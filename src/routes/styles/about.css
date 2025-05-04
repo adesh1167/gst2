@@ -1,0 +1,113 @@
+.about-container {
+    width: 100%;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .about-details{
+    background: white;
+    padding-top: 20px;
+  }
+
+  .details-section{
+    flex-direction: ;
+    align-items: center;
+    margin: 10px 0;
+    padding: 20px;
+  }
+
+  .question{
+    background-image: linear-gradient( to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.8)), url(./../../assets/question-mark2.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content-box;
+  }
+
+  .section-title{
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .section-body{
+    padding: 0 20px;
+  }
+
+  .about-hero {
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    justify-content: center;
+    background-color: #D9D9D9;
+    background-position: left;
+    color: white;
+  }
+
+  .hero-consistency{
+    background-image: url("./../../assets/consistency.jpg");
+  }
+  .hero-accuracy{
+    background-image: url("./../../assets/accuracy.jpg");
+  }
+  .hero-affordability{
+    background-image: url("./../../assets/affordability.jpg");
+  }
+  .about-container14 {
+    display: flex;
+    max-width: var(--dl-size-size-maxwidth);
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-accuracy .about-container14{
+    align-items: flex-end;
+  }
+  .about-text04 {
+    max-width: 25rem;
+  }
+  .about-text05 {
+    font-size: 1.15rem;
+    max-width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-radius: 15px;
+  }
+
+  .quote{
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .about-footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .footer-text{
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  @media only screen and (min-width: 479px){
+    .details-group{
+        display: flex;
+        margin-top: 50px;
+    }
+
+    .dynamic{
+        width: 50%;
+        flex-shrink: 0;
+    }
+
+  }

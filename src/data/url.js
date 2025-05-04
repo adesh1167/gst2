@@ -1,0 +1,1 @@
+export const baseApiUrl = "https://darkgray-caribou-708880.hostingersite.com/gst/handlers"
