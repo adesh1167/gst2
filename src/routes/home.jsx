@@ -55,7 +55,7 @@ const Home = () => {
                         <div className="dag-container19">
                             <span className="dag-text26" id="checkoutCurrencyCont" />
                             <span className="dag-text27" id="checkoutPriceCont">
-                                {country}{netTotal * factor}
+                                {country} {netTotal * factor}
                             </span>
                         </div>
                         <div className="dag-container20">
