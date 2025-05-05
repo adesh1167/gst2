@@ -125,7 +125,7 @@ function Fixture({ fixture }) {
                     </div>
                 </div>
                 <div className="dag-container16">
-                    <span>{getFixtureDate(fixture.match_data.fixture.date)}</span>
+                    <span>{getFixtureDate(fixture.match_data.fixture.date, country)}</span>
                     <span>Game Type: {fixture.game_type}</span>
                 </div>
             </div>

@@ -1,11 +1,16 @@
 import React from 'react'
 import formatNumber from '../functions/formatNumber'
+import { getMyMatchTime } from '../functions/formatDate'
+import { useSelector } from 'react-redux'
 
 const MyMatchDay = ({ day }) => {
+
+    const {country} = useSelector(state => state.data);
+
     return (
         <div className="slip">
             <div className="my-matches-container07">
-                <span>Matches bought on May 02 2025</span>
+                <span>Matches bought {getMyMatchTime(day.time, country)}</span>
             </div>
             {day.matches.map((item, index) => (
                 <MyMatchItem key={index} item={item} />

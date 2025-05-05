@@ -1,10 +1,19 @@
 import { DateTime } from "luxon";
 
-export function getFixtureDate(dateString, zone = "+0"){
+const timeZones = {
+    NGN: "+1",
+    GHS: "+0",
+    MWK: "+2",
+    ZMW: "+2",
+    ZAR: "+2",
+    UGX: "+3",
+}
+
+export function getFixtureDate(dateString, zone = "GHS"){
     dateString = dateString.trim();
-    const now = DateTime.now({ zone: `UTC${zone}` });
+    const now = DateTime.now({ zone: `UTC${timeZones[zone]}` });
     let date = DateTime.fromISO(dateString);
-    date = date.setZone(`UTC${zone}`);
+    date = date.setZone(`UTC${timeZones[zone]}`);
 
     console.log(date);
   
@@ -21,5 +30,29 @@ export function getFixtureDate(dateString, zone = "+0"){
     } else {
       // Otherwise, show just the date
       return date.toFormat("dd/MM/yyyy HH:mm:ss");
+    }
+}
+
+export function getMyMatchTime(dateString, zone = "GHS"){
+    dateString = dateString.trim();
+    const now = DateTime.now({ zone: `UTC${timeZones[zone]}` });
+    let date = DateTime.fromSQL(dateString);
+    date = date.setZone(`UTC${timeZones[zone]}`);
+
+    console.log(date);
+  
+    if (date.hasSame(now, 'day')) {
+      return "Today";
+    } else if (date.plus({ days: 1 }).hasSame(now, 'day')) {
+      //   return `Yesterday ${date.toLocaleString(DateTime.TIME_SIMPLE)}`;
+      return "Yesterday";
+    } else if (date.minus({ days: 1 }).hasSame(now, 'day')) {
+      //   return `Yesterday ${date.toLocaleString(DateTime.TIME_SIMPLE)}`;
+      return "Tomorrow";
+    } else if (date.hasSame(now, 'year')) {
+      return `on ${date.toFormat("MMM dd")}`;
+    } else {
+      // Otherwise, show just the date
+      return `on ${date.toFormat("dd/MM/yyyy")}`;
     }
 }
