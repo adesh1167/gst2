@@ -56,7 +56,7 @@ const Fixtures = () => {
       <div className="dag-container09">
         {(!firstLoad || fixturesLength > 0) &&
           <span className="dag-text10">
-            Available Predictions<span id="predictionsCount">
+            Available Predictions <span id="predictionsCount">
               {(firstLoad && fixturesLength > 0) && `(${fixturesLength})`}
             </span>
           </span>}
