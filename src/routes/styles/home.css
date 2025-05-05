@@ -295,7 +295,7 @@
   height: auto;
   display: flex;
   overflow-x: hidden;
-  align-items: flex-start;
+  align-items: center;
   font-weight: bold;
   margin-bottom: 4px;
 }
@@ -311,12 +311,12 @@
   height: auto;
   display: flex;
   overflow-x: hidden;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
 .dag-image2 {
-  width: 20px;
+  height: 18px;
   object-fit: cover;
   margin-right: 5px;
 }
@@ -335,7 +335,7 @@
   height: auto;
   display: flex;
   overflow-x: hidden;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-end;
 }
 
@@ -347,7 +347,7 @@
 }
 
 .dag-image3 {
-  width: 20px;
+  height: 18px;
   object-fit: cover;
   margin-left: 3px;
 }

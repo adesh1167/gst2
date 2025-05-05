@@ -140,9 +140,9 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
             },
             onClose: () => {
                 dispatch(showToast({
-                    message: "Payment failed, please try again",
-                    type: "error",
-                    duration: 3000
+                    message: "Payment abandoned, check My Matches to confirm if payment was successful",
+                    type: "warn",
+                    duration: 5000
                 }))
                 setLoading(false);
                 setIsPaymentOpen(false)
@@ -153,7 +153,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
 
     function confirmPayment(tx_ref) {
         axios({
-            url: `${baseApiUrl}/confirm-payment-test.php`,
+            url: `${baseApiUrl}/confirm-payment.php`,
             method: "POST",
             data: {
                 tx_ref
