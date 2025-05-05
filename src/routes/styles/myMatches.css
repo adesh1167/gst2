@@ -315,7 +315,7 @@ body {
 
 .no-matches-button{
     border-radius: 20px;
-    padding: 3px 20px !important;
+    padding: 3px 20px 5px 20px !important;
     border: 2px #000 solid;
     color: #000;
     margin-top: 15px;
