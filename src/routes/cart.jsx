@@ -37,7 +37,7 @@ const Cart = () => {
 
     function applyCoupon(e) {
         e.preventDefault();
-        if(couponText === "") {
+        if (couponText === "") {
             dispatch(showToast({
                 message: "Enter A Coupon",
                 type: "warning",
@@ -127,15 +127,15 @@ const Cart = () => {
                         </div>
                     </div>}
                     <div className="empty-cart-flag" id="emptyCartFlagCont">
-                        <label htmlFor='emptyCartFlagInput'>Empty cart after payment <Tick checked={emptyCartFlag}/></label>
-                        <input className="empty-cart-input" id='emptyCartFlagInput' type="checkbox" value={emptyCartFlag} onChange={e => setEmptyCartFlag(e.target.checked)}/>
+                        <label htmlFor='emptyCartFlagInput'>Empty cart after payment <Tick checked={emptyCartFlag} /></label>
+                        <input className="empty-cart-input" id='emptyCartFlagInput' type="checkbox" value={emptyCartFlag} onChange={e => setEmptyCartFlag(e.target.checked)} />
                     </div>
                     <div className="cart-container34">
                         <div className="cart-container35">
                             <div className="cart-container36">
                                 <span className="cart-text46">SUMMARY</span>
                             </div>
-                            <form className="cart-container37" onSubmit={couponLoading ? e=>e.preventDefault() : applyCoupon}>
+                            <form className="cart-container37" onSubmit={couponLoading ? e => e.preventDefault() : applyCoupon}>
                                 <input
                                     type="text"
                                     placeholder="Promo Code"
@@ -149,7 +149,7 @@ const Cart = () => {
                                     className="cart-button button"
                                     id="couponButton"
                                 >
-                                    <LoadingButton loading={couponLoading}>Apply</LoadingButton> 
+                                    <LoadingButton loading={couponLoading}>Apply</LoadingButton>
                                 </button>
                             </form>
                             <div className="cart-container38">
@@ -161,7 +161,7 @@ const Cart = () => {
                             </div>
                             {coupon &&
                                 (coupon?.min_matches && coupon.min_matches > cartObj.quantity ?
-                                    <div>Coupon <span style={{fontWeight: 'bold'}}>{coupon.coupon}</span> only applies on {coupon.min_matches} or more matches</div>
+                                    <div>Coupon <span style={{ fontWeight: 'bold' }}>{coupon.coupon}</span> only applies on {coupon.min_matches} or more matches</div>
                                     :
                                     <div
                                         className="coupon-details"
@@ -169,10 +169,11 @@ const Cart = () => {
                                     >
                                         <div className="cart-container39">
                                             <div className="cart-container40">
-                                                <span id="couponMessageCont">{coupon?.coupon} applied</span>
-                                                <svg viewBox="0 0 1024 1024" className="cart-icon15">
-                                                    <path d="M864 128l-480 480-224-224-160 160 384 384 640-640z" />
+                                                <span id="couponMessageCont">{coupon?.coupon} applied &nbsp;</span>
+                                                <svg width={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                    <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
                                                 </svg>
+
                                             </div>
                                             <span id="couponMessageCustomCont">{coupon?.message}</span>
                                         </div>
@@ -189,7 +190,7 @@ const Cart = () => {
                         </div>
                     </div>
                     {cart.length > 0 ?
-                        <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart}/>
+                        <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />
                         :
                         <div className='cart-add-item-message'>
                             Add at least one match to cart to checkout

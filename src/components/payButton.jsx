@@ -48,6 +48,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
                                 public_key: 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
+                                // public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
                                 tx_ref: res.data.data.tx_ref,
                                 amount: res.data.data.price,
                                 currency: res.data.data.currency,
@@ -118,11 +119,6 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
         setIsPaymentOpen(true);
         handlePayment({
             callback: (response) => {
-                dispatch(showToast({
-                    message: "",
-                    type: "error",
-                    duration: 3000
-                }))
                 console.log(response);
                 if (response.status == 'successful' || response.status == 'completed') {
                     confirmPayment(response.tx_ref);
@@ -164,17 +160,17 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                 dispatch(showToast({
                     message: "Payment successful",
                     type: "success",
-                    duration: 3000
+                    duration: 5000
                 }))
                 setTimeout(() => {
                     dispatch(showToast({
                         message: "Redirecting to My Matches",
                         type: "info",
-                        duration: 2000
+                        duration: 4000
                     }))
                 }, 1000);
-                if (emptyCartFlag(emptyCart()));
-                setTimeout(navigate("/my-matches"), 2000);
+                if (emptyCartFlag) emptyCart();
+                setTimeout(()=>navigate("/my-matches"), 3000);
             } else if (res.data.status === "update") {
 
             } else if (res.data.status === "login") {
@@ -205,18 +201,17 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
     }, [config])
 
     useEffect(() => {
-        if (isPaymentOpen) {
-            navCounter.current = 0;
-        } else {
-            if (navCounter.current > 0) navigate(-navCounter.current);
+
+        const removeFlutterwaveIframes = () => {
+            const iframes = document.querySelectorAll('iframe[src*="flutterwave"]');
+            iframes.forEach(iframe => iframe.remove());
+        };
+
+        if (!isPaymentOpen) {
+            // Wait a moment for modal to fully close
+            setTimeout(removeFlutterwaveIframes, 1000);
         }
     }, [isPaymentOpen])
-
-    useEffect(() => {
-        if (isPaymentOpen) {
-            navCounter.current += 1;
-        }
-    }, [location])
 
     console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
