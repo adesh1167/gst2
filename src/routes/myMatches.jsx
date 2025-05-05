@@ -5,18 +5,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../data/url";
 import Loading from "../components/loading";
-import { setMyMatches } from "../slices/myMatchesReducer";
+import { setMatchesLoaded, setMyMatches } from "../slices/myMatchesReducer";
 import MyMatchDay from "../components/myMatchDay";
-import { Link } from "react-router";
+import { Link, useNavigationType } from "react-router";
+import { showToast } from "../slices/toastsReducer";
 
 const MyMatches = () => {
 
-    const [firstLoad, setFirstLoad] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { matches } = useSelector(state => state.myMatches);
+    const { matches, matchesLoaded } = useSelector(state => state.myMatches);
     const { isAuthenticated } = useSelector(state => state.user);
     const dispatch = useDispatch();
+    const navType = useNavigationType();
+    const [firstLoad, setFirstLoad] = useState(matchesLoaded && navType !== "PUSH");
 
 
     function fetchMyMatches() {
@@ -37,15 +39,23 @@ const MyMatches = () => {
                 )
             }
         }).catch((err) => {
+            dispatch(showToast({
+                message: "An error occurred, check your network and reload",
+                type: "error",
+                duration: 3000
+            }))
             console.log(err);
         }).finally(() => {
             setFirstLoad(true);
+            if (!matchesLoaded) dispatch(setMatchesLoaded(true));
             setLoading(false);
         })
     }
 
     useEffect(() => {
-        setFirstLoad(false);
+        // setFirstLoad(false);
+        if (firstLoad) return;
+        if (!isAuthenticated) return;
         fetchMyMatches();
     }, [isAuthenticated])
 
@@ -60,10 +70,11 @@ const MyMatches = () => {
                         All matches you've paid for will appear here
                     </div>
 
-                    {error ?
+                    {!isAuthenticated ?
 
                         <div className="no-matches">
-                            {error}
+                            <div className="no-matches-text"> Please login to see your matches</div>
+                            <Link className="no-matches-button" to="/login"> Login</Link>
                         </div>
                         :
 

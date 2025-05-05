@@ -7,6 +7,7 @@ const AuthContext = createContext();
 const AppContext = () => {
 
     const [cart, setCart] = useState([]);
+    const [currency, setCurrency] = useState("GHS");
 
     return (
         <AuthContext.Provider value={{

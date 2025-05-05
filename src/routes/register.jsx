@@ -6,10 +6,14 @@ import { Link, useNavigate } from 'react-router';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { useForm } from 'react-hook-form';
+import { showToast } from '../slices/toastsReducer';
+import LoadingButton from '../components/loadingButton';
+import PasswordEye from '../components/passwordEye';
 
 const Register = () => {
 
     const [loading, setLoading] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const formRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -34,14 +38,27 @@ const Register = () => {
             console.log(res.data);
 
             if (res.data.status === "success") {
+                dispatch(showToast({
+                    message: "Registration succesful",
+                    type: "success",
+                    duration: 2000
+                }))
                 navigate('/login', { replace: true });
             } else {
-                alert(res.data.message);
+                dispatch(showToast({
+                    message: res.data.message,
+                    type: "error",
+                    duration: 3000
+                }))
             }
 
         } catch (err) {
             console.error(err);
-            alert("Unable to register. Check your network and try again.");
+            dispatch(showToast({
+                message: "Unable to logout, check network and try again",
+                type: "error",
+                duration: 3000
+            }))
         } finally {
             console.log('finally');
             setLoading(false);
@@ -105,7 +122,6 @@ const Register = () => {
                                 type="email"
                                 placeholder="Email"
                                 className="register-textinput input"
-                                data-val="true"
                                 {...register("email", {
                                     required: "Email is required",
                                     pattern: {
@@ -120,20 +136,23 @@ const Register = () => {
                         </div>
                         <div className="register-container06">
                             <div className="register-container11">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Password"
-                                    className="register-textinput input"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                        minLength: {
-                                            value: 6,
-                                            message: "At least 6 characters"
-                                        }
-                                    })}
-                                />
+                                <div className='password-input-wrapper'>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type={passwordVisible ? "text" : "password"}
+                                        placeholder="Password"
+                                        className="register-textinput input password-eye-input"
+                                        {...register("password", {
+                                            required: "Password is required",
+                                            minLength: {
+                                                value: 6,
+                                                message: "At least 6 characters"
+                                            }
+                                        })}
+                                    />
+                                    <PasswordEye toggleVisible={setPasswordVisible} visible={passwordVisible} />
+                                </div>
                                 {errors.password &&
                                     <span className="validation-message">{errors.password.message}</span>
                                 }
@@ -142,7 +161,7 @@ const Register = () => {
                                 <input
                                     id="confirmPassword"
                                     name="confirm-password"
-                                    type="password"
+                                    type={passwordVisible ? "text" : "password"}
                                     placeholder="Confirm Password"
                                     className="register-textinput input"
                                     {...register("confirm-password", {
@@ -167,7 +186,7 @@ const Register = () => {
                             />
                             <label htmlFor='pus18'>I am 18+</label>
                             {errors.plus18 &&
-                                <div className="validation-message" style={{width: "100%", textAlign: 'right', flex: "1 1"}}>{errors.plus18.message}</div>
+                                <div className="validation-message" style={{ width: "100%", textAlign: 'right', flex: "1 1" }}>{errors.plus18.message}</div>
                             }
                         </div>
                         <button
@@ -175,12 +194,7 @@ const Register = () => {
                             className="register-button button"
                             id="submitButton"
                         >
-                            {!loading ?
-                                "Register"
-                                :
-                                <Loading width={18} height={22} color='white' style={{ display: "inline-block" }} />
-
-                            }
+                            <LoadingButton loading={loading} color='#fff'>Register</LoadingButton>
                         </button>
                         <div className="register-container13 after-button">
                             <span>

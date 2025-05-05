@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setCoupon } from '../slices/dataReducer';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
+import { showToast } from '../slices/toastsReducer';
 
 const Coupon = () => {
 
@@ -22,7 +23,11 @@ function applyCoupon() {
             dispatch(setCoupon(res.data.data));
         } else {
             dispatch(setCoupon(null))
-            alert(res.data.message);
+            dispatch(showToast({
+                message: res.data.message,
+                type: "error",
+                duration: 3000
+            }))
         }
     }).catch(err => {
         console.log(err);

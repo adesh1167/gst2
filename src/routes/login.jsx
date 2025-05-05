@@ -9,10 +9,14 @@ import { login } from '../slices/userReducer';
 import { Link, useNavigate } from 'react-router';
 import Loading from '../components/loading';
 import { useForm } from 'react-hook-form';
+import { showToast } from '../slices/toastsReducer';
+import PasswordEye from '../components/passwordEye';
+import LoadingButton from '../components/loadingButton';
 
 const Login = () => {
 
     const [loading, setLoading] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const formRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,30 +29,38 @@ const Login = () => {
 
     async function doLogin(e) {
         setLoading(true);
-    
+
         try {
             const res = await axios({
                 url: `${baseApiUrl}/login.php`,
                 method: 'POST',
                 data: new FormData(formRef.current),
             });
-    
+
             console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(login(res.data.data));
                 navigate('/', { replace: true });
             } else {
-                alert(res.data.message);
+                dispatch(showToast({
+                    message: res.data.message,
+                    type: "error",
+                    duration: 3000
+                }))
             }
         } catch (err) {
             console.log(err);
-            alert("Unable to login. Check your network and try again");
+            dispatch(showToast({
+                message: "Unable to logout, check network and try again",
+                type: "error",
+                duration: 3000
+            }))
         } finally {
             console.log('finally');
             setLoading(false);
         }
     }
-    
+
 
     return (
         <div className='register-container'>
@@ -77,20 +89,24 @@ const Login = () => {
                             }
                         </div>
                         <div className="register-container09">
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="Password"
-                                className="register-textinput input valid"
-                                {...register("password", {
-                                    required: "Password is required",
-                                    minLength: {
-                                        value: 6,
-                                        message: "At least 6 characters"
-                                    }
-                                })}
-                            />
+                            <div className='password-input-wrapper'>
+
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={passwordVisible ? "text" : "password"}
+                                    placeholder="Password"
+                                    className="register-textinput input valid"
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "At least 6 characters"
+                                        }
+                                    })}
+                                />
+                                <PasswordEye toggleVisible={setPasswordVisible} visible={passwordVisible} />
+                            </div>
                             {errors.password &&
                                 <span className="validation-message">{errors.password.message}</span>
                             }
@@ -110,11 +126,7 @@ const Login = () => {
                             className="register-button button"
                             id="submitButton"
                         >
-                            {!loading ?
-                                "Login"
-                                :
-                                <Loading width={18} height={22} color='white' style={{ display: "inline-block" }} />
-                            }
+                            <LoadingButton loading={loading} color='#fff'>Login</LoadingButton>
                         </button>
                         <div className="register-container13">
                             <span>

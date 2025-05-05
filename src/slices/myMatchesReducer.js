@@ -3,6 +3,7 @@ import { parsePaidMatch } from "../functions/parseFixtures";
 
 
 const initialState = {
+    matchesLoaded: false,
     matches: []
 }
 
@@ -18,9 +19,12 @@ const myMatchesSlice = createSlice({
         },
         addMyMatches: (state, action) => {
             state.matches = [...state.matches, ...action.payload];
+        },
+        setMatchesLoaded: (state, action) => {
+            state.matchesLoaded = action.payload;
         }
     }
 })
 
-export const { setMyMatches, addMyMatches } = myMatchesSlice.actions;
+export const { setMyMatches, addMyMatches, setMatchesLoaded } = myMatchesSlice.actions;
 export default myMatchesSlice.reducer;

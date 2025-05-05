@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import parseFixtures from "../functions/parseFixtures";
 
 const initialState = {
-    
+    fixturesLoaded: false,
     fixtures: []
 }
 
@@ -15,9 +15,12 @@ const fixturesSlice = createSlice({
         },
         addFixtures: (state, action) => {
             state.fixtures = parseFixtures(action.payload, state.fixtures);
+        },
+        setFixturesLoaded: (state, action) => {
+            state.fixturesLoaded = action.payload;
         }
     }
 })
 
-export const { setFixtures, addFixtures } = fixturesSlice.actions;
+export const { setFixtures, addFixtures, setFixturesLoaded } = fixturesSlice.actions;
 export default fixturesSlice.reducer; 

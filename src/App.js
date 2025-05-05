@@ -7,6 +7,8 @@ import { baseApiUrl } from './data/url';
 import { setCountry, setFactor, setFirstLoad } from './slices/dataReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './slices/userReducer';
+import Toasts from './components/toasts';
+import { showToast } from './slices/toastsReducer';
 
 axios.defaults.withCredentials = true;
 
@@ -37,6 +39,11 @@ function App() {
         dispatch(login(res.data.data));
       }
     }).catch((err)=>{
+      dispatch(showToast({
+        message: "An error occurred, reload page",
+        type: "error",
+        duration: 3000
+    }))
       console.log(err)
     }).finally(()=>{
       dispatch(setFirstLoad(true));
@@ -50,6 +57,7 @@ function App() {
       <Routes>
         <Route path="*" element={<UserRoutes />} />
       </Routes>
+      <Toasts/>
     </Router>
   );
 }

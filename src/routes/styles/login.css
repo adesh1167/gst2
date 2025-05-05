@@ -109,9 +109,11 @@
     flex: 1;
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: flex;
+    justify-content: center;
     flex-direction: column;
     margin-right: 10px;
+    position: relative;
 }
 
 .register-container12 {
@@ -120,6 +122,22 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+}
+
+.password-input-wrapper{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-eye-input{
+    padding-right: 35px !important;
+}
+
+.password-eye{
+    position: absolute;
+    right: 10px;
 }
 
 .plus18 {

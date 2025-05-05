@@ -9,6 +9,9 @@ import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { setCoupon } from '../slices/dataReducer';
 import PayButton from '../components/payButton';
+import LoadingButton from '../components/loadingButton';
+import { showToast } from '../slices/toastsReducer';
+import Tick from '../components/tick';
 
 const Cart = () => {
 
@@ -18,7 +21,9 @@ const Cart = () => {
     const netTotal = useSelector(selectNetTotal) * factor;
     const { quantity, total } = cartObj;
     const coupon = useSelector(state => state.data.coupon);
-    const [couponText, setCouponText] = useState();
+    const [couponText, setCouponText] = useState("");
+    const [couponLoading, setCouponLoading] = useState(false);
+    const [emptyCartFlag, setEmptyCartFlag] = useState(false);
 
     console.log("netTotal: ", netTotal);
     const dispatch = useDispatch();
@@ -32,6 +37,15 @@ const Cart = () => {
 
     function applyCoupon(e) {
         e.preventDefault();
+        if(couponText === "") {
+            dispatch(showToast({
+                message: "Enter A Coupon",
+                type: "warning",
+                duration: 3000
+            }))
+            return;
+        }
+        setCouponLoading(true);
         axios({
             url: `${baseApiUrl}/check-coupon.php`,
             data: { coupon: couponText },
@@ -39,17 +53,34 @@ const Cart = () => {
         }).then(res => {
             console.log(res)
             if (res.data.status == "success") {
+                dispatch(showToast({
+                    message: `${res.data.data.coupon} applied`,
+                    type: "success",
+                    duration: 3000
+                }))
                 dispatch(setCoupon(res.data.data));
+                setCouponText("");
             } else {
                 dispatch(setCoupon(null))
-                alert(res.data.message);
+                dispatch(showToast({
+                    message: res.data.message,
+                    type: "error",
+                    duration: 3000
+                }))
             }
         }).catch(err => {
+            dispatch(showToast({
+                message: "An error occurred, check your network and try again",
+                type: "error",
+                duration: 3000
+            }))
             console.log(err);
+        }).finally(() => {
+            setCouponLoading(false);
         })
     }
 
-    console.log("Coupon: ", coupon, cartObj.quantity, coupon?.min_matches && coupon.min_matches > cartObj.quantity)
+    console.log("Coupon: ", couponText, cartObj.quantity, coupon?.min_matches && coupon.min_matches > cartObj.quantity)
 
     return (
         <div className="cart" id="cartContainer" style={{ display: "block" }}>
@@ -86,8 +117,8 @@ const Cart = () => {
                             </span>
                         }
                     </div>
-                    {cart.length > 0 && <div className="remove-all" id="removeAllItemsCont" onClick={emptyCart}>
-                        <div className="cart-container04" id="removeAllItemsButton">
+                    {cart.length > 0 && <div className="remove-all" id="removeAllItemsCont">
+                        <div className="cart-container04" id="removeAllItemsButton" onClick={emptyCart}>
                             <span>Remove All</span>
                             <svg viewBox="0 0 1024 1024" className="cart-icon">
                                 <path d="M512 128c-211.755 0-384 172.288-384 384s172.245 384 384 384 384-172.288 384-384-172.245-384-384-384zM512 810.667c-164.651 0-298.667-133.973-298.667-298.667s134.016-298.667 298.667-298.667 298.667 133.973 298.667 298.667-134.016 298.667-298.667 298.667z" />
@@ -96,15 +127,15 @@ const Cart = () => {
                         </div>
                     </div>}
                     <div className="empty-cart-flag" id="emptyCartFlagCont">
-                        <span>Empty cart after payment</span>
-                        <input className="empty-cart-flag" id="emptyCartFlag" type="checkbox" />
+                        <label htmlFor='emptyCartFlagInput'>Empty cart after payment <Tick checked={emptyCartFlag}/></label>
+                        <input className="empty-cart-input" id='emptyCartFlagInput' type="checkbox" value={emptyCartFlag} onChange={e => setEmptyCartFlag(e.target.checked)}/>
                     </div>
                     <div className="cart-container34">
                         <div className="cart-container35">
                             <div className="cart-container36">
                                 <span className="cart-text46">SUMMARY</span>
                             </div>
-                            <form className="cart-container37" onSubmit={applyCoupon}>
+                            <form className="cart-container37" onSubmit={couponLoading ? e=>e.preventDefault() : applyCoupon}>
                                 <input
                                     type="text"
                                     placeholder="Promo Code"
@@ -118,7 +149,7 @@ const Cart = () => {
                                     className="cart-button button"
                                     id="couponButton"
                                 >
-                                    Apply
+                                    <LoadingButton loading={couponLoading}>Apply</LoadingButton> 
                                 </button>
                             </form>
                             <div className="cart-container38">
@@ -158,7 +189,7 @@ const Cart = () => {
                         </div>
                     </div>
                     {cart.length > 0 ?
-                        <PayButton/>
+                        <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart}/>
                         :
                         <div className='cart-add-item-message'>
                             Add at least one match to cart to checkout

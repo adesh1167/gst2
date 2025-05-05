@@ -200,14 +200,14 @@ body {
 }
 
 .header .menu-container.expanded .menu {
-  width: 100%;
+  width: 75%;
   overflow-y: scroll;
 }
 
 .header .menu-content {
   height: 100vh;
   position: absolute;
-  width: 75%;
+  width: 100%;
   max-width: 400px;
   transition: width 0.3s ease-out;
   top: 0px;
@@ -367,6 +367,11 @@ body {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
 }
 
+.toast.shown{
+  right: 0%;
+  opacity: 1;
+}
+
 .toast-message {}
 
 .close-toast {
@@ -399,6 +404,7 @@ body {
   top: 0;
   left: 0;
   z-index: -1;
+  transition: none;
 }
 
 .choose-country-body,

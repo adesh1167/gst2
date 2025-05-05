@@ -8,7 +8,6 @@ import { Link, Outlet } from 'react-router';
 import { selectNetTotal } from '../slices/netTotal';
 
 const Home = () => {
-
     const { isAuthenticated, user } = useSelector(state => state.user);
     const {country, factor} = useSelector(state => state.data);
     const cart = useSelector(state => state.cart);
@@ -65,9 +64,6 @@ const Home = () => {
                             </svg>
                         </div>
                     </Link>
-                    <Outlet>
-
-                    </Outlet>
                 </div>
             </main>
             <Outlet />

@@ -5,18 +5,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import FixtureCountry from './fixtureCountry';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
-import { setFixtures } from '../slices/fixturesReducer';
+import { setFixtures, setFixturesLoaded } from '../slices/fixturesReducer';
 import Loading from './loading';
+import { useNavigationType } from 'react-router';
 
 const Fixtures = () => {
 
-  const { fixtures } = useSelector(state => state.fixtures);
-  const [firstLoad, setFirstLoad] = useState(false);
+  const { fixtures, fixturesLoaded } = useSelector(state => state.fixtures);
   const [error, setError] = useState(null);
+  const navType = useNavigationType();
+  const [firstLoad, setFirstLoad] = useState(fixturesLoaded && navType !== "PUSH");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if(firstLoad) return;
+    fecthFixtures();
+  }, [])
+
+  function fecthFixtures(){
     axios({
       url: `${baseApiUrl}/get-matches.php`,
       method: "GET",
@@ -32,10 +39,10 @@ const Fixtures = () => {
       console.log(err);
       setError("Please check your network and reload")
     }).finally(() => {
-      setFirstLoad(true)
+      setFirstLoad(true);
+      if(!fixturesLoaded) dispatch(setFixturesLoaded(true))
     })
-
-  }, [])
+  }
 
   const fixturesLength = useMemo(() =>
     Object.values(fixtures).length

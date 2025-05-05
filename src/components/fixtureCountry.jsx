@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem, removeItem } from '../slices/cartReducer'
 import { getFixtureDate } from '../functions/formatDate'
+import formatNumber from '../functions/formatNumber'
 
 const FixtureCountry = ({ country }) => {
 
@@ -10,7 +11,7 @@ const FixtureCountry = ({ country }) => {
             <div className="country-name">
                 <img
                     alt="image"
-                    src={country.flag || "assets/earth.svg"}
+                    src={country.flag || "/assets/earth.svg"}
                     className="dag-image2"
                 />
                 <span className="dag-text11">{country.name}</span>
@@ -82,11 +83,11 @@ function Fixture({ fixture }) {
                     {/* <br /> */}
                     {/* <span>{fixture.selection}</span> */}
                     {/* <br /> */}
-                    <span>{fixture.odds}</span>
+                    {/* <span>{fixture.odds}</span> */}
                     {/* <br /> */}
                     <span>{country}</span>
                     <br />
-                    <span>{fixture.price * (factor || 1)}</span>
+                    <span>{formatNumber(fixture.price * (factor || 1))}</span>
                     {/* <br /> */}
                     {/* <span>{fixture.selection}</span>
                     <br /> */}

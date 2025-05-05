@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { selectNetTotal } from '../slices/netTotal';
 import formatNumber from '../functions/formatNumber';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3';
+import { showToast } from '../slices/toastsReducer';
+import { removeItems } from '../slices/cartReducer';
+import LoadingButton from './loadingButton';
 
-const PayButton = ({ }) => {
+const PayButton = ({ emptyCart, emptyCartFlag }) => {
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
+    const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+    const navCounter = useRef(0);
 
     const netTotal = useSelector(selectNetTotal);
     const { user, isAuthenticated } = useSelector((state) => state.user);
@@ -19,6 +25,9 @@ const PayButton = ({ }) => {
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
     const handlePayment = useFlutterwave(config);
+
+    const dispatch = useDispatch();
+    const location = useLocation();
 
     function initiatePayment() {
         if (isAuthenticated) {
@@ -38,7 +47,7 @@ const PayButton = ({ }) => {
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
-                                public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
+                                public_key: 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
                                 tx_ref: res.data.data.tx_ref,
                                 amount: res.data.data.price,
                                 currency: res.data.data.currency,
@@ -58,21 +67,45 @@ const PayButton = ({ }) => {
                             setConfig(conf);
                         }
                     } else if (res.data.status === "update") {
-
+                        dispatch(showToast({
+                            message: "Some matches are no longer available. Cart has been updated",
+                            type: "warning",
+                            duration: 5000
+                        }))
+                        setTimeout(() => {
+                            dispatch(showToast({
+                                message: "Verify new cart items and checkout again",
+                                type: "info",
+                                duration: 5000
+                            }))
+                        }, 3000)
+                        dispatch(removeItems(res.data.removed_items));
                     } else if (res.data.status === "login") {
 
                     } else {
-                        alert(res.data.message);
+                        dispatch(showToast({
+                            message: "res.data.message",
+                            type: "error",
+                            duration: 3000
+                        }))
                     }
                 }).catch((err) => {
                     console.log(err);
-                    alert("An error occured, please try again later");
+                    dispatch(showToast({
+                        message: "An error occured, please try again later",
+                        type: "error",
+                        duration: 3000
+                    }))
                 }).finally(() => {
                     setLoading(false);
                 });
             }
         } else {
-            alert("Please login to continue");
+            dispatch(showToast({
+                message: "Please login to continue",
+                type: "error",
+                duration: 3000
+            }))
             navigate("/login");
         }
     }
@@ -81,20 +114,39 @@ const PayButton = ({ }) => {
     function checkOut() {
         setConfig(null);
         setLoading(true);
+        // navCounter.current = 0;
+        setIsPaymentOpen(true);
         handlePayment({
             callback: (response) => {
+                dispatch(showToast({
+                    message: "",
+                    type: "error",
+                    duration: 3000
+                }))
                 console.log(response);
                 if (response.status == 'successful' || response.status == 'completed') {
                     confirmPayment(response.tx_ref);
                 } else {
-                    alert("Payment failed, please try again later");
+                    dispatch(showToast({
+                        message: "Payment failed, please try again",
+                        type: "error",
+                        duration: 3000
+                    }))
                     setLoading(false);
                 }
                 setTimeout(closePaymentModal(), 2000);
+                setIsPaymentOpen(false);
+                // navigate(-navCounter.current);
             },
             onClose: () => {
-                alert("Payment failed, please try again later");
+                dispatch(showToast({
+                    message: "Payment failed, please try again",
+                    type: "error",
+                    duration: 3000
+                }))
                 setLoading(false);
+                setIsPaymentOpen(false)
+                // navigate(-navCounter.current);
             }
         })
     }
@@ -109,18 +161,38 @@ const PayButton = ({ }) => {
         }).then((res) => {
             console.log(res.data);
             if (res.data.status === "success") {
-                alert("Payment successful");
-                setTimeout(navigate("/my-matches"));
+                dispatch(showToast({
+                    message: "Payment successful",
+                    type: "success",
+                    duration: 3000
+                }))
+                setTimeout(() => {
+                    dispatch(showToast({
+                        message: "Redirecting to My Matches",
+                        type: "info",
+                        duration: 2000
+                    }))
+                }, 1000);
+                if (emptyCartFlag(emptyCart()));
+                setTimeout(navigate("/my-matches"), 2000);
             } else if (res.data.status === "update") {
 
             } else if (res.data.status === "login") {
 
             } else {
-                alert(res.data.message);
+                dispatch(showToast({
+                    message: res.data.message,
+                    type: "warning",
+                    duration: 3000
+                }))
             }
         }).catch((err) => {
             console.log(err);
-            alert("An error occured, please try again later");
+            dispatch(showToast({
+                message: "An error occured, check your network and try again",
+                type: "error",
+                duration: 3000
+            }))
         }).finally(() => {
             setLoading(false);
         });
@@ -132,12 +204,30 @@ const PayButton = ({ }) => {
         }
     }, [config])
 
+    useEffect(() => {
+        if (isPaymentOpen) {
+            navCounter.current = 0;
+        } else {
+            if (navCounter.current > 0) navigate(-navCounter.current);
+        }
+    }, [isPaymentOpen])
+
+    useEffect(() => {
+        if (isPaymentOpen) {
+            navCounter.current += 1;
+        }
+    }, [location])
+
+    console.log("Is Payment Open: ", isPaymentOpen, navCounter);
+
     return (
         <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment}>
-            <span>PAY &nbsp;</span>
             <span>
-                {" "}
-                <span id="paymentPriceCont">{country} {formatNumber(netTotal * factor)}</span>
+                <span id="paymentPriceCont">
+                    <LoadingButton loading={loading} height={26} width={26} color='#fff'>
+                        PAY {country} {formatNumber(netTotal * factor)}
+                    </LoadingButton>
+                </span>
             </span>
         </div>
     )
