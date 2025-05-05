@@ -933,7 +933,7 @@
 .empty-cart-flag label {
   margin-right: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .empty-cart-flag label svg{
