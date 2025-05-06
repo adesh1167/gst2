@@ -37,7 +37,7 @@ const Login = () => {
                 data: new FormData(formRef.current),
             });
 
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(login(res.data.data));
                 navigate('/', { replace: true });
@@ -56,7 +56,7 @@ const Login = () => {
                 duration: 3000
             }))
         } finally {
-            console.log('finally');
+            // console.log('finally');
             setLoading(false);
         }
     }

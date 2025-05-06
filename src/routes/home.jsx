@@ -16,7 +16,7 @@ const Home = ({hasOutlet = true, hasFixtures = true}) => {
 
     const [cartData, setCartData] = useState();
 
-    console.log("User: ", user, isAuthenticated, cart, factor);
+    // console.log("User: ", user, isAuthenticated, cart, factor);
 
     return (
         <>
@@ -27,15 +27,7 @@ const Home = ({hasOutlet = true, hasFixtures = true}) => {
                         <img alt="image" src="/assets/ronaldo.png" className="dag-image1" />
                         <div className="dag-container05">
                             <div className="dag-container06">
-                                <span className="dag-digital" onClick={() => {
-                                    console.log("Pressed")
-                                    dispatch(
-                                        login({
-                                            user: { name: "Adesile", email: "adesh1167@gmail.com" },
-                                            isAuthenticated: true
-                                        })
-                                    )
-                                }}>
+                                <span className="dag-digital">
                                     <span>GLOBAL</span>
                                     <br />
                                     <span>SPORTS</span>
@@ -48,7 +40,7 @@ const Home = ({hasOutlet = true, hasFixtures = true}) => {
                         </div>
                     </div>
                     {hasFixtures && <Fixtures />}
-                    <Link className="dag-container18" onclick="showCart()" to="/cart">
+                    <Link className="dag-container18" to="/cart">
                         <div className="items-count" id="itemsCountCont">
                             <span> {cart.quantity}</span>
                         </div>

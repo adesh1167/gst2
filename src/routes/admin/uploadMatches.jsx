@@ -31,7 +31,6 @@ const UploadMatches = () => {
     if (typeOffset) {
       const now = DateTime.now();
       date = now.plus({ days: Number(offset) }).toFormat('yyyy-MM-dd');
-      console.log(date);
     } else {
       if (!customDate) {
         dispatch(showToast({
@@ -42,7 +41,6 @@ const UploadMatches = () => {
         return;
       }
       date = customDate;
-      console.log(date);
     }
 
     setTitleDate(date);
@@ -54,7 +52,7 @@ const UploadMatches = () => {
       data: { date: date },
     }).then((response) => {
       setMatches(response.data.response);
-      console.log(response.data);
+      // console.log(response.data);
     }).catch((response) => {
       console.log(response);
     }).finally(() => {
@@ -135,7 +133,7 @@ const UploadMatches = () => {
       method: "POST",
       data: { data: matchesArray },
     }).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       dispatch(showToast({
         type: "success",
         message: "Matches uploaded successfully",
@@ -148,7 +146,7 @@ const UploadMatches = () => {
         message: "Unable to upload, chek your network and try again",
         duration: 3000,
       }))
-      console.log(response);
+      // console.log(response);
     }).finally(() => {
       setUploading(false);
     })

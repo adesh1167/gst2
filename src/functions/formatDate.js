@@ -15,7 +15,7 @@ export function getFixtureDate(dateString, zone = "GHS"){
     let date = DateTime.fromISO(dateString);
     date = date.setZone(`UTC${timeZones[zone]}`);
 
-    console.log(date);
+    // console.log(date);
   
     if (date.hasSame(now, 'day')) {
       return "Today at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
@@ -39,7 +39,7 @@ export function getMyMatchTime(dateString, zone = "GHS"){
     let date = DateTime.fromSQL(dateString);
     date = date.setZone(`UTC${timeZones[zone]}`);
 
-    console.log(date);
+    // console.log(date);
   
     if (date.hasSame(now, 'day')) {
       return "Today";

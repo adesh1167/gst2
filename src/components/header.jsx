@@ -68,13 +68,13 @@ const Header = () => {
                 duration: 3000
             }))
         }).finally(() => {
-            console.log("logout");
+            // console.log("logout");
             setLoading(false);
         })
     }
 
     function doSwitchDashoard() {
-        console.log('here');
+        // console.log('here');
         setSwitching(true);
         setTimeout(() => setMenuExpanded(false), 400);
         setTimeout(() => {

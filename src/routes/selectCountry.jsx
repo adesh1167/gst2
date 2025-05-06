@@ -20,7 +20,7 @@ const SelectCountry = ({ exitable = true }) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(localCountry);
+        // console.log(localCountry);
 
         if (!localCountry) {
             dispatch(showToast({
@@ -39,7 +39,7 @@ const SelectCountry = ({ exitable = true }) => {
                 country: localCountry
             },
         }).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(showToast({
                     message: "Country Updated",
@@ -68,7 +68,7 @@ const SelectCountry = ({ exitable = true }) => {
         console.log("Country Changed: ", localCountry);
     }, [localCountry])
 
-    console.log(localCountry);
+    // console.log(localCountry);
 
     return (
         <div className="choose-country-window">

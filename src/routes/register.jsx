@@ -35,7 +35,7 @@ const Register = () => {
                 data: new FormData(formRef.current),
             });
 
-            console.log(res.data);
+            // console.log(res.data);
 
             if (res.data.status === "success") {
                 dispatch(showToast({
@@ -60,7 +60,7 @@ const Register = () => {
                 duration: 3000
             }))
         } finally {
-            console.log('finally');
+            // console.log('finally');
             setLoading(false);
         }
     }

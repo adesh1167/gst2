@@ -49,7 +49,7 @@ const Fixtures = () => {
       url: roleData.current.fixturesUrl,
       method: "GET",
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       // if(res.status === "success"){
       if (error) setError(null)
       dispatch(setFixtures(res.data.matches))
@@ -75,7 +75,7 @@ const Fixtures = () => {
   Object.values(fixtures).flatMap(country => Object.values(country.leagues)).flatMap(league => Object.values(league.fixtures)).length
     , [fixtures])
 
-  console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, navType);
+  // console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, navType);
 
   return (
     <div className="dag-container07">

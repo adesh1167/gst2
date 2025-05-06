@@ -18,7 +18,7 @@ const UserRoutes = ({ }) => {
 
     const { pathname } = useLocation();
 
-    console.log(pathname, firstLoad, country, firstLoad && country && pathname === "/country");
+    // console.log(pathname, firstLoad, country, firstLoad && country && pathname === "/country");
 
     return (
         <>

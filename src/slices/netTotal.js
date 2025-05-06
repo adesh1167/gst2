@@ -10,7 +10,7 @@ export const selectNetTotal = createSelector(
         if(coupon && (!coupon.min_matches || coupon.min_matches <= cart.quantity)){
             total = total - (total * coupon.percent_off || 1);
         }
-        console.log('Coupon: ', coupon?.percent_off, total);
+        // console.log('Coupon: ', coupon?.percent_off, total);
         return Math.max(total, 0);
     }
 )

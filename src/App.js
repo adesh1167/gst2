@@ -15,6 +15,7 @@ import MyMatches from './routes/myMatches';
 import Login from './routes/login';
 import Register from './routes/register';
 import About from './routes/about';
+import { setMatchesLoaded, setMyMatches } from './slices/myMatchesReducer';
 
 axios.defaults.withCredentials = true;
 
@@ -25,7 +26,7 @@ function App() {
   const { user, isAdmin, dashboard } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log(cart)
+    // console.log(cart)
     if (cart) {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
@@ -38,6 +39,8 @@ function App() {
   useEffect(() => {
     dispatch(setFixtures([]));
     dispatch(setFixturesLoaded(false));
+    dispatch(setMyMatches([]));
+    dispatch(setMatchesLoaded(false));
   }, [user])
 
   useEffect(() => {
@@ -46,7 +49,7 @@ function App() {
       url: `${baseApiUrl}/get-profile.php`,
 
     }).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(setFirstLoad(true));
       if (res.data.country) {
         dispatch(setCountry(res.data.country));

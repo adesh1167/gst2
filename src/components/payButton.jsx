@@ -36,14 +36,14 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                     items: cart?.items?.map(item => item.id),
                     coupon: coupon?.coupon
                 }
-                console.log(data);
+                // console.log(data);
                 setLoading(true);
                 axios({
                     url: `${baseApiUrl}/initiate-payment.php`,
                     method: "POST",
                     data: data,
                 }).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
@@ -64,7 +64,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                                     logo: 'https://globalsportstrade.vercel.app/assets/logo.png',
                                 },
                             }
-                            console.log("Config: ", conf);
+                            // console.log("Config: ", conf);
                             setConfig(conf);
                         }
                     } else if (res.data.status === "update") {
@@ -119,7 +119,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
         setIsPaymentOpen(true);
         handlePayment({
             callback: (response) => {
-                console.log(response);
+                // console.log(response);
                 if (response.status == 'successful' || response.status == 'completed') {
                     confirmPayment(response.tx_ref);
                 } else {
@@ -155,7 +155,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                 tx_ref
             }
         }).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(showToast({
                     message: "Payment successful",
@@ -213,7 +213,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
         }
     }, [isPaymentOpen])
 
-    console.log("Is Payment Open: ", isPaymentOpen, navCounter);
+    // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
     return (
         <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment}>

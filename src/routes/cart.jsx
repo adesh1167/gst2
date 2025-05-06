@@ -25,7 +25,7 @@ const Cart = () => {
     const [couponLoading, setCouponLoading] = useState(false);
     const [emptyCartFlag, setEmptyCartFlag] = useState(false);
 
-    console.log("netTotal: ", netTotal);
+    // console.log("netTotal: ", netTotal);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -51,7 +51,7 @@ const Cart = () => {
             data: { coupon: couponText },
             method: "POST"
         }).then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.data.status == "success") {
                 dispatch(showToast({
                     message: `${res.data.data.coupon} applied`,
@@ -80,7 +80,7 @@ const Cart = () => {
         })
     }
 
-    console.log("Coupon: ", couponText, cartObj.quantity, coupon?.min_matches && coupon.min_matches > cartObj.quantity)
+    // console.log("Coupon: ", couponText, cartObj.quantity, coupon?.min_matches && coupon.min_matches > cartObj.quantity)
 
     return (
         <div className="cart" id="cartContainer" style={{ display: "block" }}>

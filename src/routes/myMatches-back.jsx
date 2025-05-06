@@ -12,13 +12,13 @@ import { showToast } from "../slices/toastsReducer";
 
 const MyMatches = () => {
 
-    const [loading, setLoading] = useState(true);
-    const [firstLoad, setFirstLoad] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { matches, matchesLoaded } = useSelector(state => state.myMatches);
     const { isAuthenticated } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navType = useNavigationType();
+    const [firstLoad, setFirstLoad] = useState(matchesLoaded && navType !== "PUSH");
 
 
     function fetchMyMatches() {
@@ -46,27 +46,18 @@ const MyMatches = () => {
             }))
             console.log(err);
         }).finally(() => {
+            setFirstLoad(true);
             if (!matchesLoaded) dispatch(setMatchesLoaded(true));
             setLoading(false);
         })
     }
 
     useEffect(() => {
-        if (firstLoad) {
-            fetchMyMatches();
-        } else {
-            if (matchesLoaded) {
-                if (navType !== "PUSH") {
-                    setLoading(false)
-                } else {
-                    fetchMyMatches();
-                }
-            } else {
-                fetchMyMatches();
-            }
-        }
-        if (!firstLoad) setFirstLoad(true);
-    }, [matchesLoaded])
+        // setFirstLoad(false);
+        if (firstLoad) return;
+        if (!isAuthenticated) return;
+        fetchMyMatches();
+    }, [isAuthenticated])
 
     // console.log("Here: ", matches);
 
@@ -86,12 +77,8 @@ const MyMatches = () => {
                             <Link className="no-matches-button" to="/login"> Login</Link>
                         </div>
                         :
-                        (loading ?
 
-                            <div className="my-matches-loading">
-                                <Loading />
-                            </div>
-                            :
+                        firstLoad && (
                             (matches.length > 0) ?
                                 <div className="slips" id="slips">
                                     {matches.map((match, index) =>
@@ -107,6 +94,11 @@ const MyMatches = () => {
                                 </div>
                         )
                     }
+
+
+                    {loading && <div className="my-matches-loading">
+                        <Loading />
+                    </div>}
                 </div>
             </div>
         </div>
