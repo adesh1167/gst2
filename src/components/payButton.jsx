@@ -19,7 +19,8 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
     const navCounter = useRef(0);
 
     const netTotal = useSelector(selectNetTotal);
-    const { user, isAuthenticated } = useSelector((state) => state.user);
+    const { user, isAuthenticated, isAdmin, dashboard } = useSelector((state) => state.user);
+    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
     const { country, factor } = useSelector((state) => state.data);
     const cart = useSelector((state) => state.cart);
     const coupon = useSelector((state) => state.data.coupon);
@@ -47,7 +48,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
-                                public_key: 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
+                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
                                 // public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
                                 tx_ref: res.data.data.tx_ref,
                                 amount: res.data.data.price,
@@ -149,7 +150,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
 
     function confirmPayment(tx_ref) {
         axios({
-            url: `${baseApiUrl}/confirm-payment.php`,
+            url: `${baseApiUrl}/${isAdminShown ? "confirm-payment-test" : "confirm-payment"}.php`,
             method: "POST",
             data: {
                 tx_ref
