@@ -97,9 +97,9 @@ const Cart = () => {
                             <span className="cart-text">SELECTED MATCHES</span>
                             <span className="cart-description">
                                 Selections of matches you pay for will be seen under{" "}
-                                <a className="cart-link" href="my-matches.html">
+                                <Link className="cart-link" to="/my-matches">
                                     MY MATCHES
-                                </a>{" "}
+                                </Link>{" "}
                             </span>
                         </div>
                     </div>

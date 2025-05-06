@@ -51,7 +51,7 @@ const Login = () => {
         } catch (err) {
             console.log(err);
             dispatch(showToast({
-                message: "Unable to logout, check network and try again",
+                message: "Unable to login, check network and try again",
                 type: "error",
                 duration: 3000
             }))

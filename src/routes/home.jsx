@@ -7,7 +7,7 @@ import Fixtures from '../components/fixtures';
 import { Link, Outlet } from 'react-router';
 import { selectNetTotal } from '../slices/netTotal';
 
-const Home = () => {
+const Home = ({hasOutlet = true, hasFixtures = true}) => {
     const { isAuthenticated, user } = useSelector(state => state.user);
     const {country, factor} = useSelector(state => state.data);
     const cart = useSelector(state => state.cart);
@@ -47,7 +47,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <Fixtures />
+                    {hasFixtures && <Fixtures />}
                     <Link className="dag-container18" onclick="showCart()" to="/cart">
                         <div className="items-count" id="itemsCountCont">
                             <span> {cart.quantity}</span>
@@ -66,7 +66,7 @@ const Home = () => {
                     </Link>
                 </div>
             </main>
-            <Outlet />
+            {hasOutlet && <Outlet />}
         </>
 
     )

@@ -8,6 +8,8 @@ import Login from "./login";
 import Register from "./register";
 import MyMatches from "./myMatches";
 import About from "./about";
+import Loading from "../components/loading";
+import Header from "../components/header";
 
 const UserRoutes = ({ }) => {
 
@@ -27,11 +29,7 @@ const UserRoutes = ({ }) => {
                     <Route path="cart" element={<Cart />} />
                     <Route path="coupon/:id" element={<Coupon />} />
                 </Route>
-                <Route path="*" element={<Navigate to="/" replace />} />
-                <Route path="/my-matches" element={<MyMatches />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/about" element={<About />} />
+                <Route path="*" element={firstLoad ? <Navigate to={"/"} replace/> : <Header />} />
             </Routes>
 
             {(firstLoad && !country) && <Navigate to="/country" replace />}

@@ -313,6 +313,7 @@
   overflow-x: hidden;
   align-items: center;
   justify-content: flex-start;
+  padding-right: 40px;
 }
 
 .dag-image2 {
@@ -337,6 +338,7 @@
   overflow-x: hidden;
   align-items: center;
   justify-content: flex-end;
+  padding-left: 40px;
 }
 
 .dag-text21 {
@@ -933,7 +935,7 @@
 .empty-cart-flag label {
   margin-right: 5px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .empty-cart-flag label svg{

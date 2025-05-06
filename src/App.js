@@ -9,55 +9,80 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from './slices/userReducer';
 import Toasts from './components/toasts';
 import { showToast } from './slices/toastsReducer';
+import AdminRoutes from './routes/adminRoutes';
+import { setFixtures, setFixturesLoaded } from './slices/fixturesReducer';
+import MyMatches from './routes/myMatches';
+import Login from './routes/login';
+import Register from './routes/register';
+import About from './routes/about';
 
 axios.defaults.withCredentials = true;
 
 function App() {
 
   const dispatch = useDispatch();
-  const cart = useSelector((state)=>state.cart);
+  const cart = useSelector((state) => state.cart);
+  const { user, isAdmin, dashboard } = useSelector((state) => state.user);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(cart)
-    if(cart){
+    if (cart) {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart])
-  
-  useEffect(()=>{
+
+  useEffect(() => {
+    dispatch(setFixturesLoaded(false));
+  }, [dashboard])
+
+  useEffect(() => {
+    dispatch(setFixtures([]));
+    dispatch(setFixturesLoaded(false));
+  }, [user])
+
+  useEffect(() => {
     axios({
       method: "POST",
       url: `${baseApiUrl}/get-profile.php`,
-      
-    }).then((res)=>{
+
+    }).then((res) => {
       console.log(res.data)
-      if(res.data.country){
+      dispatch(setFirstLoad(true));
+      if (res.data.country) {
         dispatch(setCountry(res.data.country));
         dispatch(setFactor(res.data.factor));
       }
-      if(res.data.status === "loggedin"){
+      if (res.data.status === "loggedin") {
         dispatch(login(res.data.data));
       }
-    }).catch((err)=>{
+    }).catch((err) => {
       dispatch(showToast({
         message: "An error occurred, reload page",
         type: "error",
         duration: 3000
-    }))
+      }))
       console.log(err)
-    }).finally(()=>{
-      dispatch(setFirstLoad(true));
+    }).finally(() => {
     })
   }, [])
 
-  
-  
+
+
   return (
     <Router>
       <Routes>
-        <Route path="*" element={<UserRoutes />} />
+        <Route path="*" element={
+          isAdmin && dashboard === "admin" ?
+            <AdminRoutes />
+            :
+            <UserRoutes />
+        } />
+        <Route path="/my-matches" element={<MyMatches />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
       </Routes>
-      <Toasts/>
+      <Toasts />
     </Router>
   );
 }

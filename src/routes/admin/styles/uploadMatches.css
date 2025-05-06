@@ -1,0 +1,232 @@
+.upload-matches{
+    background-color: #fff;
+    padding-top: 90px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.upload-matches input:focus{
+    outline: none;
+}
+
+.upload-matches-search{
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    padding: 8px 10px;
+    height: 50px;
+    background: linear-gradient(to bottom, #000, #0005);
+    box-shadow: 0 0 10px 0 #0007;
+    display: flex;
+    align-items: center;
+    /* background-color: #000; */
+}
+
+.upload-matches-search input{
+    border: 2px black solid;
+    border: none;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    padding: 0 35px 0 15px;
+}
+
+.upload-matches-search svg{
+    height: 32px;
+    position: absolute;
+    right: 16px;
+    padding: 4px 6px;
+    /* background-color: red; */
+}
+
+.fetch-options{
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.fetch-options-row{
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.fetch-options-row-item{
+    margin: 5px;
+    border: 2px black solid;
+    border-radius: 40px;
+    padding: 5px 10px;
+    flex: 1 1 auto;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fetch-options-row-title{
+    margin-left: 8px;
+    margin-right: 2px;
+}
+
+.fetch-options-row-date{
+    border: 2px black solid;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 4px;
+    text-align: center;
+    flex: 1 1 auto;
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fetch-options-row-date input{
+    border: none;
+    outline: none;
+    display: inline;
+    text-align: center;
+    background: none;
+    font-size: 16px;
+}
+
+.fetch-options-row-button{
+    padding: 8px 20px;
+    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
+    margin-left: 2px;
+    margin-right: 3px;
+    font-weight: bold;
+}
+
+.upload-matches-head{
+ margin: 10px 0 25px 0;
+ padding: 0 10px;
+}
+
+.upload-matches-head-text{
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.upload-matches-loading{
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.upload-matches-body{
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+    padding-bottom: 70px;
+}
+
+.upload-matches-item{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    border: 1px #999 solid;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: linear-gradient(to left, #eee, #fee);
+}
+
+.upload-matches-item.added{
+    background: linear-gradient(to left, #eee, #efe);
+}
+
+.upload-matches-item-column{
+    width: 100%;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.upload-matches-item-row{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    
+}
+
+.upload-matches-item-row.top{
+margin-bottom: 5px;    
+}
+
+.upload-matches-item-row input{
+    flex: 1 1 auto;
+    width: 25%;
+    margin: 5px;
+    padding: 6px 5px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    border: 1px #ccc solid;
+    text-align: center;
+}
+
+.upload-matches-item-button{
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    background-color: #090;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 10px;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.upload-matches-item.added .upload-matches-item-button{
+    background-color: #900;
+}
+
+.upload-matches-footer{
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 10px 20px;
+    height: 80px;
+}
+
+.upload-matches-footer-button{
+    background-color: #090;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.uplaod-matches-footer-scroll{
+    /* border: 4px black solid; */
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #000;
+    /* background-color: #090; */
+    border-radius: 50px;
+}
+
+.upload-matches-footer .icon{
+    width: 16px;
+    fill: #fff;
+}
+

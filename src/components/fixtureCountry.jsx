@@ -47,6 +47,8 @@ function FixtureLeague({ league }) {
 function Fixture({ fixture }) {
 
     const { country, factor } = useSelector(state => state.data);
+    const { isAdmin, dashboard } = useSelector(state => state.user);
+    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
     const cart = useSelector(state => state.cart.items);
     const [inCart, setInCart] = useState(false);
     const dispatch = useDispatch();
@@ -71,7 +73,7 @@ function Fixture({ fixture }) {
         }))
     }
 
-    function removeFromCart(){
+    function removeFromCart() {
         dispatch(removeItem(fixture.id))
     }
 
@@ -79,18 +81,27 @@ function Fixture({ fixture }) {
         <div className={`dag-match ${inCart ? "match-added" : ""}`}>
             <div className="dag-container11">
                 <span>
-                    {/* <span>{fixture.id}</span> */}
-                    {/* <br /> */}
                     {/* <span>{fixture.selection}</span> */}
                     {/* <br /> */}
-                    {/* <span>{fixture.odds}</span> */}
+                    {isAdminShown ?
+                        <>
+                            <span>{fixture.id}</span>
+                            <br />
+                            <span>{fixture.selection}</span>
+                            <br />
+                            <span>{fixture.odds}</span>
+                            <br />
+                            <span>{formatNumber(fixture.price * (factor || 1))}</span>
+                        </>
+                        :
+                        <>
+                            <span>{country}</span>
+                            <br />
+                            <span>{formatNumber(fixture.price * (factor || 1))}</span>
+                        </>
+
+                    }
                     {/* <br /> */}
-                    <span>{country}</span>
-                    <br />
-                    <span>{formatNumber(fixture.price * (factor || 1))}</span>
-                    {/* <br /> */}
-                    {/* <span>{fixture.selection}</span>
-                    <br /> */}
                 </span>
             </div>
             <div className="dag-container12">

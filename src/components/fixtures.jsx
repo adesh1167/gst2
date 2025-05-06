@@ -1,31 +1,52 @@
 
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FixtureCountry from './fixtureCountry';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { setFixtures, setFixturesLoaded } from '../slices/fixturesReducer';
 import Loading from './loading';
-import { useNavigationType } from 'react-router';
+import { Link, useNavigationType } from 'react-router';
 
 const Fixtures = () => {
 
   const { fixtures, fixturesLoaded } = useSelector(state => state.fixtures);
+  const { user, isAdmin, dashboard } = useSelector(state => state.user);
+  const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
   const [error, setError] = useState(null);
   const navType = useNavigationType();
-  const [firstLoad, setFirstLoad] = useState(fixturesLoaded && navType !== "PUSH");
+  const [firstLoad, setFirstLoad] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const roleData = useRef({
+    fixturesUrl: isAdminShown ? `${baseApiUrl}/get-matches-admin.php` : `${baseApiUrl}/get-matches.php`,
+  })
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if(firstLoad) return;
-    fecthFixtures();
-  }, [])
+  useLayoutEffect(() => {
+    if(!firstLoad){
+      if(fixturesLoaded){
+        if(navType !== "PUSH"){
+          setLoading(false);
+        } else{
+          fetchFixtures();
+        }
+      } else{
+        fetchFixtures();
+      }
+    } else{
+      fetchFixtures();
+    }
 
-  function fecthFixtures(){
+    if(!firstLoad) setFirstLoad(true);
+  }, [fixturesLoaded]) //dashboard change will trigger fixturesLoaded change which will in turn trigger reload here
+
+  function fetchFixtures() {
+    setLoading(true);
     axios({
-      url: `${baseApiUrl}/get-matches.php`,
+      url: roleData.current.fixturesUrl,
       method: "GET",
     }).then((res) => {
       console.log(res.data);
@@ -39,16 +60,22 @@ const Fixtures = () => {
       console.log(err);
       setError("Please check your network and reload")
     }).finally(() => {
-      setFirstLoad(true);
-      if(!fixturesLoaded) dispatch(setFixturesLoaded(true))
+      setLoading(false);
+      // setFirstLoad(true); //setFirstLoad must still be called explicitly because fixturesLoaded won't trigger a rerender (true to true) when a push occurs
+      if (!fixturesLoaded) dispatch(setFixturesLoaded(true))
+      // else setFirstLoad(true); //called inside else (setFirstLoad will be set implicity in useEffect[fixturesLoaded]) on first visit. will be called expicitly here on subsequent nav pushes
     })
   }
 
+  useEffect(() => {
+    // setFirstLoad(fixturesLoaded && navType !== "PUSH");
+  }, [fixturesLoaded])
+
   const fixturesLength = useMemo(() =>
-    Object.values(fixtures).length
+  Object.values(fixtures).flatMap(country => Object.values(country.leagues)).flatMap(league => Object.values(league.fixtures)).length
     , [fixtures])
 
-  console.log("Fixtures: ", fixtures);
+  console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, navType);
 
   return (
     <div className="dag-container07">
@@ -71,8 +98,8 @@ const Fixtures = () => {
               </div>
             </div>
             :
-            firstLoad ?
-              Object.values(fixtures).length > 0 ?
+            !loading ?
+              (Object.values(fixtures).length > 0 ?
                 <>
                   <FixtureCountry country={Object.values(fixtures)[0]} />
                   <div className="banner">
@@ -84,9 +111,9 @@ const Fixtures = () => {
                         <p> All games are predicted using AI </p>
                       </div>
                     </div>
-                    <a className="banner-button" href="about.html">
+                    <Link className="banner-button" to="/about">
                       Learn More
-                    </a>
+                    </Link>
                   </div>
                   {Object.values(fixtures).filter((d, i) => i > 0).map((country, index) => (
                     <FixtureCountry key={index} country={country} />
@@ -105,6 +132,7 @@ const Fixtures = () => {
                     Contact your local agent for exclusive fixtures today
                   </div>
                 </div>
+              )
 
 
               :
