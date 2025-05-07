@@ -74,6 +74,14 @@ function App() {
     })
   }, [])
 
+  useEffect(()=>{
+    if(pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (!tAndCAccepted && pathname !== "/about")){
+      document.body.classList.add("scroll-lock");
+    } else {
+      document.body.classList.remove("scroll-lock");
+    }
+  }, [pathname, tAndCAccepted])
+
 
 
   return (

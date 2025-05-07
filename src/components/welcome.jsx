@@ -40,7 +40,7 @@ const Welcome = () => {
                         <Link className="close-notice" to="/about">
                             Learn More
                         </Link>
-                        <button onClick={()=>dispatch(setTAndCAccepted(true))} className="close-notice">I Understand</button>
+                        <button onClick={()=>dispatch(setTAndCAccepted(true))} className="close-notice" style={{fontSize: 16}}>I Understand</button>
                     </div>
                 </div>
             </div>

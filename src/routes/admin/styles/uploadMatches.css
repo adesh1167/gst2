@@ -99,6 +99,10 @@
     font-size: 16px;
 }
 
+.fetch-options-row-date input:focus{
+    outline: none;
+}
+
 .fetch-options-row-button{
     padding: 8px 20px;
     border-radius: 10px;
@@ -143,8 +147,8 @@
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
-    /* background: linear-gradient(to left, #eee, #fee); */
-    background-color: #fff;
+    background: linear-gradient(to left, #eee, #8201);
+    /* background-color: #fff; */
 }
 
 .upload-matches-item.added{
@@ -178,6 +182,10 @@ margin-bottom: 5px;
     font-size: 16px;
     border: 1px #ccc solid;
     text-align: center;
+}
+
+.upload-matches-item-row input:focus{
+    outline: 1px #777 solid;
 }
 
 .upload-matches-item-button{
