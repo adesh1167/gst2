@@ -12,14 +12,36 @@ import { showToast } from "../slices/toastsReducer";
 
 const MyMatches = () => {
 
+    const { isAuthenticated, userQueried } = useSelector(state => state.user);
+
+    return (
+        userQueried ?
+
+            <MyMatchesContent />
+            :
+            <div className="my-matches-container">
+                <Header />
+                <div className="my-matches-container04">
+                    <div className="my-matches-container06">
+                        <div className="my-matches-loading">
+                            <Loading />
+                        </div>
+                    </div>
+                </div>
+            </div>
+    )
+
+}
+
+const MyMatchesContent = () => {
+
     const [loading, setLoading] = useState(true);
     const [firstLoad, setFirstLoad] = useState(false);
     const [error, setError] = useState(null);
     const { matches, matchesLoaded } = useSelector(state => state.myMatches);
-    const { isAuthenticated } = useSelector(state => state.user);
+    const { isAuthenticated, userQueried } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navType = useNavigationType();
-
 
     function fetchMyMatches() {
         setLoading(true);
@@ -53,7 +75,15 @@ const MyMatches = () => {
 
     useEffect(() => {
         if (firstLoad) {
-            fetchMyMatches();
+            if (matchesLoaded) {
+                if (navType !== "PUSH") {
+                    setLoading(false);
+                } else {
+                    // fetchMyMatches();
+                }
+            } else {
+                fetchMyMatches();
+            }
         } else {
             if (matchesLoaded) {
                 if (navType !== "PUSH") {
@@ -62,15 +92,7 @@ const MyMatches = () => {
                     fetchMyMatches();
                 }
             } else {
-                if(matchesLoaded){
-                    if(navType !== "PUSH"){
-                        setLoading(false);
-                    } else{
-                        fetchMyMatches();
-                    }
-                } else{
-                    fetchMyMatches();
-                }
+                fetchMyMatches();
             }
         }
         if (!firstLoad) setFirstLoad(true);

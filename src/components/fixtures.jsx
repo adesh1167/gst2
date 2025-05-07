@@ -41,7 +41,7 @@ const Fixtures = () => {
         if(navType !== "PUSH"){
           setLoading(false);
         } else{
-          fetchFixtures();
+          // fetchFixtures();
         }
       } else{
         fetchFixtures();
