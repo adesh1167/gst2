@@ -155,7 +155,7 @@ const UploadMatches = () => {
 
   return (
     <div className='upload-matches'>
-      <Header />
+      {/* <Header /> */}
       <div className='upload-matches-search'>
         <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Matches...' />
         {search.length > 0 && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" onClick={() => {

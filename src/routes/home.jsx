@@ -23,7 +23,7 @@ const Home = () => {
         <>
             <main>
                 <div className="dag-container">
-                    <Header />
+                    {/* <Header /> */}
                     <div className="dag-container04">
                         <img alt="image" src="/assets/ronaldo.png" className="dag-image1" />
                         <div className="dag-container05">

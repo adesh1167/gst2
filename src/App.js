@@ -17,6 +17,7 @@ import Register from './routes/register';
 import About from './routes/about';
 import { setMatchesLoaded, setMyMatches } from './slices/myMatchesReducer';
 import Welcome from './components/welcome';
+import Header from './components/header';
 
 axios.defaults.withCredentials = true;
 
@@ -77,6 +78,7 @@ function App() {
 
   return (
     <>
+    <Header/>
       <Routes>
         <Route path="*" element={
           isAdmin && dashboard === "admin" ?

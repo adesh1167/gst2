@@ -15,12 +15,14 @@ const MyMatches = () => {
     const { isAuthenticated, userQueried } = useSelector(state => state.user);
 
     return (
-        userQueried ?
+
+        <>
+        {/* <Header /> */}
+        {userQueried ?
 
             <MyMatchesContent />
             :
             <div className="my-matches-container">
-                <Header />
                 <div className="my-matches-container04">
                     <div className="my-matches-container06">
                         <div className="my-matches-loading">
@@ -28,7 +30,8 @@ const MyMatches = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
+        </>
     )
 
 }
@@ -102,7 +105,7 @@ const MyMatchesContent = () => {
 
     return (
         <div className="my-matches-container">
-            <Header />
+            {/* <Header /> */}
             <div className="my-matches-container04">
                 <div className="my-matches-container06">
                     <div className="my-matches-description">

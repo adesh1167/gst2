@@ -4,7 +4,7 @@ import "./styles/about.css";
 const About = () => {
     return (
         <div className="about-container">
-            <Header />
+            {/* <Header /> */}
             <div className="about-details">
                 <div className="details-section question">
                     <div className="section-title">

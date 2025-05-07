@@ -76,14 +76,12 @@ const Header = () => {
     function doSwitchDashoard() {
         // console.log('here');
         setSwitching(true);
-        setTimeout(() => setMenuExpanded(false), 400);
+        // setTimeout(() => setMenuExpanded(false), 400);
         setTimeout(() => {
             dispatch(switchDashboard(dashboard === "user" ? "admin" : "user"));
             setSwitching(false);
-        }, 1000);
+        }, 600);
     }
-
-
 
     return (
         <div className="dag-container01 header">
@@ -125,8 +123,8 @@ const Header = () => {
                             :
                             <li>
                                 <div className="login-register">
-                                    {pathname === "/login" || <Link to="/login">Login</Link>}
-                                    {pathname === "/register" || <Link to="/register">Register</Link>}
+                                    {pathname === "/login" || <Link to="/login" onClick={() => setMenuExpanded(false)}>Login</Link>}
+                                    {pathname === "/register" || <Link to="/register" onClick={() => setMenuExpanded(false)}>Register</Link>}
                                 </div>
                             </li>
                         }
