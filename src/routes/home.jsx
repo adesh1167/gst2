@@ -6,10 +6,11 @@ import { login } from '../slices/userReducer';
 import Fixtures from '../components/fixtures';
 import { Link, Outlet } from 'react-router';
 import { selectNetTotal } from '../slices/netTotal';
+import Loading from '../components/loading';
 
-const Home = ({hasOutlet = true, hasFixtures = true}) => {
-    const { isAuthenticated, user } = useSelector(state => state.user);
-    const {country, factor} = useSelector(state => state.data);
+const Home = () => {
+    const { isAuthenticated, user, userQueried } = useSelector(state => state.user);
+    const { country, factor } = useSelector(state => state.data);
     const cart = useSelector(state => state.cart);
     const netTotal = useSelector(selectNetTotal);
     const dispatch = useDispatch();
@@ -39,7 +40,21 @@ const Home = ({hasOutlet = true, hasFixtures = true}) => {
                             </div>
                         </div>
                     </div>
-                    {hasFixtures && <Fixtures />}
+                    {userQueried ?
+                        <Fixtures />
+                        :
+                        <div className='dag-container07'>
+                            <div className='dag-container08'/>
+                            <div className='dag-container09'>
+                                <div className='dag-container10'>
+                                    <div className="main-loading">
+                                        <Loading />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <Link className="dag-container18" to="/cart">
                         <div className="items-count" id="itemsCountCont">
                             <span> {cart.quantity}</span>
@@ -58,7 +73,7 @@ const Home = ({hasOutlet = true, hasFixtures = true}) => {
                     </Link>
                 </div>
             </main>
-            {hasOutlet && <Outlet />}
+            {<Outlet />}
         </>
 
     )

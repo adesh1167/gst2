@@ -18,8 +18,13 @@ function applyCoupon() {
         data: { coupon: id },
         method: "POST"
     }).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.status == "success") {
+            dispatch(showToast({
+                message: res.data.data.coupon + " applied",
+                type: "success",
+                duration: 3000
+            }))
             dispatch(setCoupon(res.data.data));
         } else {
             dispatch(setCoupon(null))

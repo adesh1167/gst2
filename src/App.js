@@ -6,7 +6,7 @@ import axios from 'axios';
 import { baseApiUrl } from './data/url';
 import { setCountry, setFactor, setFirstLoad } from './slices/dataReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from './slices/userReducer';
+import { login, setUserQueried } from './slices/userReducer';
 import Toasts from './components/toasts';
 import { showToast } from './slices/toastsReducer';
 import AdminRoutes from './routes/adminRoutes';
@@ -61,6 +61,7 @@ function App() {
       if (res.data.status === "loggedin") {
         dispatch(login(res.data.data));
       }
+      dispatch(setUserQueried(true));
     }).catch((err) => {
       dispatch(showToast({
         message: "An error occurred, reload page",

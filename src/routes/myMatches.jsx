@@ -62,7 +62,15 @@ const MyMatches = () => {
                     fetchMyMatches();
                 }
             } else {
-                fetchMyMatches();
+                if(matchesLoaded){
+                    if(navType !== "PUSH"){
+                        setLoading(false);
+                    } else{
+                        fetchMyMatches();
+                    }
+                } else{
+                    fetchMyMatches();
+                }
             }
         }
         if (!firstLoad) setFirstLoad(true);

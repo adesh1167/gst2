@@ -80,6 +80,8 @@ const Cart = () => {
         })
     }
 
+    const couponActive = (coupon && cartObj.quantity) && (!coupon?.min_matches || (coupon?.min_matches && coupon?.min_matches <= cartObj.quantity));
+
     // console.log("Coupon: ", couponText, cartObj.quantity, coupon?.min_matches && coupon.min_matches > cartObj.quantity)
 
     return (
@@ -156,10 +158,13 @@ const Cart = () => {
                                 <span>TOTAL</span>
                                 <span>
                                     {" "}
-                                    <span id="cartCheckoutPriceCont">{country} {formatNumber(total * factor)}</span>
+                                    <span id="cartCheckoutPriceCont" style={{
+                                        textDecoration: couponActive ? "line-through" : "none",
+                                        color: couponActive ? "#777" : "black"
+                                    }}>{country} {formatNumber(total * factor)}</span>
                                 </span>
                             </div>
-                            {coupon &&
+                            {(coupon && cartObj.quantity > 0) &&
                                 (coupon?.min_matches && coupon.min_matches > cartObj.quantity ?
                                     <div>Coupon <span style={{ fontWeight: 'bold' }}>{coupon.coupon}</span> only applies on {coupon.min_matches} or more matches</div>
                                     :

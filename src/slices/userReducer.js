@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const localDashboard = localStorage.getItem('dashboard');
 
 const initialState = {
+    userQueried: false,
     isAuthenticated: false,
     user: null,
     isAdmin: false,
@@ -28,9 +29,12 @@ const userSlice = createSlice({
                 state.dashboard = action.payload;
                 localStorage.setItem('dashboard', action.payload);
             }
+        },
+        setUserQueried: (state) => {
+            state.userQueried = true;
         }
     }
 })
 
-export const { login, logout, switchDashboard } = userSlice.actions;
+export const { login, logout, switchDashboard, setUserQueried } = userSlice.actions;
 export default userSlice.reducer;

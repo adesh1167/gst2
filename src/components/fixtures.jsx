@@ -37,7 +37,15 @@ const Fixtures = () => {
         fetchFixtures();
       }
     } else{
-      fetchFixtures();
+      if(fixturesLoaded){
+        if(navType !== "PUSH"){
+          setLoading(false);
+        } else{
+          fetchFixtures();
+        }
+      } else{
+        fetchFixtures();
+      }
     }
 
     if(!firstLoad) setFirstLoad(true);
