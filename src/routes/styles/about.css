@@ -95,8 +95,9 @@
     padding: 20px;
   }
 
-  .footer-text{
+  .about-footer-text{
     margin-top: 10px;
+    margin-bottom: 5px;
     font-size: 14px;
   }
   @media only screen and (min-width: 479px){

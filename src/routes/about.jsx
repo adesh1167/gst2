@@ -50,7 +50,7 @@ const About = () => {
                             </p>
                             <p>
                                 The model has come a long way since its first prediction in December
-                                2021 and it's still learning. With an average accuracy of over 92%,
+                                2021 and it is still learning. With an average accuracy of over 92%,
                                 it is now fully ready for publlic use.
                             </p>
                         </div>
@@ -73,17 +73,17 @@ const About = () => {
                 <div className="details-group">
                     <div className="details-section">
                         <div className="section-title">
-                            <h3>It's For The Masses</h3>
+                            <h3>It is For The Masses</h3>
                         </div>
                         <div className="section-body">
                             <p>
                                 The demography of bet players is dominated by a population with low
                                 income and limited resources. Even though the cost and expertise of
-                                Artificial Intelligence is on the high, we've found a nuetral ground
+                                Artificial Intelligence is on the high, we've found a neutral ground
                                 between cost and affordability.{" "}
                             </p>
                             <p>
-                                By patnering with investors, we've been able to keep the prices
+                                By partnering with investors, we have been able to keep the prices
                                 extremely low.
                             </p>
                         </div>
