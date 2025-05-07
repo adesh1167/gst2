@@ -1,5 +1,5 @@
 .upload-matches{
-    background-color: #fff;
+    background-color: #fdfdee;
     padding-top: 90px;
     min-height: 100vh;
     min-height: 100dvh;
@@ -8,7 +8,7 @@
 }
 
 .upload-matches input:focus{
-    outline: none;
+    outline: 2px #000 solid;
 }
 
 .upload-matches-search{
@@ -59,9 +59,12 @@
 
 .fetch-options-row-item{
     margin: 5px;
-    border: 2px black solid;
-    border-radius: 40px;
-    padding: 5px 10px;
+    /* border: 2px black solid; */
+    background-color: #820;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 10px;
     flex: 1 1 auto;
     text-align: center;
     white-space: nowrap;
@@ -99,7 +102,7 @@
 .fetch-options-row-button{
     padding: 8px 20px;
     border-radius: 10px;
-    background-color: #000;
+    background-color: #820;
     color: #fff;
     margin-left: 2px;
     margin-right: 3px;
@@ -114,7 +117,7 @@
 .upload-matches-head-text{
     text-align: center;
     font-weight: bold;
-
+    font-size: 18px;
 }
 
 .upload-matches-loading{
@@ -140,7 +143,8 @@
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background: linear-gradient(to left, #eee, #fee);
+    /* background: linear-gradient(to left, #eee, #fee); */
+    background-color: #fff;
 }
 
 .upload-matches-item.added{
@@ -180,7 +184,7 @@ margin-bottom: 5px;
     align-self: stretch;
     display: flex;
     align-items: center;
-    background-color: #090;
+    background-color: #000;
     color: #fff;
     padding: 5px 8px;
     border-radius: 10px;
@@ -190,7 +194,7 @@ margin-bottom: 5px;
 }
 
 .upload-matches-item.added .upload-matches-item-button{
-    background-color: #900;
+    background-color: #c00;
 }
 
 .upload-matches-footer{
@@ -205,11 +209,12 @@ margin-bottom: 5px;
 }
 
 .upload-matches-footer-button{
-    background-color: #090;
+    background-color: #060;
     color: #fff;
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: bold;
+    box-shadow: 0 0 5px 0 #000a;
 }
 
 .uplaod-matches-footer-scroll{
@@ -220,8 +225,8 @@ margin-bottom: 5px;
     align-items: center;
     width: 40px;
     height: 40px;
+    /* background-color: #820; */
     background-color: #000;
-    /* background-color: #090; */
     border-radius: 50px;
 }
 

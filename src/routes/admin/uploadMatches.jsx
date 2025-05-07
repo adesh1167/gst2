@@ -1,4 +1,4 @@
-import { use, useEffect, useMemo, useState } from 'react'
+import { use, useEffect, useMemo, useRef, useState } from 'react'
 import Header from '../../components/header';
 import './styles/uploadMatches.css';
 import { DateTime } from 'luxon';
@@ -19,6 +19,7 @@ const UploadMatches = () => {
   const [uploading, setUploading] = useState(false);
   const [customDate, setCustomDate] = useState(DateTime.now().toFormat("yyyy-MM-dd"));
   const [titleDate, setTitleDate] = useState(null);
+  const searchRef = useRef(null);
 
   const filteredMatches = useMemo(() =>
     matches.filter(match => search === "" || (match.teams.home.name + match.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1)
@@ -156,10 +157,13 @@ const UploadMatches = () => {
     <div className='upload-matches'>
       <Header />
       <div className='upload-matches-search'>
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Matches...' />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" onClick={() => setSearch("")}>
+        <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Matches...' />
+        {search.length > 0 && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" onClick={() => {
+          setSearch("");
+          searchRef.current.focus();
+        }}>
           <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-        </svg>
+        </svg>}
 
       </div>
       <div className='fetch-options'>
@@ -187,7 +191,7 @@ const UploadMatches = () => {
       <div className='upload-matches-head'>
         <div className='upload-matches-head-text'>
           {titleDate ?
-            <span>Results for {titleDate} Matches ({matches.length})</span>
+            <span>Matches for {titleDate} {loading || `(${matches.length})`}</span>
             :
             <span>Select a date to fetch matches</span>
           }

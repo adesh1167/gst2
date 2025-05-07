@@ -122,7 +122,7 @@ body {
 }
 
 .header li a {
-  padding: 10px 8px;
+  padding: 10px 0px 10px 8px;
   /* border: 2px red solid; */
   display: block;
 }
@@ -140,8 +140,8 @@ body {
 }
 
 .header li a.active span {
-  background-color: #000;
-  border-radius: 20px;
+  background: #000;
+  border-radius: 20px 0 0 20px;
   color: #fff;
   font-weight: bold;
 }
@@ -183,6 +183,7 @@ body {
   right: 0;
   color: #000;
   z-index: +1;
+  max-width: 400px;
 }
 
 .menu-blank-space{
@@ -205,10 +206,9 @@ body {
 }
 
 .header .menu-content {
-  height: 100vh;
+  height: 100%;
   position: absolute;
   width: 100%;
-  max-width: 400px;
   transition: width 0.3s ease-out;
   top: 0px;
   right: 0;
@@ -308,6 +308,7 @@ body {
 
 .profile-details-wrapper{
   display: inline-flex;
+  position: relative;
 }
 
 .user-name{
@@ -315,6 +316,22 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block !important;
+  text-transform: capitalize;
+}
+
+.user-email{
+  position: absolute;
+  top: 30px;
+  font-weight: 400;
+  font-size: 12px;
+  height: 0;
+  transition: 0.3s linear all;
+  overflow: hidden;
+  color: #777;
+}
+
+.user-name:hover ~ .user-email{
+  height: 18px;
 }
 
 .menu-admin-indicator{

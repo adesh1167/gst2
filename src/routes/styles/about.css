@@ -7,19 +7,19 @@
   }
 
   .about-details{
-    background: white;
-    padding-top: 20px;
+    background-color: #fdfdee;
+    padding-top: 50px;
   }
 
   .details-section{
-    flex-direction: ;
+    /* flex-direction: ; */
     align-items: center;
     margin: 10px 0;
     padding: 20px;
   }
 
   .question{
-    background-image: linear-gradient( to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.8)), url(./../../assets/question-mark2.png);
+    background-image: linear-gradient( to bottom, #fdfdeedd , #fdfdee99), url(./../../assets/question-mark2.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

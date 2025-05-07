@@ -327,6 +327,7 @@
   flex-shrink: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
 .dag-container15 {
@@ -346,6 +347,7 @@
   flex-shrink: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .dag-image3 {
