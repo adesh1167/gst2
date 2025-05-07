@@ -73,7 +73,7 @@ const About = () => {
                 <div className="details-group">
                     <div className="details-section">
                         <div className="section-title">
-                            <h3>It is For The Masses</h3>
+                            <h3>It Is For The Masses</h3>
                         </div>
                         <div className="section-body">
                             <p>
