@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router';
+import { Routes, Route, useNavigate, useLocation } from 'react-router';
 import './App.css';
 import UserRoutes from './routes/userRoutes';
 import { useEffect } from 'react';
@@ -16,6 +16,7 @@ import Login from './routes/login';
 import Register from './routes/register';
 import About from './routes/about';
 import { setMatchesLoaded, setMyMatches } from './slices/myMatchesReducer';
+import Welcome from './components/welcome';
 
 axios.defaults.withCredentials = true;
 
@@ -24,6 +25,8 @@ function App() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { user, isAdmin, dashboard } = useSelector((state) => state.user);
+  const { tAndCAccepted } = useSelector((state) => state.data);
+  const { pathname } = useLocation()
 
   useEffect(() => {
     // console.log(cart)
@@ -72,7 +75,7 @@ function App() {
 
 
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="*" element={
           isAdmin && dashboard === "admin" ?
@@ -85,8 +88,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      {(!tAndCAccepted && pathname != "/about") && <Welcome />}
       <Toasts />
-    </Router>
+    </>
   );
 }
 

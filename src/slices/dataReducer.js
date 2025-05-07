@@ -1,11 +1,14 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+const localTAndCAccepted = localStorage.getItem("tAndCAccepted");
+
 const initialState = {
     factor: 0,
     country: null,
     firstLoad: false,
     coupon: null,
+    tAndCAccepted:  localTAndCAccepted ? true : false
 }
 
 const dataReducer = createSlice({
@@ -24,8 +27,12 @@ const dataReducer = createSlice({
         setFirstLoad: (state, action) =>{
             state.firstLoad = action.payload;
         },
+        setTAndCAccepted: (state, action) =>{
+            state.tAndCAccepted = action.payload;
+            localStorage.setItem("tAndCAccepted", true);
+        }
     }
 })
 
-export const { setFactor, setCountry, setCoupon, setFirstLoad } = dataReducer.actions;
+export const { setFactor, setCountry, setCoupon, setFirstLoad, setTAndCAccepted } = dataReducer.actions;
 export default dataReducer.reducer;
