@@ -37,7 +37,7 @@ function App() {
   }, [cart])
 
   useEffect(() => {
-    dispatch(setFixturesLoaded(false));
+    dispatch(setFixturesLoaded(false)); 
   }, [dashboard])
 
   useEffect(() => {
