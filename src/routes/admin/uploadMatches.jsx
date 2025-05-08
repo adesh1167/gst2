@@ -19,13 +19,22 @@ const UploadMatches = () => {
   const [uploading, setUploading] = useState(false);
   const [customDate, setCustomDate] = useState(DateTime.now().toFormat("yyyy-MM-dd"));
   const [titleDate, setTitleDate] = useState(null);
+  const [filtered, setFiltered] = useState(false);
   const searchRef = useRef(null);
 
-  const filteredMatches = useMemo(() =>
-    matches.filter(match => search === "" || (match.teams.home.name + match.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1)
-    , [matches, search]);
+  // const filteredMatches = useMemo(() =>
+  //   matches.filter(match => search === "" || (match.teams.home.name + match.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1)
+  //   , [matches, search]);
 
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    setSearch('');
+  }, [filtered])
+
+  useEffect(()=>{
+    setFiltered(false);
+  }, [matches])
 
   function fetchMatches(offset, typeOffset = true) {
     let date;
@@ -128,6 +137,10 @@ const UploadMatches = () => {
       return;
     }
 
+    if(!window.confirm(`Upload ${Object.values(selectedMatches).length} matches?`)){
+      return;
+    }
+
     setUploading(true);
     axios({
       url: `${baseApiUrl}/add-matches.php`,
@@ -191,7 +204,10 @@ const UploadMatches = () => {
       <div className='upload-matches-head'>
         <div className='upload-matches-head-text'>
           {titleDate ?
-            <span>Matches for {titleDate} {loading || `(${matches.length})`}</span>
+            (filtered ?
+              <span>Selected Matches ({Object.values(selectedMatches).length})</span>
+              :
+            <span>Matches for {titleDate} {loading || `(${matches.length})`}</span>)
             :
             <span>Select a date to fetch matches</span>
           }
@@ -205,19 +221,53 @@ const UploadMatches = () => {
         </div>
         :
         <div className='upload-matches-body'>
-          {filteredMatches.map((item, index) =>
-            <UploadMatchesItem key={item.fixture.id} item={item} addMatchhToList={addMatchhToList} selectedMatches={selectedMatches} />
-          )}
+          {filtered ?
+
+            Object.values(selectedMatches).map((item, index) =>
+              <UploadMatchesItem
+                key={item.data.fixture.id}
+                shown={true}
+                item={item.data}
+                addMatchhToList={addMatchhToList}
+                selectedMatches={selectedMatches}
+                prevData={{
+                  selection: item.selection,
+                  odds: item.odds,
+                  price: item.price,
+                  type: item.type
+                }}
+              />
+            )
+            :
+            matches.map((item, index) =>
+              <UploadMatchesItem
+                key={item.fixture.id}
+                shown={search === "" || (item.teams.home.name + item.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1}
+                item={item}
+                addMatchhToList={addMatchhToList}
+                selectedMatches={selectedMatches}
+                prevData={selectedMatches[item.fixture.id] ? {
+                  selection: selectedMatches[item.fixture.id].selection,
+                  odds: selectedMatches[item.fixture.id].odds,
+                  price: selectedMatches[item.fixture.id].price,
+                  type: selectedMatches[item.fixture.id].type
+                } : null}
+              />
+            )
+          }
         </div>
 
       }
       <div className='upload-matches-footer'>
-        <div className='uplaod-matches-footer-filter'></div>
+        <div className='uplaod-matches-footer-filter' style={{opacity: filtered ? 1 : 0.5}} onClick={()=>setFiltered(prev=>!prev)}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
+          </svg>
+        </div>
         <div className='uplaod-matches-footer-scroll' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
             <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l256 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
           </svg>
-
         </div>
         <div className='upload-matches-footer-button' onClick={uploading ? null : uploadMatches}>
           <LoadingButton color='#fff' width={25} height={25} loading={uploading}>
@@ -229,9 +279,9 @@ const UploadMatches = () => {
   )
 }
 
-const UploadMatchesItem = ({ item, addMatchhToList, selectedMatches }) => {
+const UploadMatchesItem = ({ prevData, item, addMatchhToList, selectedMatches, shown }) => {
 
-  const [data, setData] = useState({
+  const [data, setData] = useState(prevData || {
     type: "1 X 2",
     selection: "",
     odds: "",
@@ -263,7 +313,7 @@ const UploadMatchesItem = ({ item, addMatchhToList, selectedMatches }) => {
   }, [selectedMatches])
 
   return (
-    <div className={`upload-matches-item ${added ? "added" : ""} `}>
+    <div className={`upload-matches-item ${added ? "added" : ""} `} style={{ display: shown ? "" : "none" }}>
       <div className='upload-matches-item-column'>
         <div className='upload-matches-item-row top'>
           {item.teams.home.name} v {item.teams.away.name}
