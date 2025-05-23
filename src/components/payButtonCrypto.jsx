@@ -202,7 +202,7 @@ const PayButtonCrypto = ({ emptyCart, emptyCartFlag }) => {
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY WIH CRYPTO
+                        PAY WIH CRYPTO ${netTotal * 0.1}
                     </LoadingButton>
                 </span>
             </span>
