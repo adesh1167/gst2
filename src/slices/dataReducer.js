@@ -5,7 +5,9 @@ const localTAndCAccepted = localStorage.getItem("tAndCAccepted");
 
 const initialState = {
     factor: 0,
+    continent: null,
     country: null,
+    currency: null,
     firstLoad: false,
     coupon: null,
     tAndCAccepted:  localTAndCAccepted ? true : false
@@ -18,8 +20,14 @@ const dataReducer = createSlice({
         setFactor: (state, action) => {
             state.factor = action.payload;
         },
+        setContinent: (state, action) => {
+            state.continent = action.payload;
+        },
         setCountry: (state, action) => {
             state.country = action.payload;
+        },
+        setCurrency: (state, action) => {
+            state.currency = action.payload;
         },
         setCoupon: (state, action) =>{
             state.coupon = action.payload;
@@ -34,5 +42,5 @@ const dataReducer = createSlice({
     }
 })
 
-export const { setFactor, setCountry, setCoupon, setFirstLoad, setTAndCAccepted } = dataReducer.actions;
+export const { setFactor, setCountry, setCurrency, setContinent, setCoupon, setFirstLoad, setTAndCAccepted } = dataReducer.actions;
 export default dataReducer.reducer;

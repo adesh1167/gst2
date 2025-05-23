@@ -12,11 +12,12 @@ import PayButton from '../components/payButton';
 import LoadingButton from '../components/loadingButton';
 import { showToast } from '../slices/toastsReducer';
 import Tick from '../components/tick';
+import PayButtonCrypto from '../components/payButtonCrypto';
 
 const Cart = () => {
 
     const cartObj = useSelector(state => state.cart);
-    const { factor, country } = useSelector(state => state.data)
+    const { factor, country, continent } = useSelector(state => state.data)
     const cart = cartObj.items;
     const netTotal = useSelector(selectNetTotal) * factor;
     const { quantity, total } = cartObj;
@@ -24,6 +25,8 @@ const Cart = () => {
     const [couponText, setCouponText] = useState("");
     const [couponLoading, setCouponLoading] = useState(false);
     const [emptyCartFlag, setEmptyCartFlag] = useState(false);
+
+    const isAfrica = continent === "AF";
 
     // console.log("netTotal: ", netTotal);
     const dispatch = useDispatch();
@@ -195,14 +198,17 @@ const Cart = () => {
                         </div>
                     </div>
                     {cart.length > 0 ?
-                        <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />
+                        <div className='cart-buttons'>
+                            {isAfrica && <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
+                            <PayButtonCrypto emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} sty/>
+                        </div>
                         :
                         <div className='cart-add-item-message'>
                             Add at least one match to cart to checkout
                         </div>
                     }
                     <Link className="change-country" id="changeCountry" to="/change-country">
-                        Change Country
+                        Change {isAfrica ? "Country" : "Currency"}
                     </Link>
                 </div>
             </div>

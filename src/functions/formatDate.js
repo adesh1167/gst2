@@ -7,6 +7,9 @@ const timeZones = {
     ZMW: "+2",
     ZAR: "+2",
     UGX: "+3",
+    USD: "-5",
+    EUR: "+1",
+    GBP: "+0",
 }
 
 export function getFixtureDate(dateString, zone = "GHS"){

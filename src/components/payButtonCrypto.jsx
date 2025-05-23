@@ -11,7 +11,7 @@ import { showToast } from '../slices/toastsReducer';
 import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 
-const PayButton = ({ emptyCart, emptyCartFlag }) => {
+const PayButtonCrypto = ({ emptyCart, emptyCartFlag }) => {
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
@@ -40,33 +40,14 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                 // console.log(data);
                 setLoading(true);
                 axios({
-                    url: `${baseApiUrl}/initiate-payment.php`,
+                    url: `${baseApiUrl}/initiate-payment-crypto.php`,
                     method: "POST",
                     data: data,
                 }).then((res) => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
-                            const conf = {
-                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
-                                // public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
-                                tx_ref: res.data.data.tx_ref,
-                                amount: res.data.data.price,
-                                currency: res.data.data.currency,
-                                payment_options: 'mobilemoneyghana, mobilemoneyzambia, mobilemoneyuganda, mpesa, banktransfer, card, 1voucher',
-                                customer: {
-                                    email: user.email,
-                                    phone_number: null,
-                                    name: `${user.first_name} ${user.last_name}`,
-                                },
-                                customizations: {
-                                    title: 'GST',
-                                    description: 'Pay For Matches',
-                                    logo: 'https://globalsportstrade.vercel.app/assets/logo.png',
-                                },
-                            }
-                            // console.log("Config: ", conf);
-                            setConfig(conf);
+                            window.location.href = res.data.payment_link;
                         }
                     } else if (res.data.status === "update") {
                         dispatch(showToast({
@@ -217,11 +198,11 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
     // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
     return (
-        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment}>
+        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment} style={{backgroundColor: "#000"}}>
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY {country} {formatNumber(netTotal * factor)}
+                        PAY WIH CRYPTO
                     </LoadingButton>
                 </span>
             </span>
@@ -229,4 +210,4 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
     )
 }
 
-export default PayButton;
+export default PayButtonCrypto;

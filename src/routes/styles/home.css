@@ -1106,6 +1106,13 @@
   justify-content: space-between;
 }
 
+.cart-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .cart-container42 {
   gap1: 10px;
   flex: 0 0 auto;
@@ -1121,6 +1128,7 @@
   justify-content: space-evenly;
   background-color: green;
   padding: 20px;
+  margin: 10px;
 }
 
 .cart-add-item-message{

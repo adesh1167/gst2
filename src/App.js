@@ -4,7 +4,7 @@ import UserRoutes from './routes/userRoutes';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { baseApiUrl } from './data/url';
-import { setCountry, setFactor, setFirstLoad } from './slices/dataReducer';
+import { setContinent, setCountry, setCurrency, setFactor, setFirstLoad } from './slices/dataReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setUserQueried } from './slices/userReducer';
 import Toasts from './components/toasts';
@@ -50,14 +50,21 @@ function App() {
   useEffect(() => {
     axios({
       method: "POST",
-      url: `${baseApiUrl}/get-profile.php`,
+      url: `${baseApiUrl}/profile.php`,
 
     }).then((res) => {
-      // console.log(res.data)
+      console.log(res.data)
       dispatch(setFirstLoad(true));
+      if (res.data.continent) {
+        dispatch(setContinent(res.data.continent))
+      }
       if (res.data.country) {
         dispatch(setCountry(res.data.country));
         dispatch(setFactor(res.data.factor));
+      }
+      if(res.data.currency){
+        dispatch(setCurrency(res.data.currency));
+        dispatch(setCountry(res.data.currency));
       }
       if (res.data.status === "loggedin") {
         dispatch(login(res.data.data));
