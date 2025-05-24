@@ -53,14 +53,14 @@ function App() {
       url: `${baseApiUrl}/profile.php`,
 
     }).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(setFirstLoad(true));
       if (res.data.continent) {
         dispatch(setContinent(res.data.continent))
+        dispatch(setFactor(res.data.factor));
       }
       if (res.data.country) {
         dispatch(setCountry(res.data.country));
-        dispatch(setFactor(res.data.factor));
       }
       if(res.data.currency){
         dispatch(setCurrency(res.data.currency));

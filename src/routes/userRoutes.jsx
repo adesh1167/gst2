@@ -23,7 +23,7 @@ const UserRoutes = ({ }) => {
 
     const isCountrySelected = (isAfrica && country) || (!isAfrica && currency);
 
-    console.log(pathname, firstLoad, continent, country, currency);
+    // console.log(pathname, firstLoad, continent, country, currency);
 
     return (
         <>

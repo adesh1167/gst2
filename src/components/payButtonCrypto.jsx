@@ -11,7 +11,7 @@ import { showToast } from '../slices/toastsReducer';
 import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 
-const PayButtonCrypto = ({ emptyCart, emptyCartFlag }) => {
+const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency  }) => {
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
@@ -202,7 +202,7 @@ const PayButtonCrypto = ({ emptyCart, emptyCartFlag }) => {
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY WIH CRYPTO ${netTotal * 0.1}
+                        PAY WIH CRYPTO {defaultCurrency ? `$${netTotal * 0.1}` : `${country}${netTotal * factor}`}
                     </LoadingButton>
                 </span>
             </span>

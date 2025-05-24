@@ -39,7 +39,7 @@ const SelectCurrency = ({ exitable = true }) => {
                 currency: localCountry
             },
         }).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(showToast({
                     message: "Currency Updated",
@@ -50,6 +50,7 @@ const SelectCurrency = ({ exitable = true }) => {
                     navigate(-1);
                 }
                 dispatch(setCurrency(res.data.currency))
+                dispatch(setCountry(res.data.currency))
                 dispatch(setFactor(res.data.factor))
             } else{
                 dispatch(showToast({

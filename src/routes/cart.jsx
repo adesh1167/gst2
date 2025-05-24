@@ -200,7 +200,7 @@ const Cart = () => {
                     {cart.length > 0 ?
                         <div className='cart-buttons'>
                             {isAfrica && <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
-                            <PayButtonCrypto emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} sty/>
+                            <PayButtonCrypto emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} defaultCurrency={isAfrica ? "$" : null}/>
                         </div>
                         :
                         <div className='cart-add-item-message'>

@@ -221,7 +221,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY {country} {formatNumber(netTotal * factor)}
+                        PAY {country}{formatNumber(netTotal * factor)}
                     </LoadingButton>
                 </span>
             </span>
