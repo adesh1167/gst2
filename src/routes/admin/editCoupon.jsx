@@ -55,7 +55,7 @@ const EditCoupon = ({edit = true}) => {
             percent_off: formData.discount,
             min_matches: formData.minimum,
             min_matches_message: formData.minMessage,
-            expires: DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss')
+            expires: DateTime.fromISO(formData.expiration).isValid ? DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss') : formData.expiration
         }
 
         setLoading({...loading, update: true});
@@ -106,7 +106,7 @@ const EditCoupon = ({edit = true}) => {
             percent_off: formData.discount,
             min_matches: formData.minimum,
             min_matches_message: formData.minMessage,
-            expires: DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss')
+            expires: DateTime.fromISO(formData.expiration).isValid ? DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss') : formData.expiration
         }
 
         setLoading({...loading, add: true});
@@ -155,7 +155,7 @@ const EditCoupon = ({edit = true}) => {
         .finally(()=>setLoading({...loading, add: false}));
     }
 
-    // console.log(formData.expiration, DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss'))
+    // console.log(formData.expiration, DateTime.fromISO(formData.expiration).isValid ? DateTime.fromISO(formData.expiration).toFormat('yyyy-MM-dd HH:mm:ss') : formData.expiration)
 
 
     return (
