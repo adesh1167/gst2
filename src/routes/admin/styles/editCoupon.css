@@ -1,0 +1,82 @@
+
+/* EDIT */
+
+.edit-coupon {
+    position: fixed;
+    padding: 20px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #0008;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.edit-coupon form {
+    background-color: #fdfdee;
+    padding: 0 20px 20px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 #0005;
+}
+
+.edit-coupon h2 {
+    text-align: center;
+}
+
+.edit-coupon .form-group {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.edit-coupon label {
+    width: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.edit-coupon input {
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px #888 solid;
+    /* width: calc(100% - 110px); */
+    width: 180px;
+    max-width: 300px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.edit-coupon input[type="datetime-local"] {
+    background-color: white;
+    color: black;
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 16px;
+    min-height: 33px;
+}
+
+.edit-coupon input:focus {
+    outline: none;
+    border: 2px #000 solid;
+}
+
+
+.edit-coupon .buttons {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.edit-coupon .button {
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 10px 0;
+}

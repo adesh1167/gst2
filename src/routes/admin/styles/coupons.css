@@ -1,0 +1,113 @@
+.coupons-page {
+    background-color: #fdfdee;
+    padding: 20px 0;
+    padding-bottom: 80px;
+    padding-top: 60px;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.coupons-page h2{
+    text-align: center;
+}
+
+.coupons-page .error{
+    text-align: center;
+    padding: 20px;
+    color: red;
+    font-size: 18px;
+}
+
+.coupon-loading{
+    /* display: inline; */
+    width: 50px;
+    margin: 0 auto;
+}
+
+.coupons-list {
+
+}
+
+.coupons-list-item {
+    /* border: 1px #888 solid; */
+    padding: 0 20px 10px 20px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px #8883 solid;
+    position: relative;
+}
+
+.coupons-list-item:last-child {
+    border-bottom: none;
+}
+
+.coupons-list-item h3 {
+    margin-bottom: 10px;
+}
+
+.coupon-details-row {}
+
+.coupon-details-row span {
+    padding-right: 20px;
+}
+
+.coupons-list-item-actions {
+    padding-top: 10px;
+    /* border: 2px red solid; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+    /* z-index: +1; */
+}
+
+.coupons-list-item-actions button {
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 5px 0;
+    /* float: right; */
+    /* height: 100%; */
+}
+
+.coupons-list-item-actions button.danger {
+    background-color: #800;
+}
+
+.coupons-list-actions{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    /* z-index: +1; */
+}
+
+.coupon-add-button{
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 0 10px 0 #0009;
+    border: 2px #fff solid;
+}
+
+.coupon-deleting-overlay{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    background-color: #800;
+    transition: 0.4s linear all;
+    /* z-index: -1; */
+}
