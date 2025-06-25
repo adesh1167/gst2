@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import "./styles/header.css";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { baseApiUrl } from "../data/url";
@@ -22,6 +22,8 @@ const Header = () => {
 
     const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
 
+    const skip = useRef(false);
+
 
     useEffect(() => {
         if (menuExpanded) {
@@ -33,6 +35,10 @@ const Header = () => {
 
     useEffect(() => {
         if (menuExpanded) {
+            if(skip.current){
+                skip.current = false
+                return;
+            }
             setMenuExpanded(false);
         }
     }, [pathname])
@@ -82,6 +88,7 @@ const Header = () => {
     function doSwitchDashoard() {
         // console.log('here');
         setSwitching(true);
+        skip.current = true;
         // setTimeout(() => setMenuExpanded(false), 400);
         setTimeout(() => {
             dispatch(switchDashboard(dashboard === "user" ? "admin" : "user"));
