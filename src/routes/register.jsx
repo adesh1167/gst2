@@ -55,7 +55,7 @@ const Register = () => {
         } catch (err) {
             console.error(err);
             dispatch(showToast({
-                message: "Unable to logout, check network and try again",
+                message: "Unable to register, check network and try again",
                 type: "error",
                 duration: 3000
             }))

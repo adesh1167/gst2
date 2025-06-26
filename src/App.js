@@ -37,7 +37,7 @@ function App() {
   }, [cart])
 
   useEffect(() => {
-    dispatch(setFixturesLoaded(false)); 
+    dispatch(setFixturesLoaded(false));
   }, [dashboard])
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function App() {
       if (res.data.country) {
         dispatch(setCountry(res.data.country));
       }
-      if(res.data.currency){
+      if (res.data.currency) {
         dispatch(setCurrency(res.data.currency));
         dispatch(setCountry(res.data.currency));
       }
@@ -81,8 +81,8 @@ function App() {
     })
   }, [])
 
-  useEffect(()=>{
-    if(pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (!tAndCAccepted && pathname !== "/about")){
+  useEffect(() => {
+    if (pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (!tAndCAccepted && pathname !== "/about")) {
       document.body.classList.add("scroll-lock");
     } else {
       document.body.classList.remove("scroll-lock");
@@ -93,7 +93,7 @@ function App() {
 
   return (
     <>
-    <Header/>
+      <Header />
       <Routes>
         <Route path="*" element={
           isAdmin && dashboard === "admin" ?
