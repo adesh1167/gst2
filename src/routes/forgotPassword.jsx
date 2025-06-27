@@ -13,10 +13,11 @@ import { showToast } from '../slices/toastsReducer';
 import PasswordEye from '../components/passwordEye';
 import LoadingButton from '../components/loadingButton';
 
-const Login = () => {
+const ForgotPassword = () => {
 
     const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [success, setSuccess] = useState(false);
     const formRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -32,20 +33,26 @@ const Login = () => {
 
         try {
             const res = await axios({
-                url: `${baseApiUrl}/login.php`,
+                url: `${baseApiUrl}/reset-password.php`,
                 method: 'POST',
                 data: new FormData(formRef.current),
             });
 
-            // console.log(res.data);
+            console.log(res.data);
             if (res.data.status === "success") {
-                dispatch(login(res.data.data));
-                navigate('/', { replace: true });
-            } else {
+                // dispatch(login(res.data.data));
+                // navigate('/', { replace: true });
                 dispatch(showToast({
                     message: res.data.message,
+                    type: "success",
+                    duration: 4000
+                }))
+                setSuccess(true);
+            } else {
+                dispatch(showToast({
+                    message: res.data.message || "Unknown error occurred",
                     type: "error",
-                    duration: 3000
+                    duration: 5000
                 }))
             }
         } catch (err) {
@@ -53,7 +60,7 @@ const Login = () => {
             dispatch(showToast({
                 message: "Unable to login, check network and try again",
                 type: "error",
-                duration: 3000
+                duration: 5000
             }))
         } finally {
             // console.log('finally');
@@ -68,7 +75,7 @@ const Login = () => {
             <div className="register-container04">
                 <form ref={formRef} className="register-form" id="loginForm" noValidate="novalidate" onSubmit={handleSubmit(doLogin)}>
                     <div className="register-container05">
-                        <div className="register-title">LOGIN</div>
+                        <div className="register-title">FORGOT PASSWORD</div>
                         <div className="register-container09">
                             <input
                                 id="email"
@@ -88,46 +95,17 @@ const Login = () => {
                                 <span className="validation-message">{errors.email.message}</span>
                             }
                         </div>
-                        <div className="register-container09">
-                            <div className='password-input-wrapper'>
+                        {success ?
+                            <p className="register-success-text">Check your email for the reset link</p>
+                            :
 
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type={passwordVisible ? "text" : "password"}
-                                    placeholder="Password"
-                                    className="register-textinput input valid"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                        minLength: {
-                                            value: 6,
-                                            message: "At least 6 characters"
-                                        }
-                                    })}
-                                />
-                                <PasswordEye toggleVisible={setPasswordVisible} visible={passwordVisible} />
-                            </div>
-                            {errors.password &&
-                                <span className="validation-message">{errors.password.message}</span>
-                            }
-                        </div>
-                        <div className="plus18">
-                            <input
-                                name="remember-me"
-                                type="checkbox"
-                                id='remember-me'
-                                style={{ marginRight: 10 }}
-                                defaultChecked=""
-                            />
-                            <label htmlFor='remember-me'>Keep Me Logged In</label>
-                        </div>
-                        <button
-                            type="submit"
-                            className="register-button button"
-                            id="submitButton"
-                        >
-                            <LoadingButton loading={loading} color='#fff'>Login</LoadingButton>
-                        </button>
+                            <button
+                                type="submit"
+                                className="register-button button"
+                                id="submitButton"
+                            >
+                                <LoadingButton loading={loading} color='#fff'>Reset Password</LoadingButton>
+                            </button>}
                         <div className="register-container13">
                             <span>
                                 Don't have an account yet?{" "}
@@ -138,9 +116,9 @@ const Login = () => {
                         </div>
                         <div className="register-container13">
                             <span>
-                                Forgot Password?{" "}
-                                <Link to="/forgot-password" className="register-link link">
-                                    Reset
+                                Remember Password?{" "}
+                                <Link to="/login" className="register-link link">
+                                    Login
                                 </Link>
                             </span>
                         </div>
@@ -151,4 +129,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default ForgotPassword;

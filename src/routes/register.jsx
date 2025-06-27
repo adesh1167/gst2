@@ -204,6 +204,14 @@ const Register = () => {
                                 </Link>
                             </span>
                         </div>
+                        <div className="register-container13">
+                            <span>
+                                Forgot Password?{" "}
+                                <Link to="/forgot-password" className="register-link link">
+                                    Reset
+                                </Link>
+                            </span>
+                        </div>
                     </div>
                 </form>
             </div>

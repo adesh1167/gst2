@@ -18,6 +18,8 @@ import About from './routes/about';
 import { setMatchesLoaded, setMyMatches } from './slices/myMatchesReducer';
 import Welcome from './components/welcome';
 import Header from './components/header';
+import ForgotPassword from './routes/forgotPassword';
+import ResetPassword from './routes/resetPassword';
 
 axios.defaults.withCredentials = true;
 
@@ -104,6 +106,8 @@ function App() {
         <Route path="/my-matches" element={<MyMatches />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/about" element={<About />} />
       </Routes>
       {(!tAndCAccepted && pathname != "/about") && <Welcome />}
