@@ -99,7 +99,7 @@ const Cart = () => {
                 <div className="cart-container01">
                     <div className="cart-container02">
                         <div className="cart-container03">
-                            <span className="cart-text">SELECTED MATCHES</span>
+                            <span className="cart-text">SELECTED MATCHES {cart.length > 0 && `(${cart.length})`}</span>
                             <span className="cart-description">
                                 Selections of matches you pay for will be seen under{" "}
                                 <Link className="cart-link" to="/my-matches">
