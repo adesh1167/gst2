@@ -20,6 +20,7 @@ import Welcome from './components/welcome';
 import Header from './components/header';
 import ForgotPassword from './routes/forgotPassword';
 import ResetPassword from './routes/resetPassword';
+import ManualPayment from './components/manualPayment';
 
 axios.defaults.withCredentials = true;
 

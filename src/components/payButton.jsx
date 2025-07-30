@@ -10,6 +10,7 @@ import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3';
 import { showToast } from '../slices/toastsReducer';
 import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
+import { unavailablePayments } from '../data/unavaiablePayments';
 
 const PayButton = ({ emptyCart, emptyCartFlag }) => {
 
@@ -114,10 +115,20 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
 
 
     function checkOut() {
-        setConfig(null);
         setLoading(true);
         // navCounter.current = 0;
         setIsPaymentOpen(true);
+        if (unavailablePayments.includes(country)) {
+            setTimeout(() => {
+                setLoading(false)
+                closePaymentModal();
+                setIsPaymentOpen(false);
+                // document.querySelectorAll('iframe[src*="flutterwave"]').forEach(el => el.remove());
+                navigate("/cart/manual-payment");
+            }, [100]);
+            return;
+        }
+
         handlePayment({
             callback: (response) => {
                 // console.log(response);
@@ -146,6 +157,8 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                 // navigate(-navCounter.current);
             }
         })
+
+        setConfig(null);
     }
 
     function confirmPayment(tx_ref) {
@@ -171,7 +184,7 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                     }))
                 }, 1000);
                 if (emptyCartFlag) emptyCart();
-                setTimeout(()=>navigate("/my-matches"), 3000);
+                setTimeout(() => navigate("/my-matches"), 3000);
             } else if (res.data.status === "update") {
 
             } else if (res.data.status === "login") {
