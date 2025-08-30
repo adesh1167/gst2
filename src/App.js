@@ -1,7 +1,7 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router';
+import { Routes, Route, useNavigate, useLocation, redirect } from 'react-router';
 import './App.css';
 import UserRoutes from './routes/userRoutes';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { baseApiUrl } from './data/url';
 import { setContinent, setCountry, setCurrency, setFactor, setFirstLoad } from './slices/dataReducer';
@@ -32,6 +32,8 @@ function App() {
   const { tAndCAccepted } = useSelector((state) => state.data);
   const { pathname } = useLocation()
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     // console.log(cart)
     if (cart) {
@@ -51,37 +53,77 @@ function App() {
   }, [user])
 
   useEffect(() => {
-    axios({
-      method: "POST",
-      url: `${baseApiUrl}/profile.php`,
 
-    }).then((res) => {
-      // console.log(res.data)
-      dispatch(setFirstLoad(true));
-      if (res.data.continent) {
-        dispatch(setContinent(res.data.continent))
-        dispatch(setFactor(res.data.factor));
-      }
-      if (res.data.country) {
-        dispatch(setCountry(res.data.country));
-      }
-      if (res.data.currency) {
-        dispatch(setCurrency(res.data.currency));
-        dispatch(setCountry(res.data.currency));
-      }
-      if (res.data.status === "loggedin") {
-        dispatch(login(res.data.data));
-      }
-      dispatch(setUserQueried(true));
-    }).catch((err) => {
-      dispatch(showToast({
-        message: "An error occurred, reload page",
-        type: "error",
-        duration: 3000
-      }))
-      console.log(err)
-    }).finally(() => {
-    })
+    async function init(){
+
+        if(pathname === "/persisted"){
+          try {
+            const res = await axios({
+              method: "POST",
+              url: `${baseApiUrl}/profile.php`,
+            })
+
+            console.log(res.data);
+            if(!res.data.persisted){
+              sessionStorage.setItem("incognito", true);
+              navigate("/", {replace: true});
+            }
+            
+          } catch (error) {
+            console.log(error);
+            dispatch(showToast({
+                message: "Network error occured, reload",
+                type: "error",
+                duration: 3000
+            }))
+          }
+        }
+
+        axios({
+          method: "POST",
+          url: `${baseApiUrl}/profile.php`,
+    
+        }).then((res) => {
+          console.log(res.data)
+          if(!res.data.persisted){
+            const isIncognito = sessionStorage.getItem("incognito", true);
+            if(!isIncognito){
+              setTimeout(()=>{
+                console.log("redirecting");
+                window.location.href = `${baseApiUrl}/ping.php?redirect=${window.location.origin}/persisted`;
+              }, 1)
+              return;
+            }
+          }
+          dispatch(setFirstLoad(true));
+    
+          if (res.data.continent) {
+            dispatch(setContinent(res.data.continent))
+            dispatch(setFactor(res.data.factor));
+          }
+          if (res.data.country) {
+            dispatch(setCountry(res.data.country));
+          }
+          if (res.data.currency) {
+            dispatch(setCurrency(res.data.currency));
+            dispatch(setCountry(res.data.currency));
+          }
+          if (res.data.status === "loggedin") {
+            dispatch(login(res.data.data));
+          }
+          dispatch(setUserQueried(true));
+        }).catch((err) => {
+          dispatch(showToast({
+            message: "An error occurred, reload page",
+            type: "error",
+            duration: 3000
+          }))
+          console.log(err)
+        }).finally(() => {
+        })
+    }
+
+    init();
   }, [])
 
   useEffect(() => {
