@@ -202,7 +202,7 @@ const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency  }) => {
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY WIH CRYPTO {defaultCurrency ? `$${netTotal * 0.1}` : `${country}${formatNumber(netTotal * factor)}`}
+                        PAY WIH CRYPTO {defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country}${formatNumber(netTotal * factor)}`}
                     </LoadingButton>
                 </span>
             </span>
