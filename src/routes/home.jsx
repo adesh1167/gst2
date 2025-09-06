@@ -7,6 +7,7 @@ import Fixtures from '../components/fixtures';
 import { Link, Outlet } from 'react-router';
 import { selectNetTotal } from '../slices/netTotal';
 import Loading from '../components/loading';
+import formatNumber from '../functions/formatNumber';
 
 const Home = () => {
     const { isAuthenticated, user, userQueried } = useSelector(state => state.user);
@@ -62,7 +63,7 @@ const Home = () => {
                         <div className="dag-container19">
                             <span className="dag-text26" id="checkoutCurrencyCont" />
                             <span className="dag-text27" id="checkoutPriceCont">
-                                {country} {netTotal * factor}
+                                {country} {formatNumber(netTotal * factor)}
                             </span>
                         </div>
                         <div className="dag-container20">
