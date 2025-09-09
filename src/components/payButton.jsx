@@ -49,7 +49,8 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
-                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
+                                // public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
+                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer',
                                 // public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
                                 tx_ref: res.data.data.tx_ref,
                                 amount: res.data.data.price,

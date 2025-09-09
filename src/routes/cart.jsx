@@ -117,7 +117,7 @@ const Cart = () => {
                                     <CartItem key={item.id} item={item} />
                                 )
                                 :
-                                <span class="empty-cart-message">
+                                <span className="empty-cart-message">
                                     <img src='/assets/empty-cart.png' />
                                     Cart is empty
                                 </span>
