@@ -29,12 +29,29 @@ code {
   display: none;
 }
 
+@media only screen and (min-width: 660px) {
+  .dag-country {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .my-matches-container04 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .my-matches-description {
+    margin-top: 20px !important;
+    margin-bottom: 30px !important;
+  }
+}
+
 @media only screen and (min-width: 960px) {
   .menu-blank-space {
     display: none !important;
   }
 
-  .header .navicon{
+  .header .navicon {
     display: none !important;
   }
 
@@ -42,22 +59,23 @@ code {
     display: block;
     width: 400px;
     left: 0;
+    border-right: 2px #000 solid;
   }
-  
-  .header{
+
+  .header {
     z-index: +2 !important;
   }
-  
-  .static .menu-content{
+
+  .static .menu-content {
     padding-top: 50px;
-    /* box-shadow: none; */
+    box-shadow: none;
   }
 
   .header .menu {
     display: none;
   }
 
-  .menu li a{
+  .menu li a {
     padding: 10px 8px 10px 0 !important;
   }
 
@@ -65,33 +83,39 @@ code {
     border-radius: 0 20px 20px 0 !important;
   }
 
-  main{
+  main {
     padding-left: 400px;
   }
 
-  .dag-container04{
+  .dag-container04 {
     /* top: 20px !important; */
     left: 400px;
     width: calc(100% - 400px) !important;
     /* z-index: +3; */
   }
-  
-  .dag-container07{
+
+  .dag-container07 {
     /* z-index: +3; */
     /* position: relative; */
   }
 
-  .dag-country{
+  .dag-country {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
 
-  .fixed{
+  .fixed {
     width: calc(100% - 400px) !important;
+    height: calc(100% - 50px) !important;
   }
 
-  .my-matches-container04{
+  .my-matches-container04 {
     padding-left: 20px !important;
     padding-right: 20px !important;
+  }
+
+  .my-matches-description {
+    margin-top: 20px !important;
+    margin-bottom: 30px !important;
   }
 }
