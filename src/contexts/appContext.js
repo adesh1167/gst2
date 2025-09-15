@@ -1,18 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import React from 'react'
 
 const AuthContext = createContext();
 
-const AppContext = () => {
+const AppContext = ({children}) => {
 
-    const [cart, setCart] = useState([]);
-    const [currency, setCurrency] = useState("GHS");
+    const [menuExpanded, setMenuExpanded] = useState(false);
+
+    const value = useMemo(() => ({
+        menuExpanded, setMenuExpanded
+    }), [menuExpanded])
 
     return (
-        <AuthContext.Provider value={{
-            cart, setCart
-        }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     )

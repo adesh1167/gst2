@@ -22,6 +22,8 @@ import ForgotPassword from './routes/forgotPassword';
 import ResetPassword from './routes/resetPassword';
 import ManualPayment from './components/manualPayment';
 import Menu from './components/menu';
+import useWindowSize from './functions/useWindowSize';
+import AppContext, { useApp } from './contexts/appContext';
 
 axios.defaults.withCredentials = true;
 
@@ -32,6 +34,9 @@ function App() {
   const { user, isAdmin, dashboard } = useSelector((state) => state.user);
   const { tAndCAccepted } = useSelector((state) => state.data);
   const { pathname } = useLocation()
+
+  const { width, height } = useWindowSize();
+  const {menuExpanded} = useApp();
 
   const navigate = useNavigate();
 
@@ -128,17 +133,18 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (!tAndCAccepted && pathname !== "/about")) {
+    if (pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (menuExpanded && width <= 960) || (!tAndCAccepted && pathname !== "/about")) {
       document.body.classList.add("scroll-lock");
     } else {
       document.body.classList.remove("scroll-lock");
     }
-  }, [pathname, tAndCAccepted])
+  }, [pathname, tAndCAccepted, menuExpanded, width, height])
 
 
 
   return (
     <>
+
       <Header />
       <div className='static'>
         <Menu />

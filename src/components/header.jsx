@@ -1,22 +1,18 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import "./styles/header.css";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { baseApiUrl } from "../data/url";
-import Loading from "./loading";
-import { logout, switchDashboard } from "../slices/userReducer";
-import { showToast } from "../slices/toastsReducer";
-import Switch from "./switch";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSelector } from "react-redux";
 import Menu from "./menu";
+import { useApp } from "../contexts/appContext";
 
 const Header = () => {
 
-    const [menuExpanded, setMenuExpanded] = useState(false);
     const [menuClosed, setMenuClosed] = useState(false);
     const { isAdmin, dashboard } = useSelector(state => state.user);
     const { pathname } = useLocation();
+
+    const {menuExpanded, setMenuExpanded} = useApp();
 
     const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
 
@@ -66,7 +62,6 @@ const Header = () => {
                 </div>
                 <div className="menu-blank-space" onClick={toggleMenuExpanded} />
                 <Menu
-                    isAdminShown={isAdminShown}
                     setMenuExpanded={setMenuExpanded}
                     setSkip={setSkip}
                 />
