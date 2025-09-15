@@ -107,7 +107,7 @@ const ResetPassword = () => {
     return (
         <div className="register-container">
             {/* <Header /> */}
-            <div className="register-container04">
+            <div className="register-container04 fixed">
                 {data.first_name && <div className='reset-user'>{data.first_name} {data.last_name}</div>}
                 {firstLoading ?
                     <div className='register-center-container'>

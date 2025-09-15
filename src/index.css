@@ -12,15 +12,86 @@ code {
     monospace;
 }
 
-.scroll-lock{
+.scroll-lock {
   overflow: hidden;
 }
 
-.back-drop{
+.back-drop {
   position: absolute;
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
   z-index: -1;
+}
+
+.static .menu {
+  display: none;
+}
+
+@media only screen and (min-width: 960px) {
+  .menu-blank-space {
+    display: none !important;
+  }
+
+  .header .navicon{
+    display: none !important;
+  }
+
+  .static .menu {
+    display: block;
+    width: 400px;
+    left: 0;
+  }
+  
+  .header{
+    z-index: +2 !important;
+  }
+  
+  .static .menu-content{
+    padding-top: 50px;
+    /* box-shadow: none; */
+  }
+
+  .header .menu {
+    display: none;
+  }
+
+  .menu li a{
+    padding: 10px 8px 10px 0 !important;
+  }
+
+  .menu li a.active span {
+    border-radius: 0 20px 20px 0 !important;
+  }
+
+  main{
+    padding-left: 400px;
+  }
+
+  .dag-container04{
+    /* top: 20px !important; */
+    left: 400px;
+    width: calc(100% - 400px) !important;
+    /* z-index: +3; */
+  }
+  
+  .dag-container07{
+    /* z-index: +3; */
+    /* position: relative; */
+  }
+
+  .dag-country{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .fixed{
+    width: calc(100% - 400px) !important;
+  }
+
+  .my-matches-container04{
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }

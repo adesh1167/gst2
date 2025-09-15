@@ -78,7 +78,7 @@ const SelectCurrency = ({ exitable = true }) => {
     // console.log(localCountry);
 
     return (
-        <div className="choose-country-window">
+        <div className="choose-country-window fixed">
             <div className="blank-space" onClick={exitable ? () => navigate(-1) : () => { }} />
             <div className="choose-country-body">
                 <div className="choose-country-title">Select Your Currency</div>

@@ -71,7 +71,7 @@ const Register = () => {
     return (
         <div className="register-container">
             {/* <Header /> */}
-            <div className="register-container04">
+            <div className="register-container04 fixed">
                 <form ref={formRef} className="register-form" id="registerForm" onSubmit={handleSubmit(doRegister)} noValidate>
                     <div className="register-container05">
                         <div className="register-title">REGISTER</div>

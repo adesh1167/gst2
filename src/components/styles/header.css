@@ -109,25 +109,25 @@ body {
     width: 28px;
   } */
 
-.header ul {
+.menu ul {
   margin: 0;
   padding: 0;
   list-style: none;
   overflow: hidden;
 }
 
-.header li{
+.menu li{
   /* padding: 10px 0; */
   /* border: 2px blue solid; */
 }
 
-.header li a {
+.menu li a {
   padding: 10px 0px 10px 8px;
   /* border: 2px red solid; */
   display: block;
 }
 
-.header li > span, .header li a span {
+.menu li > span, .menu li a span {
   padding: 10px 12px;
   /* border-top: 1px solid rgba(255,255,255,0.2); */
   color: #000;
@@ -139,32 +139,32 @@ body {
   /* text-align: center; */
 }
 
-.header li a.active span {
+.menu li a.active span {
   background: #000;
   border-radius: 20px 0 0 20px;
   color: #fff;
   font-weight: bold;
 }
 
-.header li span svg{
+.menu li span svg{
   width: 20px;
   margin-right: 10px;
   fill: #000;
   stroke: #000;
 }
 
-.header li a.active span svg{
+.menu li a.active span svg{
   fill: #fff;
   stroke: #fff;
 }
 
-.header li a:hover,
-.header .menu-btn:hover {
+.menu li a:hover,
+.menu-btn:hover {
   /* background-color: #f4f4f4; */
 }
 
 
-.header .logo {
+.menu .logo {
   display: block;
   float: left;
   font-size: 2em;
@@ -174,7 +174,7 @@ body {
 
 /* menu */
 
-.header .menu {
+.menu {
   height: 100%;
   position: fixed;
   width: 0%;
@@ -200,12 +200,12 @@ body {
   display: block;
 }
 
-.header .menu-container.expanded .menu {
+.menu-container.expanded .menu {
   width: 75%;
   overflow-y: scroll;
 }
 
-.header .menu-content {
+.menu-content {
   height: 100%;
   position: absolute;
   width: 100%;
@@ -225,7 +225,7 @@ body {
   margin-right: 10px;
 }
 
-.header .menu-icon {
+.menu-icon {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -237,7 +237,7 @@ body {
   transition: 0.2s all linear;
 }
 
-.header .menu-icon .navicon {
+.menu-icon .navicon {
   background: white;
   display: block;
   height: 2px;
@@ -246,8 +246,8 @@ body {
   width: 18px;
 }
 
-.header .menu-icon .navicon:before,
-.header .menu-icon .navicon:after {
+.menu-icon .navicon:before,
+.menu-icon .navicon:after {
   background: white;
   content: '';
   display: block;
@@ -257,41 +257,41 @@ body {
   width: 100%;
 }
 
-.header .menu-icon .navicon:before {
+.menu-icon .navicon:before {
   top: 5px;
 }
 
-.header .menu-icon .navicon:after {
+.menu-icon .navicon:after {
   top: -5px;
 }
 
-.header .menu-btn {
+.menu-btn {
   display: none;
 }
 
-.header .menu-container.expanded .menu-icon {
+.menu-container.expanded .menu-icon {
   top: 5px;
 }
 
-.header .menu-container.expanded .menu-icon .navicon {
+.menu-container.expanded .menu-icon .navicon {
   background: transparent;
 }
 
-.header .menu-container.expanded .menu-icon .navicon:before,
-.header .menu-container.expanded .menu-icon .navicon:after {
+.menu-container.expanded .menu-icon .navicon:before,
+.menu-container.expanded .menu-icon .navicon:after {
   background: black;
 }
 
-.header .menu-container.expanded .menu-icon .navicon:before {
+.menu-container.expanded .menu-icon .navicon:before {
   transform: rotate(-45deg);
 }
 
-.header .menu-container.expanded .menu-icon .navicon:after {
+.menu-container.expanded .menu-icon .navicon:after {
   transform: rotate(45deg);
 }
 
-.header .menu-container.expanded .menu-icon:not(.steps) .navicon:before,
-.header .menu-container.expanded .menu-icon:not(.steps) .navicon:after {
+.menu-container.expanded .menu-icon:not(.steps) .navicon:before,
+.menu-container.expanded .menu-icon:not(.steps) .navicon:after {
   top: 0;
 }
 
