@@ -44,6 +44,10 @@ code {
     margin-top: 20px !important;
     margin-bottom: 30px !important;
   }
+
+  .cart-wrapper{
+    padding: 0 20px;
+  }
 }
 
 @media only screen and (min-width: 960px) {
@@ -81,6 +85,7 @@ code {
 
   .menu li a.active span {
     border-radius: 0 20px 20px 0 !important;
+    padding-left: 20px !important;
   }
 
   main {
@@ -118,4 +123,5 @@ code {
     margin-top: 20px !important;
     margin-bottom: 30px !important;
   }
+
 }
