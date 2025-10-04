@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function NeuralBackground({ opacity = 1 }) {
+export default function NeuralBackground({ opacity =  1 }) {
   const canvasRef = useRef(null);
   const prevWidth = useRef(window.innerWidth);
 
@@ -12,7 +12,7 @@ export default function NeuralBackground({ opacity = 1 }) {
     let height = (canvas.height = window.innerHeight);
 
     // Scale point count based on screen area
-    let pointCount = Math.floor((width * height) / 10000); // ~1 point per 25k px²
+    let pointCount = Math.floor((width * height) / 8000); // ~1 point per 25k px²
     let points = createPoints(pointCount);
 
     function createPoints(count) {
@@ -75,7 +75,7 @@ export default function NeuralBackground({ opacity = 1 }) {
         prevWidth.current = window.innerWidth;
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        pointCount = Math.floor((width * height) / 10000);
+        pointCount = Math.floor((width * height) / 8000);
         points = createPoints(pointCount);
       }
     };
