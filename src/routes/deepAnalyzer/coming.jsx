@@ -28,7 +28,7 @@ const AnalyzerComing = () => {
         >
             {/* Home Screen Section */}
             <header className="text-center mb-12 h-[calc(100vh-160px)] flex flex-col justify-around relative gap-8">
-                <NeuralBackground opacity={0.4}/>
+                <NeuralBackground opacity={0.6}/>
                 <div>
                     <h1 className="text-5xl max-xs:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-red-400 mb-6 relative">
                         DEEP ANALYZER
