@@ -46,9 +46,9 @@ const SelectCurrency = ({ exitable = true }) => {
                     type: "success",
                     duration: 2000
                 }))
-                if (pathname !== "/country") {
+                // if (pathname !== "/country") {
                     navigate(-1);
-                }
+                // }
                 dispatch(setCurrency(res.data.currency))
                 dispatch(setCountry(res.data.currency))
                 dispatch(setFactor(res.data.factor))

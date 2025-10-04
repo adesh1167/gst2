@@ -44,7 +44,7 @@ const Header = () => {
         skip.current = val;
     }, [])
 
-    console.log("IsAdminShown: ", isAdminShown);
+    // console.log("IsAdminShown: ", isAdminShown);
 
     return (
         <div className="dag-container01 header">

@@ -13,6 +13,7 @@ import LoadingButton from '../components/loadingButton';
 import { showToast } from '../slices/toastsReducer';
 import Tick from '../components/tick';
 import PayButtonCrypto from '../components/payButtonCrypto';
+import PayForMatchesWrapper from '../components/payForMatchesWrapper';
 
 const Cart = () => {
 
@@ -200,7 +201,7 @@ const Cart = () => {
                         </div>
                         {cart.length > 0 ?
                             <div className='cart-buttons'>
-                                {isAfrica && <PayButton emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
+                                {isAfrica && <PayForMatchesWrapper emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
                                 <PayButtonCrypto emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} defaultCurrency={isAfrica ? "$" : null} />
                             </div>
                             :

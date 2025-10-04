@@ -8,6 +8,8 @@ import store from './store';
 import { BrowserRouter as Router } from 'react-router';
 import AppContext from './contexts/appContext';
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>

@@ -12,7 +12,7 @@ import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 import { unavailablePayments } from '../data/unavaiablePayments';
 
-const PayButton = ({ emptyCart, emptyCartFlag }) => {
+const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {} }) => {
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
@@ -231,11 +231,15 @@ const PayButton = ({ emptyCart, emptyCartFlag }) => {
     // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
     return (
-        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment}>
+        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
+            backgroundColor: background,
+            color: color,
+            ...style
+        }}>
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY {country}{formatNumber(netTotal * factor)}
+                        {title} {showPrice && `${country}${formatNumber(netTotal * factor)}`}
                     </LoadingButton>
                 </span>
             </span>

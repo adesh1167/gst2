@@ -75,10 +75,10 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
             setSwitching(false);
         }, 600);
     }
-    console.log("IsAdminShown: ", isAdminShown);
+    // console.log("IsAdminShown: ", isAdminShown);
 
     return (
-        <div className="menu">
+        <div className={`menu`}>
             <ul className="menu-content">
                 {isAuthenticated ?
                     <>
@@ -115,6 +115,408 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
                                 <path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
                             </svg>
                             Home</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className={({ isActive }) => isActive ? "active" : ""} to="/deep-analyzer">
+                        <span
+                            // style={{
+                            //     background: `linear-gradient(
+                            //     to right,
+                            //     red,
+                            //     orange,
+                            //     blue,
+                            //     purple,
+                            //     green,
+                            //     black,
+                            //     red
+                            // )`,
+                            //     WebkitBackgroundClip: "text", /* For WebKit browsers (Chrome, Safari) */
+                            //     backgroundClip: "text",
+                            //     color: "transparent",
+                            // }}
+                            className="new"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                version="1.1"
+                                viewBox="0 0 256 256"
+                                xmlSpace="preserve"
+                            >
+                                <g
+                                    style={{
+                                        stroke: "none",
+                                        strokeWidth: 0,
+                                        strokeDasharray: "none",
+                                        strokeLinecap: "butt",
+                                        strokeLinejoin: "miter",
+                                        strokeMiterlimit: 10,
+                                        fill: "none",
+                                        fillRule: "nonzero",
+                                        opacity: 1
+                                    }}
+                                    transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)"
+                                >
+                                    <path
+                                        d="M 45 18.719 c -1.657 0 -3 -1.343 -3 -3 V 3 c 0 -1.657 1.343 -3 3 -3 c 1.657 0 3 1.343 3 3 v 12.719 C 48 17.376 46.657 18.719 45 18.719 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 55.267 18.719 c -1.657 0 -3 -1.343 -3 -3 V 3 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 v 12.719 C 58.267 17.376 56.924 18.719 55.267 18.719 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 65.533 18.719 c -1.657 0 -3 -1.343 -3 -3 V 3 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 v 12.719 C 68.533 17.376 67.19 18.719 65.533 18.719 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 34.733 18.719 c -1.657 0 -3 -1.343 -3 -3 V 3 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 v 12.719 C 37.733 17.376 36.39 18.719 34.733 18.719 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 24.467 18.719 c -1.657 0 -3 -1.343 -3 -3 V 3 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 v 12.719 C 27.467 17.376 26.124 18.719 24.467 18.719 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 45 90 c -1.657 0 -3 -1.343 -3 -3 V 74.281 c 0 -1.657 1.343 -3 3 -3 c 1.657 0 3 1.343 3 3 V 87 C 48 88.657 46.657 90 45 90 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 55.267 90 c -1.657 0 -3 -1.343 -3 -3 V 74.281 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 V 87 C 58.267 88.657 56.924 90 55.267 90 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 65.533 90 c -1.657 0 -3 -1.343 -3 -3 V 74.281 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 V 87 C 68.533 88.657 67.19 90 65.533 90 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 34.733 90 c -1.657 0 -3 -1.343 -3 -3 V 74.281 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 V 87 C 37.733 88.657 36.39 90 34.733 90 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 24.467 90 c -1.657 0 -3 -1.343 -3 -3 V 74.281 c 0 -1.657 1.343 -3 3 -3 s 3 1.343 3 3 V 87 C 27.467 88.657 26.124 90 24.467 90 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 15.719 48 H 3 c -1.657 0 -3 -1.343 -3 -3 c 0 -1.657 1.343 -3 3 -3 h 12.719 c 1.657 0 3 1.343 3 3 C 18.719 46.657 17.376 48 15.719 48 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 15.719 37.733 H 3 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 12.719 c 1.657 0 3 1.343 3 3 S 17.376 37.733 15.719 37.733 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 15.719 27.467 H 3 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 12.719 c 1.657 0 3 1.343 3 3 S 17.376 27.467 15.719 27.467 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 15.719 58.267 H 3 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 12.719 c 1.657 0 3 1.343 3 3 S 17.376 58.267 15.719 58.267 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 15.719 68.533 H 3 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 12.719 c 1.657 0 3 1.343 3 3 S 17.376 68.533 15.719 68.533 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 87 48 H 74.281 c -1.657 0 -3 -1.343 -3 -3 c 0 -1.657 1.343 -3 3 -3 H 87 c 1.657 0 3 1.343 3 3 C 90 46.657 88.657 48 87 48 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 87 37.733 H 74.281 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 H 87 c 1.657 0 3 1.343 3 3 S 88.657 37.733 87 37.733 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 87 27.467 H 74.281 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 H 87 c 1.657 0 3 1.343 3 3 S 88.657 27.467 87 27.467 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 87 58.267 H 74.281 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 H 87 c 1.657 0 3 1.343 3 3 S 88.657 58.267 87 58.267 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 87 68.533 H 74.281 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 H 87 c 1.657 0 3 1.343 3 3 S 88.657 68.533 87 68.533 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 74.281 12.719 H 15.719 c -1.657 0 -3 1.343 -3 3 v 58.562 c 0 1.657 1.343 3 3 3 h 58.562 c 1.657 0 3 -1.343 3 -3 V 15.719 C 77.281 14.063 75.938 12.719 74.281 12.719 z M 48.111 59.046 c 0 1.657 -1.343 3 -3 3 c -1.657 0 -3 -1.343 -3 -3 v -9.752 H 30.675 v 9.752 c 0 1.657 -1.343 3 -3 3 s -3 -1.343 -3 -3 V 39.672 c 0 -6.461 5.257 -11.718 11.718 -11.718 s 11.718 5.257 11.718 11.718 V 59.046 z M 62.325 56.046 c 1.657 0 3 1.343 3 3 s -1.343 3 -3 3 h -7.697 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 0.849 V 33.954 h -0.849 c -1.657 0 -3 -1.343 -3 -3 s 1.343 -3 3 -3 h 7.697 c 1.657 0 3 1.343 3 3 s -1.343 3 -3 3 h -0.849 v 22.092 H 62.325 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                    <path
+                                        d="M 36.393 33.954 c -3.153 0 -5.718 2.565 -5.718 5.718 v 3.622 h 11.437 v -3.622 C 42.111 36.52 39.546 33.954 36.393 33.954 z"
+                                        style={{
+                                            stroke: "none",
+                                            strokeWidth: 1,
+                                            strokeDasharray: "none",
+                                            strokeLinecap: "butt",
+                                            strokeLinejoin: "miter",
+                                            strokeMiterlimit: 10,
+                                            fill: "#a0a",
+                                            fillRule: "nonzero",
+                                            opacity: 1
+                                        }}
+                                        transform=" matrix(1 0 0 1 0 0) "
+                                        strokeLinecap="round"
+                                    />
+                                </g>
+                            </svg>
+                            <span className="rainbow-text">
+                                DEEP ANALYZER
+                            </span>
+
+                        </span>
                     </NavLink>
                 </li>
                 <li>
@@ -199,7 +601,7 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
                 }
 
             </ul>
-        </div>
+        </div >
     )
 }
 

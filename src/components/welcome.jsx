@@ -8,7 +8,7 @@ const Welcome = () => {
     const dispatch = useDispatch();
 
     return (
-        <div className="notice-window">
+        <div className="notice-window fixed">
             <div className="blank-space " />
             <div className="notice-body">
                 <div className="notice-title">Getting Started</div>

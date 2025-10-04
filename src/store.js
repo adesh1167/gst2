@@ -5,6 +5,7 @@ import cartReducer from "./slices/cartReducer";
 import dataReducer from "./slices/dataReducer";
 import myMatchesReducer from "./slices/myMatchesReducer";
 import toastsReducer from "./slices/toastsReducer";
+import subscriptionsReducer from "./slices/subscriptionsReducer";
 
 
 const store = configureStore({
@@ -14,7 +15,8 @@ const store = configureStore({
         cart: cartReducer,
         data: dataReducer,
         myMatches: myMatchesReducer,
-        toasts: toastsReducer
+        toasts: toastsReducer,
+        subscriptions: subscriptionsReducer
     }
 })
 

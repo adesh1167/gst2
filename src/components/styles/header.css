@@ -127,7 +127,7 @@ body {
   display: block;
 }
 
-.menu li > span, .menu li a span {
+.menu li > span, .menu li a>span {
   padding: 10px 12px;
   /* border-top: 1px solid rgba(255,255,255,0.2); */
   color: #000;
@@ -137,14 +137,23 @@ body {
   width: 100%;
   white-space: nowrap;
   /* text-align: center; */
+  transition: 0.2s linear color, 0.2s linear background, 0.2s linear padding;
 }
 
-.menu li a.active span {
+.ai .menu li > span, .ai .menu li a>span {
+    color: #fdfdee;
+}
+
+.menu li a.active>span {
   background: #000;
   border-radius: 20px 0 0 20px;
   color: #fff;
   font-weight: bold;
-  transition: 0.2s linear padding;
+}
+
+.ai .menu li a.active>span {
+  background: #fdfdee;
+  color: #000;
 }
 
 .menu li span svg{
@@ -152,11 +161,21 @@ body {
   margin-right: 10px;
   fill: #000;
   stroke: #000;
+  transition: 0.2s linear fill, 0.2s linear stroke;
+}
+
+.ai .menu li span svg{
+    fill: #fdfdee;
 }
 
 .menu li a.active span svg{
   fill: #fff;
   stroke: #fff;
+}
+
+.ai .menu li a.active span svg{
+  fill: #000;
+  stroke: #000;
 }
 
 .menu li a:hover,
@@ -217,8 +236,13 @@ body {
   color: #000;
   z-index: +1;
   box-shadow: 0 0 10px 0 #0006;
+  transition: 0.2s linear background;
 }
 
+.ai .menu-content{
+  background-color: #000;
+  color: #fdfdee;
+}
 /* menu icon */
 
 .admin-dashboard-indicator{
@@ -276,6 +300,11 @@ body {
 
 .menu-container.expanded .menu-icon .navicon {
   background: transparent;
+}
+
+.ai .menu-container.expanded .menu-icon .navicon:before,
+.ai .menu-container.expanded .menu-icon .navicon:after {
+  background: #fff;
 }
 
 .menu-container.expanded .menu-icon .navicon:before,
@@ -400,7 +429,7 @@ body {
   padding: 13px 40px 10px 12px;
 }
 
-.login-register a{
+.login-register a, .login-register-button{
   border-radius: 20px;
   padding: 3px 20px 5px 20px !important;
   border: 2px #000 solid;
@@ -410,6 +439,11 @@ body {
   margin-right: 10px;
   text-align: center;
   font-weight: bold;
+}
+
+.ai .login-register a, .ai .login-register-button{
+  color: #fff;
+  border-color: #fff;
 }
 
 .profile-details a {

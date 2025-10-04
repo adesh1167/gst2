@@ -48,8 +48,8 @@ const AdminRoutes = () => {
             </Routes>
 
             
-            {(firstLoad && !isCountrySelected) && <Navigate to="/country" replace />}
-            {(firstLoad && isCountrySelected && pathname === "/country") && <Navigate to="/" replace />}
+            {/* {(firstLoad && !isCountrySelected) && <Navigate to="/country" replace />}
+            {(firstLoad && isCountrySelected && pathname === "/country") && <Navigate to="/" replace />} */}
         </>
     )
 }

@@ -11,18 +11,19 @@ const methods = {
 
     bank: {
         text1: (data) => <>
-            <p>
+            <p className='my-5'>
                 We understand that payment methods for {data.country} are currently unavailable.
             </p>
-            <p>
+            <p className='my-5'>
                 While we are working to make them available, we've made an alternative.
             </p>
-            To make payment of <b>{data.currency}{data.amount}</b> for the matches you selected:
-            <p />
+            <p className='my-5'>
+                To make payment of <b>{data.currency}{data.amount}</b> for the matches you selected:
+            </p>
         </>,
 
         text2: (data) => <>
-            <p>
+            <p className='my-5'>
                 Make payment to the account details below:
                 <b>
                     <br />
@@ -37,7 +38,7 @@ const methods = {
                     Country: {data.country}
                 </b>
             </p>
-            <p>
+            <p className='my-5'>
                 Send a screenshot of your payment to{" "}
                 <a href="mailto:contact.globalsportstrade@gmail.com">
                     contact.globalsportstrade@gmail.com
@@ -47,18 +48,19 @@ const methods = {
     },
     voucher: {
         text1: (data) => <>
-            <p>
+            <p className='my-5'>
                 We understand that payment methods for {data.country} are currently unavailable.
             </p>
-            <p>
+            <p className='my-5'>
                 While we are working to make them available, we've made an alternative.
             </p>
-            To make payment of <b>{data.currency}{data.amount}</b> for the matches you selected:
-            <p />
+            <p>
+                To make payment of <b>{data.currency}{data.amount}</b> for the matches you selected:
+            </p>
         </>,
 
         text2: (data) => <>
-            <p>
+            <p className='my-5'>
 
                 Buy a Voucher of <b>{data.currency}{data.amount}</b> and send to <a href="mailto:contact.globalsportstrade@gmail.com">
                     contact.globalsportstrade@gmail.com
@@ -99,7 +101,7 @@ const ManualPayment = () => {
     }
 
     return (
-        <div className="notice-window">
+        <div className="notice-window fixed">
             <div onClick={() => navigate(-1)} className="blank-space close-notice" />
             <div className="notice-body">
                 <div className="notice-title">Issues With {countryDetails.name} Payment</div>
@@ -132,7 +134,7 @@ const ManualPayment = () => {
 
                     </div>
                     )}
-                    <p>
+                    <p className='my-5'>
                         An official will confirm your payment within 15 minutes maximum and your
                         dashboard will be updated with the match selections.
                     </p>

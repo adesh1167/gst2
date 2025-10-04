@@ -12,6 +12,7 @@ const SelectCountry = ({ exitable = true }) => {
 
     const [localCountry, setLocalCountry] = useState(null);
     const [loading, setLoading] = useState(false);
+    // const {redirect} = useP
 
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -46,9 +47,9 @@ const SelectCountry = ({ exitable = true }) => {
                     type: "success",
                     duration: 2000
                 }))
-                if (pathname !== "/country") {
+                // if (pathname !== "/country") {
                     navigate(-1);
-                }
+                // }
                 dispatch(setCountry(res.data.country))
                 dispatch(setFactor(res.data.factor))
             }

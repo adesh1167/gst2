@@ -11,7 +11,7 @@ import { showToast } from '../slices/toastsReducer';
 import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 
-const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency  }) => {
+const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency, title = "PAY", showPrice = true, background = "#000", color = "", style = {} }) => {
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
@@ -152,7 +152,7 @@ const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency  }) => {
                     }))
                 }, 1000);
                 if (emptyCartFlag) emptyCart();
-                setTimeout(()=>navigate("/my-matches"), 3000);
+                setTimeout(() => navigate("/my-matches"), 3000);
             } else if (res.data.status === "update") {
 
             } else if (res.data.status === "login") {
@@ -198,11 +198,15 @@ const PayButtonCrypto = ({ emptyCart, emptyCartFlag, defaultCurrency  }) => {
     // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
     return (
-        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment} style={{backgroundColor: "#000"}}>
+        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
+            backgroundColor: background,
+            color: color,
+            ...style
+        }}>
             <span>
                 <span id="paymentPriceCont">
                     <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        PAY WIH CRYPTO {defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country}${formatNumber(netTotal * factor)}`}
+                        {title} {showPrice && (defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country}${formatNumber(netTotal * factor)}`)}
                     </LoadingButton>
                 </span>
             </span>
