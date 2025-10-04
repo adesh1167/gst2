@@ -8,7 +8,7 @@ import formatNumber from '../functions/formatNumber';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { setCoupon } from '../slices/dataReducer';
-import PayButton from '../components/payButton';
+// import PayButton from '../components/payButton';
 import LoadingButton from '../components/loadingButton';
 import { showToast } from '../slices/toastsReducer';
 import Tick from '../components/tick';
@@ -104,7 +104,9 @@ const Cart = () => {
                                 <span className="cart-text">SELECTED MATCHES {cart.length > 0 && `(${cart.length})`}</span>
                                 <span className="cart-description">
                                     Selections of matches you pay for will be seen under{" "}
-                                    <Link className="cart-link" to="/my-matches">
+                                    <Link className="cart-link" to="/my-matches" style={{
+                                        whiteSpace: "nowrap"
+                                    }}>
                                         MY MATCHES
                                     </Link>{" "}
                                 </span>

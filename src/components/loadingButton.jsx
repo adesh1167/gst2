@@ -1,7 +1,7 @@
 import Loading from './loading'
 
 const LoadingButton = ({ children, loading, width = 16, height = 16, color = "#000", style = {}, className }) => {
-    console.log(style);
+    // console.log(style);
     return (
 
         loading ?

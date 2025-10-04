@@ -30,7 +30,8 @@ const FlutterwaveButton = ({
 
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
-    const { user } = useSelector((state) => state.user);
+    const { isAdmin, dashboard, user } = useSelector((state) => state.user);
+    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ const FlutterwaveButton = ({
             method: "POST",
             data: initiatePayload,
         }).then(data => {
-            console.log("data: ", data);
+            // console.log("data: ", data);
             if (data.data?.status === "success") {
                 dispatch(showToast({
                     type: "info",
@@ -57,9 +58,9 @@ const FlutterwaveButton = ({
                 }
 
                 const newConfig = {
-                    // public_key: "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer
+                    public_key: isAdminShown ? "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X" : "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer
                     // public_key: "FLWPUBK_TEST-188405db052e39c446317fc265c0cc97-X", //Ameer
-                    public_key: "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X", //Bam
+                    // public_key: "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X", //Bam
                     // public_key: "FLWPUBK_TEST-7e5e437d158c856bbe2fc2f94ab040c6-X", //HighB
                     // public_key: "FLWPUBK-f2801afdf127dbb02f2adced0d298880-X", //Bam
                     tx_ref: data.data?.data?.tx_ref,
@@ -72,8 +73,8 @@ const FlutterwaveButton = ({
                         name: `${user.first_name} ${user.last_name}`,
                     },
                     meta: {
-                        email: data.email,
-                        fullName: `${user.first_name} ${user.last_name}`,
+                        email: data.data.user.email,
+                        fullName: `${data.data.user.first_name} ${data.data.user.last_name}`,
                     },
                     customizations: {
                         title: "Global Sports Trade",
@@ -82,7 +83,7 @@ const FlutterwaveButton = ({
                     },
                 };
 
-                console.log("Config: ", newConfig);
+                // console.log("Config: ", newConfig);
 
                 setConfig(newConfig)
 
@@ -114,7 +115,7 @@ const FlutterwaveButton = ({
     }
 
 
-    console.log("Config: ", config);
+    // console.log("Config: ", config);
 
     return (
         <>
@@ -145,18 +146,16 @@ const FlutterwaveButton = ({
 const StartPayment = ({ config, setConfig, setLoading, finalCallBack, confirmLink }) => {
 
     const handleFlutterPayment = useFlutterwave(config);
-    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         async function startPayment() {
             if (config) {
                 try {
-                    await handleFlutterPayment({
+                    handleFlutterPayment({
                         callback: (response) => {
-                            console.log("Payment response:", response);
+                            // console.log("Payment response:", response);
                             closePaymentModal(); // close modal programmatically
                             if (response.status == 'successful' || response.status == 'completed') {
                                 confirmPayment(response.tx_ref, config.customer.email);
@@ -184,9 +183,12 @@ const StartPayment = ({ config, setConfig, setLoading, finalCallBack, confirmLin
                                 duration: 4000
                             }))
                             setLoading(false);
-                            setConfig(null);
+                            // setTimeout(() => {
+                                // setConfig(null);
+                            // }, 10000)
+                            // console.log("Payment cancelled");
                         },
-                    }).catch;
+                    });
                 } catch (error) {
                     dispatch(showToast({
                         type: "error",
@@ -210,7 +212,7 @@ const StartPayment = ({ config, setConfig, setLoading, finalCallBack, confirmLin
                 tx_ref
             }
         }).then(res => {
-            console.log("res inside: ", res, res.data);
+            // console.log("res inside: ", res, res.data);
             finalCallBack(res)
             // if (res.status === "success") {
             //     // saveAccessCode(res.accessCode);
