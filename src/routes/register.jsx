@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { showToast } from '../slices/toastsReducer';
 import LoadingButton from '../components/loadingButton';
 import PasswordEye from '../components/passwordEye';
+import Tick from '../components/tick';
 
 const Register = () => {
 
@@ -66,6 +67,7 @@ const Register = () => {
     }
 
     const password = watch("password");
+    const plus18 = watch('plus18', false)
 
 
     return (
@@ -183,8 +185,12 @@ const Register = () => {
                                     required: "Agree that you are 18+",
                                 })}
                                 style={{ marginRight: 10 }}
+                                className='opacity-0 absolute'
                             />
-                            <label htmlFor='pus18'>I am 18+</label>
+                            <label className='flex items-center gap-2' htmlFor='plus18'>
+                                <Tick checked={plus18} color="#fff" />
+                                <span>Keep Me Logged In</span>
+                            </label>
                             {errors.plus18 &&
                                 <div className="validation-message" style={{ width: "100%", textAlign: 'right', flex: "1 1" }}>{errors.plus18.message}</div>
                             }

@@ -8,10 +8,11 @@ import { useDispatch } from 'react-redux';
 import { login } from '../slices/userReducer';
 import { Link, useLocation, useNavigate } from 'react-router';
 import Loading from '../components/loading';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { showToast } from '../slices/toastsReducer';
 import PasswordEye from '../components/passwordEye';
 import LoadingButton from '../components/loadingButton';
+import Tick from '../components/tick';
 
 const Login = () => {
 
@@ -20,7 +21,7 @@ const Login = () => {
     const formRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {state} = useLocation();
+    const { state } = useLocation();
 
     // console.log(state);
 
@@ -43,7 +44,7 @@ const Login = () => {
             // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(login(res.data.data));
-                navigate((state.redirect || '/'), { replace: true });
+                navigate((state?.redirect || '/'), { replace: true });
             } else {
                 dispatch(showToast({
                     message: res.data.message,
@@ -64,6 +65,7 @@ const Login = () => {
         }
     }
 
+    const rememberMe = watch('remember-me', false)
 
     return (
         <div className='register-container'>
@@ -121,8 +123,14 @@ const Login = () => {
                                 id='remember-me'
                                 style={{ marginRight: 10 }}
                                 defaultChecked=""
+                                {...register("remember-me", {
+                                })}
+                                className='opacity-0 absolute'
                             />
-                            <label htmlFor='remember-me'>Keep Me Logged In</label>
+                            <label className='flex items-center gap-2' htmlFor='remember-me'>
+                                <Tick checked={rememberMe} color="#fff" />
+                                <span>Keep Me Logged In</span>
+                            </label>
                         </div>
                         <button
                             type="submit"

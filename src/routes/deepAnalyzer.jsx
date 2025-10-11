@@ -30,11 +30,15 @@ export default function DeepAnalyzer() {
     }, [])
 
     useEffect(() => {
+        console.log("User Queried????: ", deepAnalyzerSubscription)
         if (userQueried) {
             fetchDeepAnalyzerSubscription();
-            if (isAuthenticated && !deepAnalyzerSubscription.queried) {
-                fetchDeepAnalyzerSubscription();
+            if (isAuthenticated) {
+                if(!deepAnalyzerSubscription.queried){
+                    fetchDeepAnalyzerSubscription();
+                }
             } else {
+                console.log("Fetching Subscription Status");
                 dispatch(setDeepAnalyzerSubscription({ error: "Logged Out" }));
             }
         }
