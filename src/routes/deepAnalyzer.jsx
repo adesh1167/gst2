@@ -7,18 +7,21 @@ import { useApp } from "../contexts/appContext";
 import axios from 'axios';
 import { pre } from 'framer-motion/client';
 import { baseApiUrl } from "../data/url";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AnalyzerComing from "./deepAnalyzer/coming";
 
 import "./styles/deepAnalyzer.css";
+import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
 
 export default function DeepAnalyzer() {
 
-    const { isAuthenticated } = useSelector(state => state.user);
+    const { isAuthenticated, userQueried } = useSelector(state => state.user);
 
-    const {deepAnalyzerSubscription} = useSelector(state => state.subscriptions);
+    const { deepAnalyzerSubscription } = useSelector(state => state.subscriptions);
 
     const { deepAnalyzerMatches, fetchDeepAnalyzerMatches, fetchDeepAnalyzerSubscription } = useApp();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!deepAnalyzerMatches.loaded) {
@@ -27,17 +30,17 @@ export default function DeepAnalyzer() {
     }, [])
 
     useEffect(() => {
-        if(isAuthenticated && !deepAnalyzerSubscription.queried){
+        if (userQueried) {
             fetchDeepAnalyzerSubscription();
+            if (isAuthenticated && !deepAnalyzerSubscription.queried) {
+                fetchDeepAnalyzerSubscription();
+            } else {
+                dispatch(setDeepAnalyzerSubscription({ error: "Logged Out" }));
+            }
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, userQueried])
 
-
-    const matches = [
-        { id: 1, title: "Eagles vs Tigers", subtitle: "Full match — 12 May 2025", score: "2 - 1" },
-        { id: 2, title: "Rangers vs Hawks", subtitle: "Highlights — 09 Sep 2025", score: "1 - 3" },
-        { id: 3, title: "City FC vs United", subtitle: "Tactical — 03 Sep 2025", score: "0 - 0" },
-    ];
+console.log("User: ", userQueried)
 
     return (
         <div className="min-h-screen h-full pt-10 bg-gradient-to-b from-black via-gray-900 to-[#07070a] text-gray-100 font-sans overflow-hidden margin orbitron-regular">
@@ -45,10 +48,10 @@ export default function DeepAnalyzer() {
                 <AnimatePresence mode="sync">
                     <Routes>
                         <Route path="*">
-                            <Route path="*" element={<AnalyzerComing />} />
-                            {/* <Route path="*" element={<AnalyzerHome />} /> */}
-                            {/* <Route index element={<AnalyzerHome />} /> */}
-                            {/* <Route path="analyze/:id" element={<DeepAnalyzerTool />} /> */}
+                            {/* <Route path="*" element={<AnalyzerComing />} /> */}
+                            <Route path="*" element={<AnalyzerHome />} />
+                            <Route index element={<AnalyzerHome />} />
+                            <Route path="analyze/:id" element={<DeepAnalyzerTool />} />
                         </Route>
                     </Routes>
                 </AnimatePresence>

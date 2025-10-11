@@ -162,7 +162,7 @@ const EditCoupon = ({edit = true}) => {
         <div className='edit-coupon'>
             <div className='back-drop' onClick={()=>navigate(-1)}/>
             <form onSubmit={e=>e.preventDefault()}>
-                <h2>{edit ? "Edit" : "Add"} Coupon</h2>
+                <h2 className="my-5 font-bold text-2xl">{edit ? "Edit" : "Add"} Coupon</h2>
                 <div className='form-group'>
                     <label htmlFor='coupon-code'>Coupon</label>
                     <input type='text' id='coupon-code' value={formData.coupon} onChange={(e)=>setValue("coupon", e.target.value)}/>

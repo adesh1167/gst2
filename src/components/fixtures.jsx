@@ -112,11 +112,11 @@ const Fixtures = () => {
                   <FixtureCountry country={Object.values(fixtures)[0]} />
                   <div className="banner">
                     <div className="banner-cont">
-                      <h2>Welcome to GST</h2>
+                      <h2 className='my-4'>Welcome to GST</h2>
                       <div className="">
-                        <p> Every game is at least 2 odds </p>
-                        <p> Assurance is 99.99+ </p>
-                        <p> All games are predicted using AI </p>
+                        <p className='my-3'> Every game is at least 2 odds </p>
+                        <p className='my-3'> Assurance is 99.99+ </p>
+                        <p className='mt-3 mb-8'> All games are predicted using AI </p>
                       </div>
                     </div>
                     <Link className="banner-button" to="/about">

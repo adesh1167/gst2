@@ -35,7 +35,7 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const { user, isAdmin, dashboard } = useSelector((state) => state.user);
   const { firstLoad, country, currency, continent, tAndCAccepted } = useSelector((state) => state.data);
-  const allData = useSelector((state) => state);
+  // const allData = useSelector((state) => state);
   const { pathname } = useLocation()
 
   const { width, height } = useWindowSize();
@@ -140,7 +140,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || (menuExpanded && width <= 960) || (!tAndCAccepted && pathname !== "/about")) {
+    if (pathname === "/cart" || pathname === "/country" || pathname === "/change-country" || pathname === "/deep-analyzer/search" || (menuExpanded && width <= 960) || (!tAndCAccepted && pathname !== "/about")) {
       document.body.classList.add("scroll-lock");
     } else {
       document.body.classList.remove("scroll-lock");
@@ -162,7 +162,7 @@ function App() {
     }
   }, [isCountrySelected, firstLoad, pathname]);
   
-  console.log("All Data: ", allData);
+  // console.log("All Data: ", allData);
 
   return (
     <>
@@ -188,8 +188,8 @@ function App() {
           <Route path="/reset-password/:id" element={<ResetPassword />} />
           <Route path="/about" element={<About />} />
         </Routes>
-      </main>
       {(!tAndCAccepted && pathname != "/about") && <Welcome />}
+      </main>
       <Toasts />
     </>
   );

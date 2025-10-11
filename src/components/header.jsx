@@ -12,7 +12,7 @@ const Header = () => {
     const { isAdmin, dashboard } = useSelector(state => state.user);
     const { pathname } = useLocation();
 
-    const {menuExpanded, setMenuExpanded} = useApp();
+    const { menuExpanded, setMenuExpanded } = useApp();
 
     const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
 
@@ -56,9 +56,11 @@ const Header = () => {
                 </span>
             </div>
             <div className={`menu-container ${menuExpanded ? "expanded" : ""}`}>
-                <div className="menu-icon" htmlFor="menu-btn" onClick={toggleMenuExpanded}>
+                <div className="menu-icon" htmlFor="menu-btn">
                     {(menuClosed && isAdminShown) && <span className="admin-dashboard-indicator">ADMIN</span>}
-                    <span className="navicon" />
+                    <div className="flex items-center self-stretch min-h-[20px]" onClick={toggleMenuExpanded}>
+                        <span className="navicon" />
+                    </div>
                 </div>
                 <div className="menu-blank-space" onClick={toggleMenuExpanded} />
                 <Menu

@@ -6,7 +6,7 @@ import './styles/login.css';
 import { baseApiUrl } from '../data/url';
 import { useDispatch } from 'react-redux';
 import { login } from '../slices/userReducer';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Loading from '../components/loading';
 import { useForm } from 'react-hook-form';
 import { showToast } from '../slices/toastsReducer';
@@ -20,6 +20,9 @@ const Login = () => {
     const formRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {state} = useLocation();
+
+    // console.log(state);
 
     const { register, handleSubmit, watch, formState: {
         errors,
@@ -40,7 +43,7 @@ const Login = () => {
             // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(login(res.data.data));
-                navigate('/', { replace: true });
+                navigate((state.redirect || '/'), { replace: true });
             } else {
                 dispatch(showToast({
                     message: res.data.message,

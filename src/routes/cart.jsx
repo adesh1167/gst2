@@ -204,7 +204,19 @@ const Cart = () => {
                         {cart.length > 0 ?
                             <div className='cart-buttons'>
                                 {isAfrica && <PayForMatchesWrapper emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
-                                <PayButtonCrypto emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} defaultCurrency={isAfrica ? "$" : null} />
+                                <PayButtonCrypto
+                                    emptyCartFlag={emptyCartFlag}
+                                    emptyCart={emptyCart}
+                                    defaultCurrency={isAfrica ? "$" : null}
+                                    title='PAY'
+                                    showPrice={true}
+                                    payload={{
+                                        items: cart?.map(item => item.id),
+                                        coupon: coupon?.coupon
+                                    }}
+                                    ready={cart.length > 0}
+                                    initiateLink={`${baseApiUrl}/initiate-payment-crypto.php`}
+                                />
                             </div>
                             :
                             <div className='cart-add-item-message'>

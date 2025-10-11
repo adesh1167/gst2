@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { Link, NavLink, redirect, useLocation, useNavigate } from "react-router";
 import "./styles/header.css";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
@@ -103,7 +103,7 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
                     :
                     <li>
                         <div className="login-register">
-                            {pathname === "/login" || <Link to="/login">Login</Link>}
+                            {pathname === "/login" || <Link to="/login" state={{redirect: pathname}}>Login</Link>}
                             {pathname === "/register" || <Link to="/register">Register</Link>}
                         </div>
                     </li>

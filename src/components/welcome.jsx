@@ -11,22 +11,22 @@ const Welcome = () => {
         <div className="notice-window fixed">
             <div className="blank-space " />
             <div className="notice-body">
-                <div className="notice-title">Getting Started</div>
+                <div className="notice-title text-xl">Getting Started</div>
                 <div className="notice-content">
-                    <p>
+                    <p className='py-3'>
                         Global Sports Trade is a prediction platform which uses Artificial
                         Intelligence to make accurate prediction of sport events.
                     </p>
-                    <p>
+                    <p className='py-3'>
                         All available predictions are listed on the homepage with their prices.
                     </p>
-                    <ul>
-                        <li>Select the matches you want</li>
-                        <li>Make payment for them</li>
-                        <li>Their selections will be revealed under <b>My Matches</b>.</li>
+                    <ul className='py-3 pl-4'>
+                        <li className='list-disc '>Select the matches you want</li>
+                        <li className='list-disc'>Make payment for them</li>
+                        <li className='list-disc'>Their selections will be revealed under <b>My Matches</b>.</li>
                     </ul>
                     <p />
-                    <p>
+                    <p className='py-3'> 
                         You can then proceed to stake these matches on any betting site of your
                         choice.
                     </p>

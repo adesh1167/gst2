@@ -13,3 +13,11 @@
     font-weight: 700;
     font-style: normal;
 }
+
+.orbitron-light {
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    
+}

@@ -12,7 +12,7 @@ const timeZones = {
   GBP: "+0",
 }
 
-export function getFixtureDate(dateString, zone = "GHS") {
+export function getFixtureDate(dateString, zone = "GHS", separate = false) {
   try {
     dateString = dateString.trim();
     const now = DateTime.now({ zone: `UTC${timeZones[zone]}` });
@@ -20,21 +20,50 @@ export function getFixtureDate(dateString, zone = "GHS") {
     date = date.setZone(`UTC${timeZones[zone]}`);
 
     // console.log(date);
+    let values = {
+      date: "",
+      time: ""
+    }
+
+    let string = "";
 
     if (date.hasSame(now, 'day')) {
-      return "Today at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      string = "Today at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      values = ({
+        date: "Today",
+        time: date.toLocaleString(DateTime.TIME_24_SIMPLE)
+      })
     } else if (date.plus({ days: 1 }).hasSame(now, 'day')) {
       //   return `Yesterday ${date.toLocaleString(DateTime.TIME_SIMPLE)}`;
-      return "Yesterday at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      string = "Yesterday at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      values = ({
+        date: "Yesterday",
+        time: date.toLocaleString(DateTime.TIME_24_SIMPLE)
+      })
     } else if (date.minus({ days: 1 }).hasSame(now, 'day')) {
       //   return `Yesterday ${date.toLocaleString(DateTime.TIME_SIMPLE)}`;
-      return "Tomorrow at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      string = "Tomorrow at " + date.toLocaleString(DateTime.TIME_24_SIMPLE);
+      values = ({
+        date: "Tomorrow",
+        time: date.toLocaleString(DateTime.TIME_24_SIMPLE)
+      })
+
     } else if (date.hasSame(now, 'year')) {
-      return date.toFormat("MMM dd HH:mm");
+      string = date.toFormat("MMM dd HH:mm");
+      values = ({
+        date: date.toFormat("MMM dd"),
+        time: date.toFormat("HH:mm")
+      })
     } else {
       // Otherwise, show just the date
-      return date.toFormat("dd/MM/yyyy HH:mm:ss");
+      string = date.toFormat("dd/MM/yyyy HH:mm:ss");
+      values = ({
+        date: date.toFormat("dd/MM/yyyy"),
+        time: date.toFormat("HH:mm:ss")
+      })
     }
+
+    return separate ? values : string;
   } catch (error) {
     console.error({
       error,
@@ -45,7 +74,7 @@ export function getFixtureDate(dateString, zone = "GHS") {
   }
 }
 
-export function getMyMatchTime(dateString, zone = "GHS") {
+export function getMyMatchTime(dateString, zone = "GHS", prefix="on ") {
   try {
     dateString = dateString.trim();
     const now = DateTime.now({ zone: `UTC${timeZones[zone]}` });
@@ -63,7 +92,7 @@ export function getMyMatchTime(dateString, zone = "GHS") {
       //   return `Yesterday ${date.toLocaleString(DateTime.TIME_SIMPLE)}`;
       return "Tomorrow";
     } else if (date.hasSame(now, 'year')) {
-      return `on ${date.toFormat("MMM dd")}`;
+      return `${prefix} ${date.toFormat("MMM dd")}`;
     } else {
       // Otherwise, show just the date
       return `on ${date.toFormat("dd/MM/yyyy")}`;

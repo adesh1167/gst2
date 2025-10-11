@@ -16,6 +16,7 @@ const subscriptionsSlice = createSlice({
     initialState,
     reducers: {
         setDeepAnalyzerSubscription: (state, action) => {
+            console.log("Payload:", action.payload);
             state.deepAnalyzerSubscription = action.payload.error ?
                 {
                     ...state.deepAnalyzerSubscription,
@@ -30,10 +31,11 @@ const subscriptionsSlice = createSlice({
                 {
                     ...state.deepAnalyzerSubscription,
                     queried: true,
-                    isActive: action.payload.active,
+                    isActive: action.payload.active ? true : false,
                     startDate: action.payload.start_date,
                     endDate: action.payload.end_date,
                     plan: action.payload.plan,
+                    planName: action.payload.plan === "weekly_sub" ? "Weekly" : (action.payload.plan === "monthly_sub" ? "Monthly" : action.payload.plan),
                     error: action.payload.error
                 };
         }

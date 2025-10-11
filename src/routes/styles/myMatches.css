@@ -27,46 +27,6 @@ body {
     flex-direction: column;
 }
 
-.dag-container01 {
-    top: 0;
-    fill: white;
-    color: white;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    z-index: +1;
-    position: fixed;
-    overflow-x: hidden;
-    align-items: center;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    justify-content: space-between;
-    background-color: #000000;
-}
-
-.dag-container02 {
-    gap1: 10px;
-    flex: 0 0 auto;
-    width: auto;
-    display: flex;
-    align-items: center;
-}
-
-.dag-image {
-    width: 30px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-right: 10px;
-}
-
-.dag-text {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-}
-
 .dag-container03 {
     gap1: 15px;
     flex: 0 0 auto;

@@ -74,7 +74,7 @@ const Coupons = () => {
 
     return (
         <div className='coupons-page'>
-            <h2>Manage Coupons</h2>
+            <h2 className='text-2xl my-5 font-bold'>Manage Coupons</h2>
 
             {error ?
                 <div className='error'>
@@ -198,7 +198,7 @@ const CouponItem = ({ couponData, setCoupons }) => {
     return (
         <div className='coupons-list-item'>
             <div className='coupons-list-item-info'>
-                <h3>{coupon}</h3>
+                <h3 className='my-4 font-bold text-xl'>{coupon}</h3>
                 <div className='coupon-details'>
                     {/* <div className='coupon-details-row'>
                         <span>{message}</span>

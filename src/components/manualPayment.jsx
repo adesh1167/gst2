@@ -112,9 +112,9 @@ const ManualPayment = () => {
                         amount: formatNumber(netTotal)
                     })}
 
-                    <ul style={{ paddingInlineStart: 20, fontWeight: "bold" }}>
+                    <ul className='pl-4' style={{ paddingInlineStart: 20, fontWeight: "bold" }}>
                         {cart?.map((item, i) =>
-                            <li key={item.id}>{item.home} - {item.away}</li>
+                            <li  className='list-disc' key={item.id}>{item.home} - {item.away}</li>
                         )}
                     </ul>
                     {countryDetails.manualPaymentDetails.map((method, i) => <div key={method.type + i}>

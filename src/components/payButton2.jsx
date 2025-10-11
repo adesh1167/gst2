@@ -77,7 +77,7 @@ const FlutterwaveButton = ({
                         fullName: `${data.data.user.first_name} ${data.data.user.last_name}`,
                     },
                     customizations: {
-                        title: "Global Sports Trade",
+                        title: "GST - Dawood",
                         description: description,
                         logo: "https://globalsportstrade.vercel.app/logo.png",
                     },
@@ -126,7 +126,7 @@ const FlutterwaveButton = ({
                 finalCallBack={finalCallBack}
                 confirmLink={confirmLink}
             />}
-            <div className="cart-container42 cursor-pointer" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
+            <div className="cart-container42 cursor-pointer hover:scale-105 transition-all" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
                 backgroundColor: background,
                 color: color,
                 ...style

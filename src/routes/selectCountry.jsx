@@ -75,7 +75,7 @@ const SelectCountry = ({ exitable = true }) => {
         <div className="choose-country-window fixed">
             <div className="blank-space" onClick={exitable ? () => navigate(-1) : () => { }} />
             <div className="choose-country-body">
-                <div className="choose-country-title">Select Your Country</div>
+                <h2 className="choose-country-title my-3 font-bold text-xl">Select Your Country</h2>
                 <form className="choose-country-form" id="chooseCountryForm" onSubmit={loading ? e=>e.preventDefault() : handleSubmit}>
                     <div className="country-input-group">
                         <input

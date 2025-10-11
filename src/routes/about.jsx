@@ -8,7 +8,7 @@ const About = () => {
             <div className="about-details">
                 <div className="details-section question">
                     <div className="section-title">
-                        <h3>How Does GST Work?</h3>
+                        <h3 className='text-xl my-6 font-bold'>How Does GST Work?</h3>
                     </div>
                     <div className="section-body">
                         <p>
@@ -24,7 +24,7 @@ const About = () => {
                 </div>
                 <div className="about-hero hero-consistency">
                     <div className="about-container14">
-                        <h1 className="about-text04">Consistency</h1>
+                        <h1 className="about-text04 text-2xl my-6 font-bold">Consistency</h1>
                         <span className="about-text05">
                             <span>
                                 <span>
@@ -39,7 +39,7 @@ const About = () => {
                 <div className="details-group">
                     <div className="details-section ">
                         <div className="section-title">
-                            <h3>Accuracy Is Key</h3>
+                            <h3 className='text-xl my-6 font-bold'>Accuracy Is Key</h3>
                         </div>
                         <div className="section-body">
                             <p>
@@ -57,7 +57,7 @@ const About = () => {
                     </div>
                     <div className="about-hero hero-accuracy dynamic">
                         <div className="about-container14">
-                            <h1 className="about-text04">Accuracy</h1>
+                            <h1 className="about-text04 text-2xl my-6 font-bold">Accuracy</h1>
                             <span className="about-text05">
                                 <span>
                                     <span>
@@ -73,7 +73,7 @@ const About = () => {
                 <div className="details-group">
                     <div className="details-section">
                         <div className="section-title">
-                            <h3>It Is For The Masses</h3>
+                            <h3 className='text-xl my-6 font-bold'>It Is For The Masses</h3>
                         </div>
                         <div className="section-body">
                             <p>
@@ -90,7 +90,7 @@ const About = () => {
                     </div>
                     <div className="about-hero hero-affordability dynamic">
                         <div className="about-container14">
-                            <h1 className="about-text04">Affordability</h1>
+                            <h1 className="about-text04 text-2xl my-6 font-bold">Affordability</h1>
                             <span className="about-text05">
                                 <span>
                                     <span>

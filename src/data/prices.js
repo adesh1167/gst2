@@ -1,2 +1,2 @@
-export const weeklySubscriptionPrice = 1000;
-export const monthlySubscriptionPrice = 3500;
+export const weeklySubscriptionPrice = 1500;
+export const monthlySubscriptionPrice = 4500;

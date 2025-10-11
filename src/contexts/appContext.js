@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 
 import React from 'react'
 import { baseApiUrl } from "../data/url";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
 
 const AuthContext = createContext();
@@ -15,6 +15,19 @@ const AppContext = ({ children }) => {
         loaded: false,
         matches: [],
     });
+
+    const { isAuthenticated } = useSelector(state => state.user);
+
+    const [deepAnalyzerUpcoming, setDeepAnalyzerUpcoming] = useState({
+        pageSize: 20,
+        pages: 0,
+        page: 1,
+        loaded: false,
+        matches: {},
+        allLoaded: false
+    });
+
+    const [deepAnalyzerTab, setDeepAnalyzerTab] = useState('highlights');
 
     const dispatch = useDispatch();
 
@@ -36,28 +49,97 @@ const AppContext = ({ children }) => {
         })
     }, []);
 
+    const fetchDeepAnalyzerUpcoming = useCallback((newPage) => {
+        if(deepAnalyzerUpcoming.allLoaded) return;
+        const pageSize = deepAnalyzerUpcoming.pageSize || 4;
+        const page = newPage ?? (deepAnalyzerUpcoming.page || 1);
+
+        console.log(pageSize, page, deepAnalyzerUpcoming.page);
+        if(deepAnalyzerUpcoming.matches[page]) return;
+        axios({
+            method: "GET",
+            url: `${baseApiUrl}/get-matches-by-page.php?page=${page}&pageSize=${pageSize}`,
+        }).then((res) => {
+            console.log(res.data);
+            // if (res.data.success) {
+                const allLoaded = res.data.matches.length < pageSize;
+                if(res.data.matches.length === 0) {
+                    setDeepAnalyzerUpcoming(prev => ({
+                        ...prev,
+                        page: page - 1,
+                        loaded: true,
+                        allLoaded: true
+                    }))
+
+                    return;
+                }
+
+                setDeepAnalyzerUpcoming(prev => ({
+                    ...prev,
+                    loaded: true,
+                    pages: Math.max(page, deepAnalyzerUpcoming.pages),
+                    matches: {
+                        ...prev.matches,
+                        [page]: res.data.matches.map(match => ({
+                            ...match,
+                            ...JSON.parse(match.match_data),
+                            match_data: null
+                        }))
+                    },
+                    allLoaded
+                }));
+            // } else {
+
+            // }
+        })
+    }, [deepAnalyzerUpcoming]);
+
     const fetchDeepAnalyzerSubscription = useCallback(() => {
         axios({
             method: "GET",
             url: `${baseApiUrl}/get-deep-analyzer-subscription.php`,
         }).then((res) => {
             console.log(res.data);
-            if(res.data.success) {
+            if (res.data.status === "success") {
                 dispatch(setDeepAnalyzerSubscription(res.data.data));
-            } else{
-                dispatch(setDeepAnalyzerSubscription({error: res.data.message}));
+            } else {
+                dispatch(setDeepAnalyzerSubscription({ error: res.data.message }));
             }
         })
+    }, []);
+
+    const searchMatches = useCallback(async (query) => {
+        return axios({
+            method: "GET",
+            url: `${baseApiUrl}/search-matches.php?query=${query}`,
+        }).then((res) => {
+            if(res.data.status === "success"){
+                return res.data.matches.map(match => ({
+                    ...match,
+                    ...JSON.parse(match.match_data),
+                    match_data: null
+                }))
+            } else {
+                return [];
+            }
+        }).catch(err => {
+            console.log(err);
+            return [];
+        }   )
     }, []);
 
     const value = useMemo(() => ({
         menuExpanded, setMenuExpanded,
         deepAnalyzerMatches, setDeepAnalyzerMatches,
+        deepAnalyzerUpcoming, setDeepAnalyzerUpcoming,
+        deepAnalyzerTab, setDeepAnalyzerTab,
         fetchDeepAnalyzerMatches,
-        fetchDeepAnalyzerSubscription
-    }), [menuExpanded, deepAnalyzerMatches])
+        fetchDeepAnalyzerUpcoming,
+        fetchDeepAnalyzerSubscription,
+        searchMatches,
+    }), [menuExpanded, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab])
 
-    console.log("DeepAnalyzerMatches: ", deepAnalyzerMatches)
+    console.log("DeepAnalyzerUpcoming: ", deepAnalyzerUpcoming)
 
     return (
         <AuthContext.Provider value={value}>

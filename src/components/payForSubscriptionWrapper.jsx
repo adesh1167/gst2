@@ -8,8 +8,12 @@ import { removeItems } from '../slices/cartReducer';
 import { unavailablePayments } from '../data/unavaiablePayments';
 import FlutterwaveButton from './payButton2';
 import { useLocation, useNavigate } from 'react-router';
+import { useApp } from '../contexts/appContext';
 
-const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {} }) => {
+const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showPrice = true, background = "", color = "", style = {} }) => {
+
+
+    const { fetchDeepAnalyzerSubscription } = useApp();
 
     const [manualLink, setManualLink] = useState(null);
 
@@ -17,8 +21,6 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     const { isAdmin, dashboard } = useSelector((state) => state.user);
     const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
     const { country, factor } = useSelector((state) => state.data);
-    const cart = useSelector((state) => state.cart);
-    const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
     const {pathname} = useLocation();
 
@@ -26,18 +28,17 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
 
     useEffect(() => {
         if (country && unavailablePayments.includes(country)) {
-            setManualLink("/cart/manual-payment");
+            setManualLink(`/deep-analyzer/manual-subscription/${type}`);
         }
-    }, [country])
+    }, [country, type])
 
     // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
 
     const initiatePayload = useMemo(() => {
         return {
-            items: cart?.items?.map(item => item.id),
-            coupon: coupon?.coupon
+            type: type,
         }
-    }, [cart, coupon])
+    }, [type])
 
     const finalCallBack = useCallback((res) => {
         console.log("Res outside: ", res);
@@ -47,15 +48,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
                 type: "success",
                 duration: 5000
             }))
-            setTimeout(() => {
-                dispatch(showToast({
-                    message: "Redirecting to My Matches",
-                    type: "info",
-                    duration: 4000
-                }))
-            }, 1000);
-            if (emptyCartFlag) emptyCart();
-            setTimeout(() => navigate("/my-matches"), 3000);
+            fetchDeepAnalyzerSubscription();
         } else if (res.data.status === "update") {
 
         } else if (res.data.status === "login") {
@@ -70,7 +63,6 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     }, [])
 
     const errorCallBack = useCallback((res) => {
-        console.log(res)
         if (res.data.status === "update") {
             dispatch(showToast({
                 message: "Some matches are no longer available. Cart has been updated",
@@ -104,20 +96,22 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     return (
 
         <FlutterwaveButton
-            initiateLink={`${baseApiUrl}/initiate-payment.php`}
-            confirmLink={`${baseApiUrl}/${isAdminShown ? "confirm-payment-test" : "confirm-payment"}.php`}
+            initiateLink={`${baseApiUrl}/initiate-subscription.php`}
+            confirmLink={`${baseApiUrl}/${isAdminShown ? "confirm-subscription-test" : "confirm-subscription"}.php`}
             errorCallBack={errorCallBack}
             finalCallBack={finalCallBack}
             initiatePayload={initiatePayload}
-            coupon={coupon}
-            title='PAY'
+            coupon={null}
+            title='SUBSCRIBE'
             price={netTotal * factor}
-            showPrice={true}
+            showPrice={showPrice}
             country={country}
-            description={`Pay For Matches`}
+            description={`${title}`}
             manual={manualLink}
+            style={style}
+            background={background}
         />
     )
 }
 
-export default PayForMatchesWrapper;
+export default PayForSubscriptionWrapper;

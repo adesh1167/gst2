@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { selectNetTotal } from '../slices/netTotal';
 import formatNumber from '../functions/formatNumber';
-import { useLocation, useNavigate } from 'react-router';
+import { redirect, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3';
@@ -26,6 +26,7 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
     const cart = useSelector((state) => state.cart);
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
+    const {pathname} = useLocation();
     const handlePayment = useFlutterwave(config);
 
     const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                 type: "error",
                 duration: 3000
             }))
-            navigate("/login");
+            navigate("/login", { state: { redirect: pathname}});
         }
     }
 

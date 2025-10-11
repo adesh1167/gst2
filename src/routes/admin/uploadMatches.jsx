@@ -295,6 +295,9 @@ const UploadMatchesItem = ({ prevData, item, addMatchhToList, selectedMatches, s
   function addMatch() {
     const matchData = {
       ...data,
+      fixture_id: item.fixture.id,
+      home: item.teams.home.name,
+      away: item.teams.away.name,
       country: item.league.country,
       league: item.league.name,
       fixture: item.fixture.date,

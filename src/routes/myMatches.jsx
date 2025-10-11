@@ -7,7 +7,7 @@ import { baseApiUrl } from "../data/url";
 import Loading from "../components/loading";
 import { setMatchesLoaded, setMyMatches } from "../slices/myMatchesReducer";
 import MyMatchDay from "../components/myMatchDay";
-import { Link, useNavigationType } from "react-router";
+import { Link, redirect, useLocation, useNavigationType } from "react-router";
 import { showToast } from "../slices/toastsReducer";
 
 const MyMatches = () => {
@@ -46,6 +46,8 @@ const MyMatchesContent = () => {
     const dispatch = useDispatch();
     const navType = useNavigationType();
 
+    const {pathname} = useLocation();
+
     function fetchMyMatches() {
         setLoading(true);
         axios({
@@ -59,7 +61,7 @@ const MyMatchesContent = () => {
                 setError(
                     <>
                         <div className="no-matches-text"> Please login to see your matches</div>
-                        <Link className="no-matches-button" to="/login"> Login</Link>
+                        <Link className="no-matches-button" to="/login" state={{redirect: pathname}}> Login</Link>
                     </>
                 )
             }
