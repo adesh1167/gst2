@@ -129,7 +129,8 @@ export function buildReport(fixtureStats = {}, opts = {}) {
     }
 
     // fallback to winner encoded under predictionRoot.winner string
-    if (!predictedWinner && typeof predictionRoot?.winner === "string") predictedWinner = predictionRoot.winner;
+    if ((!predictedWinner || typeof predictedWinner !== "string") && typeof predictionRoot?.winner === "string") predictedWinner = predictionRoot.winner;
+    else predictedWinner = "Draw";
 
     // final fallback: empty string
     predictedWinner = predictedWinner ?? null;
