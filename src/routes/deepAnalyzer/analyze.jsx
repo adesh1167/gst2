@@ -73,7 +73,7 @@ const DeepAnalyzerTool = () => {
     //     console.log("Stats: ", fixtureStats);
     // }, [deepAnalyzerMatches]);
 
-    useLayoutEffect(()=>{
+    useLayoutEffect(() => {
         fetchMatch();
     }, [])
 
@@ -152,7 +152,7 @@ const DeepAnalyzerTool = () => {
             if (!fixtureStats || !data) return;
             // if (!summary) {
             timeout = setTimeout(() => {
-                console.log("Building Report...");
+                // console.log("Building Report...");
                 setSummary(buildReport(fixtureStats, {
                     accuracy: data.accuracy,
                     ...duration.current
@@ -165,6 +165,16 @@ const DeepAnalyzerTool = () => {
             clearTimeout(timeout);
         }
     }, [analyzed])
+
+    // useEffect(() => {
+    //     if (fixtureStats) {
+    //         console.log("Building Report...");
+    //         setSummary(buildReport(fixtureStats, {
+    //             accuracy: data.accuracy,
+    //             ...duration.current
+    //         }))
+    //     }
+    // }, [fixtureStats])
 
     useEffect(() => {
         if (summary) {
@@ -189,7 +199,7 @@ const DeepAnalyzerTool = () => {
 
             fetchFixtureStats()
                 .then((res) => {
-                    console.log("Res: ", res);
+                    // console.log("Res: ", res);
                     if (res) {
                         setAnalyzed(false);
                         setAnalyzing(true);
@@ -212,7 +222,7 @@ const DeepAnalyzerTool = () => {
             url: `${baseApiUrl}/get-match.php?fixture_id=${id}`
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.status === 'success') {
                     const newdata = res.data.data;
                     setData({
@@ -241,7 +251,7 @@ const DeepAnalyzerTool = () => {
             }
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.status === 'success') {
                     setFixtureStats({
                         ...res.data.data,
@@ -348,7 +358,7 @@ const DeepAnalyzerTool = () => {
         })
     }, [currentCategoryIndex, subIndex, fixtureStats])
 
-    console.log("Summary: ", analyzed, analyzing, summary);
+    // console.log("Summary: ", analyzed, analyzing, summary);
 
     return (
         <motion.div
@@ -468,11 +478,12 @@ const DeepAnalyzerTool = () => {
                                     {analyzing ?
                                         <motion.div
                                             key="analysis"
+                                            layout
                                             initial={{ opacity: 0, x: 50, height: 200 }}
                                             animate={{ opacity: 1, x: 0, height: 'auto' }}
                                             exit={{ opacity: 0, x: -50, position: "absolute", right: 0 }}
                                             transition={{ duration: 0.8 }}
-                                            className="w-full lg-custom:w-80 rounded-2xl p-4 bg-[rgba(255,255,255,0.015)] border border-gray-800 flex flex-col gap-3"
+                                            className="w-full lg-custom:w-80 rounded-2xl p-4 bg-[rgba(255,255,255,0.015)] border border-gray-800 flex flex-col gap-3 overflow-hidden"
                                         >
                                             <div className="text-sm text-gray-400">
                                                 <span>Progress: </span>
@@ -481,11 +492,17 @@ const DeepAnalyzerTool = () => {
                                                 </span>
                                             </div>
                                             <ul className="space-y-2 mt-2">
-                                                {analysisConfig.map((c, idx) => (
-                                                    <li key={c.id} className={`text-sm transition duration-300 ease-in-out ${currentCategoryIndex >= idx ? "text-purple-400" : "text-gray-500 font-normal"} ${currentCategoryIndex === idx ? "text-shadow-xs text-shadow-purple-500 scale-110 origin-left translate-x-[-12px] font-extrabold" : "font-bold"}`}>
-                                                        {idx < currentCategoryIndex ? `✔ ` : idx === currentCategoryIndex ? <LoadingRing size={20} /> : `• `} {c.title}
-                                                    </li>
-                                                ))}
+                                                <AnimatePresence>
+                                                    {analysisConfig.map((c, idx) => (
+                                                        <li key={c.id} className={`text-sm transition duration-500 ease-in-out origin-left ${currentCategoryIndex >= idx ? "text-purple-400 font-bold" : "text-gray-500 font-normal"} ${currentCategoryIndex === idx ? "text-shadow-xs text-shadow-purple-500 scale-110 translate-x-[-12px] font-extrabold" : "font-bold scale-100 translate-x-0"}`}>
+                                                            {idx < currentCategoryIndex ? `✔ ` : idx === currentCategoryIndex ?
+                                                                <motion.span className='absolute left-0' layoutId='testlayout'>
+                                                                    <LoadingRing key={c.id} size={20} className={"block"} style={{ display: "block" }} />
+                                                                </motion.span>
+                                                                : `• `} {idx === currentCategoryIndex && <span className='invisible'> ..... </span>} {c.title}
+                                                        </li>
+                                                    ))}
+                                                </AnimatePresence>
                                             </ul>
                                             <div className="mt-auto pt-5">
                                                 <div className='rounded-lg relative pt-4' style={{

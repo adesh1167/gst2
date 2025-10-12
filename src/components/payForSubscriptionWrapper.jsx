@@ -41,7 +41,7 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
     }, [type])
 
     const finalCallBack = useCallback((res) => {
-        console.log("Res outside: ", res);
+        // console.log("Res outside: ", res);
         if (res.data.status === "success") {
             dispatch(showToast({
                 message: "Payment successful",

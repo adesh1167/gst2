@@ -130,7 +130,7 @@ const MyMatchesContent = () => {
                             (matches.length > 0) ?
                                 <div className="slips" id="slips">
                                     {matches.map((match, index) =>
-                                        <MyMatchDay day={match} />
+                                        <MyMatchDay key={match.time+index} day={match} />
                                     )}
                                 </div>
                                 :

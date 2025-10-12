@@ -59,7 +59,7 @@ const PayButtonCryptoStart = ({ defaultCurrency, title = "PAY", showPrice = true
                     method: "POST",
                     data: data,
                 }).then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             window.location.href = res.data.payment_link;

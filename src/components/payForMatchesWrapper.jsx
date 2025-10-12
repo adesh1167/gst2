@@ -40,7 +40,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     }, [cart, coupon])
 
     const finalCallBack = useCallback((res) => {
-        console.log("Res outside: ", res);
+        // console.log("Res outside: ", res);
         if (res.data.status === "success") {
             dispatch(showToast({
                 message: "Payment successful",
@@ -70,7 +70,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     }, [])
 
     const errorCallBack = useCallback((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.data.status === "update") {
             dispatch(showToast({
                 message: "Some matches are no longer available. Cart has been updated",

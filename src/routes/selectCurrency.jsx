@@ -71,9 +71,9 @@ const SelectCurrency = ({ exitable = true }) => {
         })
     }
 
-    useEffect(() => {
-        console.log("Country Changed: ", localCountry);
-    }, [localCountry])
+    // useEffect(() => {
+    //     console.log("Country Changed: ", localCountry);
+    // }, [localCountry])
 
     // console.log(localCountry);
 

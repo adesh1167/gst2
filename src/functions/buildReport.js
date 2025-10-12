@@ -77,8 +77,8 @@ export function buildReport(fixtureStats = {}, opts = {}) {
     }
     else if (typeof fixtureStats.accuracy === "number") {
         accuracy = Math.round(fixtureStats.accuracy);
-    } else if (typeof fixtureStats.accuracy === "string" && !Number.isNaN(Number(fixtureStats.accuracy))) {
-        accuracy = Math.round(Number(fixtureStats.accuracy));
+    } else if (typeof fixtureStats.accuracy === "string" && !Number.isNaN(parseInt(fixtureStats.accuracy))) {
+        accuracy = Math.round(parseInt(fixtureStats.accuracy));
     } else {
         // try to derive from predictionBlock.percent (supports many shapes)
         const pct = predictionBlock?.percent ?? predictionRoot?.percent;
@@ -90,13 +90,13 @@ export function buildReport(fixtureStats = {}, opts = {}) {
                 const awayValues = ["away", "A", "a", "Away"].map(k => pct[k]).filter(v => v != null);
 
                 // pick maximum among home/away/draw numeric entries if possible
-                const numeric = Object.values(pct).map(v => Number(v)).filter(v => Number.isFinite(v));
+                const numeric = Object.values(pct).map(v => parseInt(v)).filter(v => Number.isFinite(v));
                 if (numeric.length) {
                     const max = Math.max(...numeric);
                     accuracy = Math.round(max);
                 }
-            } else if (!Number.isNaN(Number(pct))) {
-                accuracy = Math.round(Number(pct));
+            } else if (!Number.isNaN(parseInt(pct))) {
+                accuracy = Math.round(parseInt(pct));
             }
         }
     }
@@ -104,9 +104,13 @@ export function buildReport(fixtureStats = {}, opts = {}) {
     // predicted winner name fallback
     let predictedWinner = null;
     if (predictionBlock?.winner?.name) predictedWinner = predictionBlock.winner.name;
-    else if (predictionBlock?.winner) predictedWinner = String(predictionBlock.winner);
+    else if (predictionBlock?.winner) predictedWinner = (predictionBlock.winner);
     else if (predictionRoot?.winner?.name) predictedWinner = predictionRoot.winner.name;
-    else if (predictionRoot?.winner) predictedWinner = String(predictionRoot.winner);
+    else if (predictionRoot?.winner) predictedWinner = (predictionRoot.winner);
+
+    // console.log('Predicted Winner 1: ', predictedWinner);
+
+    if(typeof predictedWinner !== "string") predictedWinner = null;
 
     // if still missing, try deriving from percent (highest)
     if (!predictedWinner && (predictionBlock?.percent || predictionRoot?.percent)) {
@@ -114,23 +118,33 @@ export function buildReport(fixtureStats = {}, opts = {}) {
         if (typeof pct === "object") {
             // normalize keys
             const obj = {};
-            if (pct.home != null) obj.home = Number(pct.home);
-            if (pct.H != null) obj.home = Number(pct.H);
-            if (pct.draw != null) obj.draw = Number(pct.draw);
-            if (pct.D != null) obj.draw = Number(pct.D);
-            if (pct.away != null) obj.away = Number(pct.away);
-            if (pct.A != null) obj.away = Number(pct.A);
+            if (pct.home != null) obj.home = parseInt(pct.home);
+            if (pct.H != null) obj.home = parseInt(pct.H);
+            if (pct.draw != null) obj.draw = parseInt(pct.draw);
+            if (pct.D != null) obj.draw = parseInt(pct.D);
+            if (pct.away != null) obj.away = parseInt(pct.away);
+            if (pct.A != null) obj.away = parseInt(pct.A);
 
             const maxKey = Object.keys(obj).reduce((acc, k) => (obj[k] > (obj[acc] ?? -Infinity) ? k : acc), Object.keys(obj)[0]);
-            if (maxKey === "home") predictedWinner = homeName;
+            if(obj.home === obj.away){
+                // if(obj.draw > obj.home){
+                    predictedWinner = "Draw";
+                // }
+            }
+            else if (maxKey === "home") predictedWinner = homeName;
             else if (maxKey === "away") predictedWinner = awayName;
             else if (maxKey === "draw") predictedWinner = "Draw";
+
+        // console.log('Predicted Winner 2: ', predictedWinner, "MaxKey: ", maxKey, "Obj: ", obj, "Pct: ", pct);
+
         }
     }
 
     // fallback to winner encoded under predictionRoot.winner string
     if ((!predictedWinner || typeof predictedWinner !== "string") && typeof predictionRoot?.winner === "string") predictedWinner = predictionRoot.winner;
-    else predictedWinner = "Draw";
+    // else predictedWinner = "Draw";
+
+    // console.log('Predicted Wiinner: ', predictedWinner);
 
     // final fallback: empty string
     predictedWinner = predictedWinner ?? null;
@@ -140,8 +154,8 @@ export function buildReport(fixtureStats = {}, opts = {}) {
         // explicit goals if provided
         if (predictionBlock?.goals && (predictionBlock.goals.home != null || predictionBlock.goals.away != null)) {
             return {
-                home: Number(predictionBlock.goals.home ?? 0),
-                away: Number(predictionBlock.goals.away ?? 0),
+                home: parseInt(predictionBlock.goals.home ?? 0),
+                away: parseInt(predictionBlock.goals.away ?? 0),
                 source: "predictions.goals"
             };
         }
@@ -150,7 +164,7 @@ export function buildReport(fixtureStats = {}, opts = {}) {
         const comp = predictionRoot?.comparison ?? fixtureStats?.comparison ?? {};
         const tryNum = (v) => {
             if (v == null) return null;
-            const n = Number(v);
+            const n = parseInt(v);
             return Number.isFinite(n) ? n : null;
         };
         const hExp = tryNum(comp?.poisson_distribution?.home ?? comp?.expected_goals?.home ?? comp?.total?.home);
@@ -175,9 +189,9 @@ export function buildReport(fixtureStats = {}, opts = {}) {
         // percent-based heuristic
         const pct = predictionBlock?.percent ?? predictionRoot?.percent;
         if (pct) {
-            const ph = Number(pct.home ?? pct?.H ?? 0);
-            const pd = Number(pct.draw ?? pct?.D ?? 0);
-            const pa = Number(pct.away ?? pct?.A ?? 0);
+            const ph = parseInt(pct.home ?? pct?.H ?? 0);
+            const pd = parseInt(pct.draw ?? pct?.D ?? 0);
+            const pa = parseInt(pct.away ?? pct?.A ?? 0);
             if (pd > ph && pd > pa) return { home: 1, away: 1, source: "percent.draw" };
             if (ph > pa) return { home: 1, away: 0, source: "percent.home" };
             if (pa > ph) return { home: 0, away: 1, source: "percent.away" };
@@ -196,7 +210,7 @@ export function buildReport(fixtureStats = {}, opts = {}) {
     if (!accuracy) notes.push("Accuracy not provided; derived from prediction percent where possible.");
 
     // build final processedCounts summary (also include total count)
-    const totalSubItems = Object.values(processedCounts).reduce((a, b) => a + (Number(b) || 0), 0);
+    const totalSubItems = Object.values(processedCounts).reduce((a, b) => a + (parseInt(b) || 0), 0);
     processedCounts.total = totalSubItems;
 
     return {

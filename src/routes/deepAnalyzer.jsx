@@ -30,7 +30,7 @@ export default function DeepAnalyzer() {
     }, [])
 
     useEffect(() => {
-        console.log("User Queried????: ", deepAnalyzerSubscription)
+        // console.log("User Queried????: ", deepAnalyzerSubscription)
         if (userQueried) {
             fetchDeepAnalyzerSubscription();
             if (isAuthenticated) {
@@ -38,13 +38,13 @@ export default function DeepAnalyzer() {
                     fetchDeepAnalyzerSubscription();
                 }
             } else {
-                console.log("Fetching Subscription Status");
+                // console.log("Fetching Subscription Status");
                 dispatch(setDeepAnalyzerSubscription({ error: "Logged Out" }));
             }
         }
     }, [isAuthenticated, userQueried])
 
-console.log("User: ", userQueried)
+// console.log("User: ", userQueried)
 
     return (
         <div className="min-h-screen h-full pt-10 bg-gradient-to-b from-black via-gray-900 to-[#07070a] text-gray-100 font-sans overflow-hidden margin orbitron-regular">

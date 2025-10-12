@@ -101,7 +101,7 @@ export default function AnalyzerHome() {
     useEffect(() => {
         if (deepAnalyzerTab === "upcoming") {
             if (!upcoming.loaded) {
-                console.log("Fetching DeepUpcoming")
+                // console.log("Fetching DeepUpcoming")
                 fetchDeepAnalyzerUpcoming();
             }
         }
@@ -179,7 +179,7 @@ export default function AnalyzerHome() {
         ), [upcoming.pageSize]
     )
 
-    console.log("Deep Analyzer: ", deepAnalyzerSubscription);
+    // console.log("Deep Analyzer: ", deepAnalyzerSubscription);
 
     return (
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.45 }} className="max-w-6xl mx-auto p-6 max-md:p-0">
@@ -355,7 +355,7 @@ export default function AnalyzerHome() {
                                 ) : (
                                     <div className="grid grid-cols-1 gap-3">
                                         {searchResults.map(m => (
-                                            <div key={m.id} className="flex items-center justify-between p-3 rounded-lg bg-[rgba(255,255,255,0.01)]">
+                                            <div key={m.id} className="flex items-center justify-between p-3 rounded-lg gap-2 bg-[rgba(255,255,255,0.06)]">
                                                 <div>
                                                     <div className="text-xs text-gray-400">{m.league?.name}</div>
                                                     <div className="font-medium">{m.teams.home.name} v {m.teams.away.name}</div>

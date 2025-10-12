@@ -2,6 +2,8 @@
 // Export an array of category configs. Each config has:
 // id, title, interval (ms), getMaxLen(dt) => number, render({ dt, subIndex, teamsFromFixture, predictionRoot, fixtureMeta, country })
 
+import LoadingRing from "../components/loadingRing";
+
 const analysisConfig = [
     {
         id: "fixture_overview",
@@ -321,12 +323,17 @@ const analysisConfig = [
         getMaxLen: (dt) => 1,
         render: ({ predictionRoot }) => {
             const predictionBlock = predictionRoot.predictions ?? predictionRoot;
-            if (!predictionBlock) return <div className="text-sm text-gray-400">No predictions available</div>;
+            if (!predictionBlock) return <div className="text-sm text-gray-400"><LoadingRing size={24}/></div>;
             const winner = predictionBlock.winner ?? predictionBlock?.winner;
+            const defaultAdvice = predictionBlock.advice ?? predictionBlock.comment ?? "Suggested bets";
+            const noPrediction = defaultAdvice.toLowerCase() == "no predictions available";
+            const advice = noPrediction ? <LoadingRing size={24}/> : defaultAdvice;
+            // console.log(defaultAdvice, noPrediction, advice);
             return (
                 <div className="text-center">
                     <h3 className="text-lg font-semibold text-purple-400 mb-2">Predictions</h3>
-                    <div className="text-sm text-gray-300 mb-2">{predictionBlock.advice ?? predictionBlock.comment ?? "Suggested bets"}</div>
+                    {}
+                    <div className="text-sm text-gray-300 mb-2">{advice} {noPrediction}</div>
                     <div className="font-bold text-xl">{winner?.name ?? "—"}</div>
                     <div className="text-sm text-gray-400 mt-2">Win% — Home: {predictionBlock.percent?.home ?? "-"} · Draw: {predictionBlock.percent?.draw ?? "-"} · Away: {predictionBlock.percent?.away ?? "-"}</div>
                     <div className="mt-2 text-xs">Win or Draw: {String(predictionBlock.win_or_draw ?? predictionBlock.win_or_draw === undefined ? "-" : predictionBlock.win_or_draw)}</div>

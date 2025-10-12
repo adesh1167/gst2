@@ -92,7 +92,7 @@ const DeepAnalyzerTool = () => {
                 }
             }
         }, 500 + Math.random() * 700)
-        console.log("Stats: ", fixtureStats);
+        // console.log("Stats: ", fixtureStats);
     }, [deepAnalyzerMatches]);
 
     useEffect(() => {
@@ -174,7 +174,7 @@ const DeepAnalyzerTool = () => {
         if (data) {
             fetchFixtureStats()
                 .then((res) => {
-                    console.log("Res: ", res);
+                    // console.log("Res: ", res);
                     if (res) setAnalyzing(true);
                 })
                 .catch(() => {
@@ -194,7 +194,7 @@ const DeepAnalyzerTool = () => {
             }
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 if (res.data.status === 'success') {
                     setFixtureStats({
                         ...res.data.data,
@@ -586,7 +586,7 @@ const DeepAnalyzerTool = () => {
 
             case "Form (Home)": {
                 const totalSub = dt.home_form?.length || 1;
-                console.log(subIndex, totalSub, currentCategoryIndex, totalCategories)
+                // console.log(subIndex, totalSub, currentCategoryIndex, totalCategories)
                 return ((currentCategoryIndex + subIndex / totalSub) / totalCategories) * 100;
             }
 
@@ -603,7 +603,7 @@ const DeepAnalyzerTool = () => {
     const progress = useMemo(() => getProgress(), [getProgress]);
 
 
-    console.log("Category Indeex: ",);
+    // console.log("Category Indeex: ",);
 
     return (
         <motion.div

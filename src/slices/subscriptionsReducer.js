@@ -16,7 +16,7 @@ const subscriptionsSlice = createSlice({
     initialState,
     reducers: {
         setDeepAnalyzerSubscription: (state, action) => {
-            console.log("Payload:", action.payload);
+            // console.log("Payload:", action.payload);
             state.deepAnalyzerSubscription = action.payload.error ?
                 {
                     ...state.deepAnalyzerSubscription,

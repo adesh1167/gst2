@@ -5,6 +5,8 @@ import React from 'react'
 import { baseApiUrl } from "../data/url";
 import { useDispatch, useSelector } from "react-redux";
 import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
+import { useLocation } from "react-router";
+import { setNewPaths } from "../slices/dataReducer";
 
 const AuthContext = createContext();
 
@@ -15,8 +17,8 @@ const AppContext = ({ children }) => {
         loaded: false,
         matches: [],
     });
-
-    const { isAuthenticated } = useSelector(state => state.user);
+    const {pathname} = useLocation();
+    const {firstLoad, version, newPaths} = useSelector(state => state.data)
 
     const [deepAnalyzerUpcoming, setDeepAnalyzerUpcoming] = useState({
         pageSize: 20,
@@ -31,12 +33,56 @@ const AppContext = ({ children }) => {
 
     const dispatch = useDispatch();
 
+    useEffect(()=>{
+        if(firstLoad){
+            let shouldUpdate = false;
+            newPaths.forEach(path => {
+                if(pathname.startsWith(path)){
+                    const localNewPaths = localStorage.getItem("newPaths");
+                    let filteredLocalNewPaths;
+                    if(localNewPaths){
+                        const parsedLocalNewPaths = JSON.parse(localNewPaths);
+                        filteredLocalNewPaths = parsedLocalNewPaths.filter(p => p !== path);
+                    } else {
+                        filteredLocalNewPaths = [];
+                    }
+
+                    filteredLocalNewPaths.push(path);
+                    localStorage.setItem("newPaths", JSON.stringify(filteredLocalNewPaths));
+
+                    shouldUpdate = true;
+                }
+            })
+
+            if(shouldUpdate){
+                dispatch(setNewPaths());
+            }
+        }
+    }, [pathname, firstLoad])
+
+    useEffect(()=>{
+        if(firstLoad){
+            const localVersion = localStorage.getItem('version');
+            if(localVersion){
+                const parsedLocalVersion = JSON.parse(localVersion);
+                if(parsedLocalVersion != version){
+                    localStorage.setItem('version', JSON.stringify(version));
+                    window.location.reload();
+                }
+            } else {
+                localStorage.setItem('version', JSON.stringify(version));
+            }
+        }
+    }, [firstLoad, version])
+
+    // console.log("New Paths: ", newPaths);
+
     const fetchDeepAnalyzerMatches = useCallback(() => {
         axios({
             method: "GET",
             url: `${baseApiUrl}/get-matches.php`,
         }).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setDeepAnalyzerMatches(prev => ({
                 ...prev,
                 loaded: true,
@@ -54,13 +100,13 @@ const AppContext = ({ children }) => {
         const pageSize = deepAnalyzerUpcoming.pageSize || 4;
         const page = newPage ?? (deepAnalyzerUpcoming.page || 1);
 
-        console.log(pageSize, page, deepAnalyzerUpcoming.page);
+        // console.log(pageSize, page, deepAnalyzerUpcoming.page);
         if(deepAnalyzerUpcoming.matches[page]) return;
         axios({
             method: "GET",
             url: `${baseApiUrl}/get-matches-by-page.php?page=${page}&pageSize=${pageSize}`,
         }).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             // if (res.data.success) {
                 const allLoaded = res.data.matches.length < pageSize;
                 if(res.data.matches.length === 0) {
@@ -99,7 +145,7 @@ const AppContext = ({ children }) => {
             method: "GET",
             url: `${baseApiUrl}/get-deep-analyzer-subscription.php`,
         }).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(setDeepAnalyzerSubscription(res.data.data));
             } else {
@@ -123,7 +169,7 @@ const AppContext = ({ children }) => {
                 return [];
             }
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
             return [];
         }   )
     }, []);
@@ -139,7 +185,7 @@ const AppContext = ({ children }) => {
         searchMatches,
     }), [menuExpanded, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab])
 
-    console.log("DeepAnalyzerUpcoming: ", deepAnalyzerUpcoming)
+    // console.log("DeepAnalyzerUpcoming: ", deepAnalyzerUpcoming)
 
     return (
         <AuthContext.Provider value={value}>

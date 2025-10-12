@@ -4,7 +4,7 @@ import UserRoutes from './routes/userRoutes';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { baseApiUrl } from './data/url';
-import { setContinent, setCountry, setCurrency, setFactor, setFirstLoad } from './slices/dataReducer';
+import { setContinent, setCountry, setCurrency, setFactor, setFirstLoad, setNewPaths, setVersion } from './slices/dataReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setUserQueried } from './slices/userReducer';
 import Toasts from './components/toasts';
@@ -33,7 +33,7 @@ function App() {
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const { user, isAdmin, dashboard } = useSelector((state) => state.user);
+  const { user, isAdmin, dashboard, userQueried } = useSelector((state) => state.user);
   const { firstLoad, country, currency, continent, tAndCAccepted } = useSelector((state) => state.data);
   // const allData = useSelector((state) => state);
   const { pathname } = useLocation()
@@ -63,6 +63,7 @@ function App() {
     dispatch(setFixturesLoaded(false));
     dispatch(setMyMatches([]));
     dispatch(setMatchesLoaded(false));
+
   }, [user])
 
   useEffect(() => {
@@ -76,7 +77,7 @@ function App() {
             url: `${baseApiUrl}/profile.php`,
           })
 
-          console.log(res.data);
+          // console.log(res.data);
           if (!res.data.persisted) {
             sessionStorage.setItem("incognito", true);
             navigate("/", { replace: true });
@@ -97,7 +98,7 @@ function App() {
         url: `${baseApiUrl}/profile.php`,
 
       }).then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         if (!res.data.persisted) {
           const isIncognito = sessionStorage.getItem("incognito", true);
           if (!isIncognito) {
@@ -108,6 +109,7 @@ function App() {
             return;
           }
         }
+
         dispatch(setFirstLoad(true));
 
         if (res.data.continent) {
@@ -123,6 +125,13 @@ function App() {
         }
         if (res.data.status === "loggedin") {
           dispatch(login(res.data.data));
+        }
+        if(res.data.version){
+          dispatch(setVersion(res.data.version));
+        }
+        if(res.data.new_paths){
+          // console.log("Server new paths: ", res.data.new_paths);
+          dispatch(setNewPaths(res.data.new_paths));
         }
         dispatch(setUserQueried(true));
       }).catch((err) => {

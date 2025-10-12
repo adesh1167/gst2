@@ -1,7 +1,8 @@
-// LoadingRing.jsx
-import React from "react";
+import { style } from "framer-motion/client";
 
-export default function LoadingRing({ size = 64, ariaLabel = "Loading" }) {
+// LoadingRing.jsx
+export default function LoadingRing({ size = 64, ariaLabel = "Loading", className, style = {}}) {
+
   return (
     <svg
       role="img"
@@ -9,8 +10,9 @@ export default function LoadingRing({ size = 64, ariaLabel = "Loading" }) {
       width={size}
       height={size}
       viewBox="0 0 64 64"
-      className="loading-ring"
+      className={`loading-ring ${className}`}
       xmlns="http://www.w3.org/2000/svg"
+      style={style}
     >
       <title>{ariaLabel}</title>
 
