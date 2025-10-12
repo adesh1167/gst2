@@ -129,7 +129,7 @@ const Login = () => {
                             />
                             <label className='flex items-center gap-2' htmlFor='remember-me'>
                                 <Tick checked={rememberMe} color="#fff" />
-                                <span>Keep Me Logged In</span>
+                                <span>Keep me logged in</span>
                             </label>
                         </div>
                         <button

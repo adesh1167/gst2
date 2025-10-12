@@ -189,10 +189,10 @@ const Register = () => {
                             />
                             <label className='flex items-center gap-2' htmlFor='plus18'>
                                 <Tick checked={plus18} color="#fff" />
-                                <span>Keep Me Logged In</span>
+                                <span>I am 18+</span>
                             </label>
                             {errors.plus18 &&
-                                <div className="validation-message" style={{ width: "100%", textAlign: 'right', flex: "1 1" }}>{errors.plus18.message}</div>
+                                <div className="validation-message" style={{ width: "100%", textAlign: 'left', paddingLeft: 10, flex: "1 1" }}>{errors.plus18.message}</div>
                             }
                         </div>
                         <button
