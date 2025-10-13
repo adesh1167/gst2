@@ -179,7 +179,7 @@ export default function AnalyzerHome() {
         ), [upcoming.pageSize]
     )
 
-    // console.log("Deep Analyzer: ", deepAnalyzerSubscription);
+    console.log("Deep Analyzer: ", deepAnalyzerSubscription);
 
     return (
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.45 }} className="max-w-6xl mx-auto p-6 max-md:p-0">
@@ -221,6 +221,7 @@ export default function AnalyzerHome() {
                                 planName={deepAnalyzerSubscription.planName}
                                 startDateSql={deepAnalyzerSubscription.startDate}
                                 endDateSql={deepAnalyzerSubscription.endDate}
+                                nowDateSql={deepAnalyzerSubscription.now}
                                 onManage={() => console.log('open billing')}
                                 renewable={!deepAnalyzerSubscription.isActive}
                                 onRenew={() => setRenew(true)}

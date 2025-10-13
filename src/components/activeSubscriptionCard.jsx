@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { getMyMatchTime } from "../functions/formatDate";
 
-export function ActiveSubscriberCard({ startDateSql, endDateSql, planName = 'Monthly', price = null, features = [], onRenew = null, onCancel = null, renewable = false }) {
+export function ActiveSubscriberCard({ startDateSql, endDateSql, nowDateSql, planName = 'Monthly', price = null, features = [], onRenew = null, onCancel = null, renewable = false }) {
 
     const { country } = useSelector(state => state.data);
 
@@ -16,7 +16,7 @@ export function ActiveSubscriberCard({ startDateSql, endDateSql, planName = 'Mon
 
     const start = parseSql(startDateSql);
     const end = parseSql(endDateSql);
-    const now = new Date();
+    const now = nowDateSql ? parseSql(nowDateSql) : new Date();
 
     const isActive = start && end && now >= start && now <= end;
     const expired = start && end && now > end;
