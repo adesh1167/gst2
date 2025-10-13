@@ -58,7 +58,7 @@ export function ActiveSubscriberCard({ startDateSql, endDateSql, planName = 'Mon
                     <div className="h-2 rounded-full bg-gradient-to-r from-purple-500 to-red-400 transition-all" style={{ width: `${Math.max(0, Math.min(100, progress))}%` }} />
                 </div>
                 <div className="flex items-center justify-between text-sm text-gray-400 mt-2">
-                    <div>{isActive ? `${daysLeft} day${daysLeft === 1 ? '' : 's'} left` : expired ? 'Expired' : notStarted ? 'Starts soon' : ''}</div>
+                    <div>{isActive ? `Less than ${daysLeft} day${daysLeft === 1 ? '' : 's'} left` : expired ? 'Expired' : notStarted ? 'Starts soon' : ''}</div>
                     <div>{Math.max(0, Math.min(100, progress))}%</div>
                 </div>
             </div>
