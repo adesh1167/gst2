@@ -1,8 +1,8 @@
 export const unavailablePayments = [
-    // "MWK",
-    // "ZAR",
-    // "GHS",
-    // "NGN",
+    "MWK",
+    "ZAR",
+    "GHS",
+    "NGN",
     "ZMW",
     "UGX"
 ]
