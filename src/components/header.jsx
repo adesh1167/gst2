@@ -57,9 +57,9 @@ const Header = () => {
                 </span>
             </div>
             <div className={`menu-container ${menuExpanded ? "expanded" : ""}`}>
-                <div className="menu-icon" htmlFor="menu-btn">
+                <div className="menu-icon" htmlFor="menu-btn" onClick={toggleMenuExpanded}>
                     {(menuClosed && isAdminShown) && <span className="admin-dashboard-indicator">ADMIN</span>}
-                    <div className="flex items-center self-stretch min-h-[20px] relative" onClick={toggleMenuExpanded}>
+                    <div className="flex items-center self-stretch min-h-[20px] relative">
                         {(newPaths.length > 0 && menuClosed) && <span className="new outside-new mr-2 relative bottom-[4px]" />}
                         <span className="navicon">
 

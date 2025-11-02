@@ -51,8 +51,10 @@ const FlutterwaveButton = ({
                     duration: 5000
                 }))
 
-                if (manual) {
-                    navigate(manual);
+                if (manual && !isAdminShown) {
+                    navigate(manual, { state: {
+                        amount: data.data.data.price,
+                    }});
                     setLoading(false);
                     return;
                 }

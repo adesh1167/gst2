@@ -12,6 +12,7 @@ import AnalyzerComing from "./deepAnalyzer/coming";
 
 import "./styles/deepAnalyzer.css";
 import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
+import ManualSubscription from "./deepAnalyzer/manualSubscription";
 
 export default function DeepAnalyzer() {
 
@@ -56,6 +57,7 @@ export default function DeepAnalyzer() {
                             <Route path="*" element={<AnalyzerHome />} />
                             <Route index element={<AnalyzerHome />} />
                             <Route path="analyze/:id" element={<DeepAnalyzerTool />} />
+                            <Route path="manual-subscription/:id" element={<ManualSubscription />} />
                         </Route>
                     </Routes>
                 </AnimatePresence>

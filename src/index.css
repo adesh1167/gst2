@@ -153,6 +153,7 @@ code {
     width: calc(100% - 400px) !important;
     height: calc(100% - 50px) !important;
     top: 50px !important;
+    right: 0;
     left: auto;
   }
 
