@@ -22,7 +22,7 @@ export default function LoadingRing({ size = 64, ariaLabel = "Loading", classNam
         cy="32"
         r="26"
         fill="none"
-        stroke="#8b5cf6" /* purple */
+        stroke="#be5cffff" /* purple */
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeDasharray="90 130"
@@ -35,7 +35,7 @@ export default function LoadingRing({ size = 64, ariaLabel = "Loading", classNam
         cy="32"
         r="18"
         fill="none"
-        stroke="#facc15" /* yellow */
+        stroke="#f86f54ff" /* yellow */
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeDasharray="60 80"
@@ -48,7 +48,7 @@ export default function LoadingRing({ size = 64, ariaLabel = "Loading", classNam
         cy="32"
         r="10"
         fill="none"
-        stroke="#0b07d0ff" /* teal/blue */
+        stroke="#a8a7faff" /* teal/blue */
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeDasharray="36 48"

@@ -8,6 +8,7 @@ import { baseApiUrl } from '../data/url';
 import { setFixtures, setFixturesLoaded } from '../slices/fixturesReducer';
 import Loading from './loading';
 import { Link, useNavigationType } from 'react-router';
+import Banners from './banners';
 
 const Fixtures = () => {
 
@@ -26,29 +27,30 @@ const Fixtures = () => {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    if(!firstLoad){
-      if(fixturesLoaded){
-        if(navType !== "PUSH"){
+    // return;
+    if (!firstLoad) {
+      if (fixturesLoaded) {
+        if (navType !== "PUSH") {
           setLoading(false);
-        } else{
+        } else {
           fetchFixtures();
         }
-      } else{
+      } else {
         fetchFixtures();
       }
-    } else{
-      if(fixturesLoaded){
-        if(navType !== "PUSH"){
+    } else {
+      if (fixturesLoaded) {
+        if (navType !== "PUSH") {
           setLoading(false);
-        } else{
+        } else {
           // fetchFixtures();
         }
-      } else{
+      } else {
         fetchFixtures();
       }
     }
 
-    if(!firstLoad) setFirstLoad(true);
+    if (!firstLoad) setFirstLoad(true);
   }, [fixturesLoaded]) //dashboard change will trigger fixturesLoaded change which will in turn trigger reload here
 
   function fetchFixtures() {
@@ -80,16 +82,17 @@ const Fixtures = () => {
   }, [fixturesLoaded])
 
   const fixturesLength = useMemo(() =>
-  Object.values(fixtures).flatMap(country => Object.values(country.leagues)).flatMap(league => Object.values(league.fixtures)).length
+    Object.values(fixtures).flatMap(country => Object.values(country.leagues)).flatMap(league => Object.values(league.fixtures)).length
     , [fixtures])
 
-  // console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, navType);
+  console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, fixturesLength);
 
   return (
     <div className="dag-container07">
       <div className="dag-container08" />
       <div className="dag-container09">
-        {(!firstLoad || fixturesLength > 0) &&
+        <Banners />
+        {(fixturesLength > 0) &&
           <span className="dag-text10">
             Available Predictions <span id="predictionsCount">
               {(firstLoad && fixturesLength > 0) && `(${fixturesLength})`}
@@ -138,6 +141,9 @@ const Fixtures = () => {
                   <div style={{ fontWeight: "bold" }}>No Prediction Online</div>
                   <div style={{ marginTop: 15 }}>
                     Contact your local agent for exclusive fixtures today
+                  </div>
+                  <div style={{ marginTop: 15 }}>
+                    Try Deep Analyzer
                   </div>
                 </div>
               )
