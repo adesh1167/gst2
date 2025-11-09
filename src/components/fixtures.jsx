@@ -142,9 +142,6 @@ const Fixtures = () => {
                   <div style={{ marginTop: 15 }}>
                     Contact your local agent for exclusive fixtures today
                   </div>
-                  <div style={{ marginTop: 15 }}>
-                    Try Deep Analyzer
-                  </div>
                 </div>
               )
 
