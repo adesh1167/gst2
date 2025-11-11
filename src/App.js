@@ -1,7 +1,7 @@
 import { Routes, Route, useNavigate, useLocation, redirect, Navigate } from 'react-router';
 import './App.css';
 import UserRoutes from './routes/userRoutes';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { baseApiUrl } from './data/url';
 import { setContinent, setCountry, setCurrency, setFactor, setFirstLoad, setNewPaths, setVersion } from './slices/dataReducer';
@@ -66,7 +66,7 @@ function App() {
 
   }, [user])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
 
     async function init() {
 
@@ -77,8 +77,8 @@ function App() {
             url: `${baseApiUrl}/profile.php`,
           })
 
-          // console.log(res.data);
-          if (!res.data.persisted) {
+          console.log(res.data);
+          if (!res.data.cookies?.PHPSESSID) {
             sessionStorage.setItem("incognito", true);
             navigate("/", { replace: true });
           }
@@ -98,9 +98,11 @@ function App() {
         url: `${baseApiUrl}/profile.php`,
 
       }).then((res) => {
-        // console.log(res.data)
-        if (!res.data.persisted) {
+        // alert(JSON.stringify(res.data.cookies))
+        // console.log(res.data.cookies.PHPSESSID);
+        if (!res.data.cookies?.PHPSESSID) {
           const isIncognito = sessionStorage.getItem("incognito", true);
+          // console.log(isIncognito);
           if (!isIncognito) {
             setTimeout(() => {
               console.log("redirecting");
