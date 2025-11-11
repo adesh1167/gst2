@@ -70,7 +70,7 @@ function App() {
 
     async function init() {
 
-      if (pathname === "/persisted") {
+      if (pathname === "/persisted") { 
         try {
           const res = await axios({
             method: "POST",
