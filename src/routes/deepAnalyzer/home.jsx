@@ -285,7 +285,7 @@ export default function AnalyzerHome() {
                     animate={searching ?
                         {
                             // // position: "fixed",
-                            top: "50px",
+                            bottom: 0,
                             // paddingTop: "20px",
                             backgroundColor: "#000",
                             // width: "100%",
@@ -299,7 +299,7 @@ export default function AnalyzerHome() {
                         {
                             // position: "relative",
                             backgroundColor: "#0000",
-                            top: 0,
+                            bottom: 0,
                             // width: "100%"
                             paddingTop: 0,
                             padding: 0,
@@ -328,11 +328,18 @@ export default function AnalyzerHome() {
                                 className={`${searching ? "pl-11" : "pl-4"} w-full rounded-3xl bg-[#05060a] border border-gray-800 px-4 py-3 pr-20 text-gray-100 placeholder:text-gray-500 shadow-inner`}
                                 aria-label="Search matches"
                                 // onFocus={() => setSearching(true)}
-                                onFocus={() => {
+                                onFocus={(e) => {
                                     if (!searching) {
                                         navigate("/deep-analyzer/search")
                                     }
                                 }}
+                                type="text"
+                                inputMode="text"
+                                name="nothingNew"
+                                autoComplete="new-password webauthn"
+                                autoCorrect="off"
+                                spellCheck="false"
+                                // readOnly
                             // onBlur={() => setSearching(false)}
                             />
                             <button type="submit" aria-label="Search" className={`absolute right-1.5 top-1/2 -translate-y-1/2 ${loading.search ? "" : "bg-gradient-to-r from-purple-600 to-red-400"} p-2 rounded-3xl text-black shadow-md px-5`}>
