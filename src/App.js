@@ -103,7 +103,7 @@ function App() {
         if (!res.data.cookies?.PHPSESSID) {
           const isIncognito = sessionStorage.getItem("incognito", true);
           // console.log(isIncognito);
-          if (!isIncognito) {
+          if (!isIncognito && false) { // skip block
             setTimeout(() => {
               console.log("redirecting");
               window.location.href = `${baseApiUrl}/ping.php?redirect=${window.location.origin}/persisted`;
