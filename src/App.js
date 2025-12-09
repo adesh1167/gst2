@@ -116,6 +116,8 @@ function App() {
 
         if (res.data.continent) {
           dispatch(setContinent(res.data.continent))
+        }
+        if(res.data.factor){
           dispatch(setFactor(res.data.factor));
         }
         if (res.data.country) {
