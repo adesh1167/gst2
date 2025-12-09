@@ -83,7 +83,7 @@ const FlutterwaveButton = ({
                         fullName: `${data.data.user.first_name} ${data.data.user.last_name}`,
                     },
                     customizations: {
-                        title: "GST - Cara",
+                        title: "GST - Dawood Flv",
                         description: description,
                         logo: "https://globalsportstrade.vercel.app/logo.png",
                     },
