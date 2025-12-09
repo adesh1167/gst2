@@ -52,20 +52,23 @@ const FlutterwaveButton = ({
                 }))
 
                 if (manual && !isAdminShown) {
-                    navigate(manual, { state: {
-                        amount: data.data.data.price,
-                    }});
+                    navigate(manual, {
+                        state: {
+                            amount: data.data.data.price,
+                        }
+                    });
                     setLoading(false);
                     return;
                 }
 
                 const newConfig = {
-                    public_key: isAdminShown ? "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X" : "FLWPUBK-9ec2ca01d7a38256ebf461adb6038826-X", //Cara
+                    public_key: isAdminShown ? "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X" : "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer
+                    // public_key: "FLWPUBK-9ec2ca01d7a38256ebf461adb6038826-X", //Cara
+                    // public_key: "FLWPUBK-f2801afdf127dbb02f2adced0d298880-X", //Bam
+                    // public_key: "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer
                     // public_key: "FLWPUBK_TEST-188405db052e39c446317fc265c0cc97-X", //Ameer
                     // public_key: "FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X", //Bam
                     // public_key: "FLWPUBK_TEST-7e5e437d158c856bbe2fc2f94ab040c6-X", //HighB
-                    // public_key: "FLWPUBK-f2801afdf127dbb02f2adced0d298880-X", //Bam
-                    // public_key: "FLWPUBK-9ec2ca01d7a38256ebf461adb6038826-X", //Cara
                     tx_ref: data.data?.data?.tx_ref,
                     amount: data.data?.data?.price,
                     currency: data.data?.data?.currency,
@@ -187,7 +190,7 @@ const StartPayment = ({ config, setConfig, setLoading, finalCallBack, confirmLin
                             }))
                             setLoading(false);
                             // setTimeout(() => {
-                                // setConfig(null);
+                            // setConfig(null);
                             // }, 10000)
                             // console.log("Payment cancelled");
                         },
