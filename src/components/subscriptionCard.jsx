@@ -39,6 +39,7 @@ const SubscriptionCard = ({ price, description, title, frequency, type }) => {
                     }}
                     defaultCurrency={false}
                     ready={true}
+                    background={isAfrica ? "" : "rgb(152 112 202)"}
                     initiateLink={`${baseApiUrl}/initiate-subscription-crypto.php`}
                 />
             </div>
