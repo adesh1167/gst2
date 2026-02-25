@@ -409,10 +409,7 @@
 }
 
 .items-count {
-  padding-right: 10px;
-  border-right: 1px white solid;
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .dag-container19 {
@@ -422,7 +419,8 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  margin-right: 10px;
+  border-right: 1px white solid;
+  padding-right: 10px;
 }
 
 .dag-text26 {
@@ -436,11 +434,14 @@
 }
 
 .dag-container20 {
+  margin-left: 10px;
   flex: 0 0 auto;
   width: auto;
   height: auto;
   display: flex;
   align-items: flex-start;
+  margin-right: 10px;
+
 }
 
 .dag-icon6 {

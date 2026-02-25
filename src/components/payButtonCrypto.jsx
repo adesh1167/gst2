@@ -32,7 +32,7 @@ const PayButtonCrypto = ({ payload, style = {}, color = "", showPrice = true, de
             title={title}
             background={background}
             ready={ready}
-            amountText={defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country}${formatNumber(netTotal * factor)}`}
+            amountText={defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country} ${formatNumber(netTotal * factor)}`}
             initiateLink={initiateLink}
         />
     )
