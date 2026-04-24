@@ -175,7 +175,7 @@ const UploadMatches = () => {
         duration: 3000,
       }))
       setSelectedMatches({});
-      sessionStorage.setItem("selectedMatches", JSON.stringify({}));
+      sessionStorage.setItem("selectedMatches", JSON.stringify({})); 
     }).catch((response) => {
       dispatch(showToast({
         type: "error",
