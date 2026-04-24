@@ -49,7 +49,7 @@ const Home = () => {
                         <div className='dag-container09'>
                             <div className='dag-container10'>
                                 <div className="main-loading">
-                                    <Loading color='#eee'/>
+                                    <Loading color='#ea580c'/>
                                 </div>
 
                             </div>

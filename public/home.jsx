@@ -46,7 +46,7 @@ const Home = () => {
                         <div className='dag-container09 flex-[0_0_auto] w-full h-auto min-h-[calc(100vh-50px)] flex items-start pt-5 flex-col pb-[140px] bg-[#fdfdee]'>
                             <div className='dag-container10 w-full h-auto flex flex-col pb-5 bg-[#fdfdee]'>
                                 <div className="main-loading w-full h-[200px] flex items-center justify-center">
-                                    <Loading />
+                                    <Loading color='#ea580c'/>
                                 </div>
 
                             </div>

@@ -26,7 +26,7 @@ const MyMatches = () => {
                     <div className="my-matches-container04">
                         <div className="my-matches-container06">
                             <div className="my-matches-loading">
-                                <Loading />
+                                <Loading color='#ea580c'/>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ const MyMatchesContent = () => {
                         (loading ?
 
                             <div className="my-matches-loading">
-                                <Loading />
+                                <Loading color='#ea580c'/>
                             </div>
                             :
                             error ?
