@@ -41,7 +41,7 @@ const MyMatchItem = ({ item }) => {
                 </div>
                 <div className="my-matches-container14">
                     <span>
-                        Type: <span>{item.game_type}</span>
+                        Type: <span>{item.gameType}</span>
                     </span>
                 </div>
             </div>
