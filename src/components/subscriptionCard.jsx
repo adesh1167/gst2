@@ -29,6 +29,7 @@ const SubscriptionCard = ({ price, description, title, frequency, type }) => {
                     showPrice={false}
                     style={styles}
                     background="rgb(152 112 202)"
+                    className={"payment-button-purple"}
                 />}
                 <PayButtonCrypto
                     title="SUB WITH CRYPTO"

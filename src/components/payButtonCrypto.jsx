@@ -11,7 +11,7 @@ import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 import { title } from 'framer-motion/client';
 
-const PayButtonCrypto = ({ payload, style = {}, color = "", showPrice = true, defaultCurrency, title = "PAY", background = "#000", ready = false, amountText, initiateLink }) => {
+const PayButtonCrypto = ({ payload, style = {}, color = "", showPrice = true, defaultCurrency, title = "PAY", background = "#000", ready = false, amountText, className, initiateLink }) => {
     const netTotal = useSelector(selectNetTotal);
     const { isAdmin, dashboard } = useSelector((state) => state.user);
     const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
@@ -34,11 +34,12 @@ const PayButtonCrypto = ({ payload, style = {}, color = "", showPrice = true, de
             ready={ready}
             amountText={defaultCurrency ? `$${formatNumber(netTotal * 0.1)}` : `${country} ${formatNumber(netTotal * factor)}`}
             initiateLink={initiateLink}
+            className={className}
         />
     )
 }
 
-const PayButtonCryptoStart = ({ defaultCurrency, title = "PAY", showPrice = true, background = "#000", color = "", style = {}, payload, ready, amountText, initiateLink }) => {
+const PayButtonCryptoStart = ({ defaultCurrency, title = "PAY", showPrice = true, background = "#000", color = "", style = {}, payload, ready, amountText, initiateLink, className }) => {
 
     const { isAuthenticated} = useSelector((state) => state.user);
     const [loading, setLoading] = useState(false);
@@ -109,7 +110,7 @@ const PayButtonCryptoStart = ({ defaultCurrency, title = "PAY", showPrice = true
     }
 
     return (
-        <div className="cart-container42 cursor-pointer hover:scale-105 transition-all" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
+        <div className={`cart-container42 cursor-pointer hover:scale-105 transition-all ${className || "" }`} id="paymentButton" onClick={loading ? null : initiatePayment} style={{
             backgroundColor: background,
             color: color,
             ...style

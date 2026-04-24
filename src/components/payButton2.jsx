@@ -25,7 +25,8 @@ const FlutterwaveButton = ({
     price,
     description,
     country,
-    manual
+    manual,
+    className,
 }) => {
 
     const [loading, setLoading] = useState(false);
@@ -132,7 +133,7 @@ const FlutterwaveButton = ({
                 finalCallBack={finalCallBack}
                 confirmLink={confirmLink}
             />}
-            <div className="cart-container42 cursor-pointer hover:scale-105 transition-all" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
+            <div className={`cart-container42 cursor-pointer hover:scale-105 transition-all ${className || ""}`} id="paymentButton" onClick={loading ? null : initiatePayment} style={{
                 backgroundColor: background,
                 color: color,
                 ...style

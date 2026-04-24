@@ -136,7 +136,7 @@ const Cart = () => {
                             </div>
                         </div>}
                         <div className="empty-cart-flag" id="emptyCartFlagCont">
-                            <label htmlFor='emptyCartFlagInput'>Empty cart after payment <Tick checked={emptyCartFlag} /></label>
+                            <label htmlFor='emptyCartFlagInput'>Empty cart after payment <Tick checked={emptyCartFlag} color="#fff"/></label>
                             <input className="empty-cart-input" id='emptyCartFlagInput' type="checkbox" value={emptyCartFlag} onChange={e => setEmptyCartFlag(e.target.checked)} />
                         </div>
                         <div className="cart-container34">
@@ -158,7 +158,7 @@ const Cart = () => {
                                         className="cart-button button"
                                         id="couponButton"
                                     >
-                                        <LoadingButton loading={couponLoading}>Apply</LoadingButton>
+                                        <LoadingButton color='#fff' loading={couponLoading}>APPLY</LoadingButton>
                                     </button>
                                 </form>
                                 <div className="cart-container38">
@@ -167,7 +167,7 @@ const Cart = () => {
                                         {" "}
                                         <span id="cartCheckoutPriceCont" style={{
                                             textDecoration: couponActive ? "line-through" : "none",
-                                            color: couponActive ? "#777" : "black"
+                                            color: couponActive ? "var(--text-muted)" : "var(--text-primary)"
                                         }}>{country} {formatNumber(total * factor)}</span>
                                     </span>
                                 </div>
@@ -203,7 +203,7 @@ const Cart = () => {
                         </div>
                         {cart.length > 0 ?
                             <div className='cart-buttons'>
-                                {isAfrica && <PayForMatchesWrapper emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} />}
+                                {isAfrica && <PayForMatchesWrapper emptyCartFlag={emptyCartFlag} emptyCart={emptyCart} className={"payment-button-orange"}/>}
                                 <PayButtonCrypto
                                     emptyCartFlag={emptyCartFlag}
                                     emptyCart={emptyCart}
@@ -215,6 +215,7 @@ const Cart = () => {
                                         coupon: coupon?.coupon
                                     }}
                                     ready={cart.length > 0}
+                                    
                                     initiateLink={`${baseApiUrl}/initiate-payment-crypto.php`}
                                 />
                             </div>

@@ -162,7 +162,7 @@ function App() {
     if (pathname.includes("/deep-analyzer")) {
       document.getElementById("root").classList.add("ai");
     } else {
-      document.getElementById("root").classList.remove("ai");
+      // document.getElementById("root").classList.remove("ai");
     }
   }, [pathname, tAndCAccepted, menuExpanded, width, height])
 

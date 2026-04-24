@@ -148,7 +148,7 @@ const Fixtures = () => {
 
               :
               <div className="main-loading">
-                <Loading />
+                <Loading color='#ea580c'/>
               </div>
           }
         </div>

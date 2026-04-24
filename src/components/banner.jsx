@@ -36,7 +36,7 @@ export default function Banner() {
                     className="absolute inset-8 rounded-full border border-purple-500/50"
                 />
 
-                <span className="relative z-10 text-xs text-purple-300 tracking-widest font-mono max-md:hidden">
+                <span className="relative z-1 text-xs text-purple-300 tracking-widest font-mono max-md:hidden">
                     AI CORE
                 </span>
             </div>

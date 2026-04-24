@@ -13,12 +13,13 @@ const Home = () => {
     const { isAuthenticated, user, userQueried } = useSelector(state => state.user);
     const { country, factor } = useSelector(state => state.data);
     const cart = useSelector(state => state.cart);
+    const coupon = useSelector(state => state.data.coupon);
     const netTotal = useSelector(selectNetTotal);
     const dispatch = useDispatch();
 
     const [cartData, setCartData] = useState();
 
-    // console.log("User: ", user, isAuthenticated, cart, factor);
+    console.log("User: ", coupon, cart, (coupon?.min_matches && coupon.min_matches <= cart.quantity));
 
     return (
         <>
@@ -48,7 +49,7 @@ const Home = () => {
                         <div className='dag-container09'>
                             <div className='dag-container10'>
                                 <div className="main-loading">
-                                    <Loading />
+                                    <Loading color='#eee'/>
                                 </div>
 
                             </div>
@@ -56,6 +57,14 @@ const Home = () => {
                     </div>
                 }
                 <Link className="dag-container18" to="/cart">
+                    {(coupon && cart.quantity > 0 && (!coupon.min_matches || (coupon?.min_matches && coupon.min_matches <= cart.quantity))) &&
+                        <div className="coupon-indicator">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10" height="10" fill="white">
+                                <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                            </svg>
+                            <span>Coupon</span>
+                        </div>
+                    }
                     <div className="dag-container19">
                         <span className="dag-text26" id="checkoutCurrencyCont" />
                         <span className="dag-text27" id="checkoutPriceCont">

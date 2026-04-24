@@ -147,3 +147,91 @@ CONCAT('<html lang="en"><head>
 </body><!--
 --></html>')
 FROM users WHERE users.id = 14;
+
+
+INSERT INTO mail_queue(send_to, subject, html_body) SELECT email, "New tool: Deep Analyzer - AI match analysis",
+CONCAT('
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>Today\'s High-Odd Fixtures - GST</title>
+    <style>
+        :root { color-scheme: light dark; supported-color-schemes: light dark; }
+        body { margin: 0; padding: 0; font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; background-color: transparent !important; }
+        .email-wrapper { width: 100%; background-color: transparent !important; padding: 10px 0; }
+        .container { max-width: 550px; margin: 0 auto; background-color: #15191d !important; border-radius: 12px; overflow: hidden; border: 1px solid #2d3339; }
+        .header { padding: 30px 20px 15px; text-align: center; background-color: #15191d !important; }
+        .logo-img { width: 70px; height: auto; margin-bottom: 10px; }
+        .logo-text { font-size: 18px; font-weight: 800; letter-spacing: 2px; color: #ffffff !important; text-transform: uppercase; display: block; }
+        .content { padding: 25px; line-height: 1.6; background-color: #15191d !important; }
+        h1 { color: #ffffff !important; font-size: 20px; margin-top: 0; text-align: center; }
+        p { color: #abb2bf !important; font-size: 15px; text-align: left; }
+        
+        /* Fixture List Style */
+        .fixture-list { background-color: #1c2127 !important; border-radius: 8px; padding: 15px; margin: 20px 0; border: 1px dashed #2d3339; }
+        .fixture-item { color: #ffffff !important; font-size: 14px; padding: 10px 0; border-bottom: 1px solid #2d3339; text-align: center; list-style: none; }
+        .fixture-item:last-child { border-bottom: none; }
+        
+        /* Promo Box */
+        .promo-box { background-color: #7f1d1d !important; color: #ffffff !important; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0; display: block; text-decoration: none;}
+        .promo-code { font-size: 24px; font-weight: 900; letter-spacing: 2px; display: block; margin-top: 5px; }
+
+        .cta-container { text-align: center; padding: 15px 0; }
+        .button { background-color: #7f1d1d !important; color: #ffffff !important; padding: 15px 35px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; text-transform: uppercase; font-size: 14px; }
+        
+        .footer { padding: 25px; text-align: center; font-size: 11px; color: #5c6370 !important; background-color: #0e1216 !important; }
+        .footer a { color: #7f1d1d !important; text-decoration: none; }
+
+        @media (prefers-color-scheme: dark) {
+            .container, .header, .content { background-color: #15191d !important; }
+            .fixture-list { background-color: #1c2127 !important; }
+            h1, .logo-text, .fixture-item { color: #ffffff !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="container">
+            <div class="header">
+                <img src="https://gsportstrade.com/logo.png" alt="GST Logo" class="logo-img">
+                <span class="logo-text">GLOBAL SPORTS TRADE</span>
+            </div>
+
+            <div class="content">
+                <h1>1,000+ Odds Now Available 📈</h1>
+                <p>Hi ',first_name,',</p>
+
+<p>Today\'s high-precision AI selections are live. We have identified 7 premium fixtures with a combined potential of approximately 1,000 odds.</p>
+
+                <div class="fixture-list">
+                    <div class="fixture-item">⚽ Sporting San Jose vs LD Alajuelense</div>
+                    <div class="fixture-item">⚽ Perez Zeledon vs Puntarenas FC</div>
+                    <div class="fixture-item">⚽ Tigres UANL vs Guadalajara Chivas</div>
+                    <div class="fixture-item">⚽ Antigua GFC vs Municipal</div>
+                    <div class="fixture-item">⚽ Alianza vs FAS</div>
+                    <div class="fixture-item">⚽ Nacional Asuncion vs Cerro Porteno</div>
+                    <div class="fixture-item">⚽ Diriangén vs Real Estelí</div>
+                </div>
+
+                <a href="https://gsportstrade.com/coupon/special50" class="promo-box">
+                    <span style="font-weight: 600;">GET 50% OFF TODAY ONLY</span>
+                    <span class="promo-code">SPECIAL50</span>
+                </a>
+
+                <div class="cta-container">
+                    <a href="https://gsportstrade.com" class="button">Access Predictions</a>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>© 2026 Global Sports Trade. All rights reserved.</p>
+                <p><a href="https://gsportstrade.com/about">About GST</a> | <a href="https://gsportstrade.com/contact">Support Center</a></p>
+                <div style="margin-top:15px; color: #4b5263 !important;">Gamble Responsibly | 18+ Only</div>
+            </div>
+        </div>
+    </div>
+
+</body></html>')
+FROM users WHERE users.id = 14;

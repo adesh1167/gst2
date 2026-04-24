@@ -43,7 +43,7 @@ code {
 }
 
 .active .rainbow-text, .ai .rainbow-text{
-  background: linear-gradient(to right,red,orange,blue,purple,green,white,red);
+  background: linear-gradient(to right,red,orange,rgb(100, 100, 255), rgb(255, 100, 255), rgb(100, 255, 100),white,red);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
@@ -65,6 +65,16 @@ code {
 .active .new::after{
   border-color: #8f8;
   color: #8f8;
+}
+
+.payment-button-orange{
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%) !important;
+  color: white !important;
+}
+
+.payment-button-purple{
+  background: rgb(168 85 247) !important;
+  color: white !important;
 }
 
 /* .ai always coincide with .active for new */

@@ -9,7 +9,7 @@ import { unavailablePayments } from '../data/unavaiablePayments';
 import FlutterwaveButton from './payButton2';
 import { useLocation, useNavigate } from 'react-router';
 
-const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {} }) => {
+const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {}, className }) => {
 
     const [manualLink, setManualLink] = useState(null);
 
@@ -116,6 +116,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
             country={country}
             description={`Pay For Matches`}
             manual={manualLink}
+            className={className}
         />
     )
 }

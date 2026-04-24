@@ -88,7 +88,7 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
     }), [newPaths])
 
     return (
-        <div className={`menu`}>
+        <div className={`menu ai`}>
             <ul className="menu-content">
                 {isAuthenticated ?
                     <>
@@ -582,7 +582,7 @@ const Menu = ({ setSkip, setMenuExpanded }) => {
                     </>
                 }
                 {isAuthenticated &&
-                    <li>
+                    <li className="logout-li">
                         <a href="#" className="logout" onClick={loading ? null : doLogout}>
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

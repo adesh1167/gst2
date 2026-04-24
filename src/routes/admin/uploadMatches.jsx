@@ -1,4 +1,4 @@
-import { use, useEffect, useMemo, useRef, useState } from 'react'
+import { use, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Header from '../../components/header';
 import './styles/uploadMatches.css';
 import { DateTime } from 'luxon';
@@ -21,6 +21,7 @@ const UploadMatches = () => {
   const [titleDate, setTitleDate] = useState(null);
   const [filtered, setFiltered] = useState(false);
   const searchRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // const filteredMatches = useMemo(() =>
   //   matches.filter(match => search === "" || (match.teams.home.name + match.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1)
@@ -28,13 +29,33 @@ const UploadMatches = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     setSearch('');
   }, [filtered])
 
-  useEffect(()=>{
+  useEffect(() => {
     setFiltered(false);
   }, [matches])
+
+  useLayoutEffect(() => {
+    const sessionSelectedMatchesJSON = sessionStorage.getItem("selectedMatches");
+    if (sessionSelectedMatchesJSON) {
+      try {
+        const sessionSelectedMatches = JSON.parse(sessionSelectedMatchesJSON);
+        setSelectedMatches(sessionSelectedMatches);
+      } catch (error) {
+
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Object.keys(selectedMatches).length > 0) {
+      sessionStorage.setItem("selectedMatches", JSON.stringify(selectedMatches))
+    }
+  }, [selectedMatches])
+
+
 
   function fetchMatches(offset, typeOffset = true) {
     let date;
@@ -137,7 +158,7 @@ const UploadMatches = () => {
       return;
     }
 
-    if(!window.confirm(`Upload ${Object.values(selectedMatches).length} matches?`)){
+    if (!window.confirm(`Upload ${Object.values(selectedMatches).length} matches?`)) {
       return;
     }
 
@@ -154,6 +175,7 @@ const UploadMatches = () => {
         duration: 3000,
       }))
       setSelectedMatches({});
+      sessionStorage.setItem("selectedMatches", JSON.stringify({}));
     }).catch((response) => {
       dispatch(showToast({
         type: "error",
@@ -167,112 +189,114 @@ const UploadMatches = () => {
   }
 
   return (
-    <div className='upload-matches'>
-      {/* <Header /> */}
-      <div className='upload-matches-search'>
-        <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Matches...' />
-        {search.length > 0 && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" onClick={() => {
-          setSearch("");
-          searchRef.current.focus();
-        }}>
-          <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-        </svg>}
+    <div className='upload-matches-wrapper'>
+      <div ref={scrollRef} className='upload-matches'>
+        {/* <Header /> */}
+        <div className='upload-matches-search'>
+          <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder='Search Matches...' />
+          {search.length > 0 && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" onClick={() => {
+            setSearch("");
+            searchRef.current.focus();
+          }}>
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+          </svg>}
 
-      </div>
-      <div className='fetch-options'>
-        <div className='fetch-options-row'>
-          <div className='fetch-options-row-item' onClick={() => fetchMatches(0)}>
-            Today
+        </div>
+        <div className='fetch-options'>
+          <div className='fetch-options-row'>
+            <div className='fetch-options-row-item' onClick={() => fetchMatches(0)}>
+              Today
+            </div>
+            <div className='fetch-options-row-item' onClick={() => fetchMatches(1)}>
+              Tomorrow
+            </div>
+            <div className='fetch-options-row-item' onClick={() => fetchMatches(2)}>
+              N. Tomorrow
+            </div>
           </div>
-          <div className='fetch-options-row-item' onClick={() => fetchMatches(1)}>
-            Tomorrow
-          </div>
-          <div className='fetch-options-row-item' onClick={() => fetchMatches(2)}>
-            N. Tomorrow
+          <div className='fetch-options-row'>
+            <div className='fetch-options-row-title'>
+              Custom
+            </div>
+            <div className='fetch-options-row-date'>
+              <input type="date" value={customDate} onChange={e => setCustomDate(e.target.value)} />
+            </div>
+            <div className='fetch-options-row-button' onClick={() => fetchMatches(undefined, false)}>GO</div>
           </div>
         </div>
-        <div className='fetch-options-row'>
-          <div className='fetch-options-row-title'>
-            Custom
-          </div>
-          <div className='fetch-options-row-date'>
-            <input type="date" value={customDate} onChange={e => setCustomDate(e.target.value)} />
-          </div>
-          <div className='fetch-options-row-button' onClick={() => fetchMatches(undefined, false)}>GO</div>
-        </div>
-      </div>
-      <div className='upload-matches-head'>
-        <div className='upload-matches-head-text'>
-          {titleDate ?
-            (filtered ?
-              <span>Selected Matches ({Object.values(selectedMatches).length})</span>
+        <div className='upload-matches-head'>
+          <div className='upload-matches-head-text'>
+            {titleDate ?
+              (filtered ?
+                <span>Selected Matches ({Object.values(selectedMatches).length})</span>
+                :
+                <span>Matches for {titleDate} {loading || `(${matches.length})`}</span>)
               :
-            <span>Matches for {titleDate} {loading || `(${matches.length})`}</span>)
-            :
-            <span>Select a date to fetch matches</span>
-          }
-        </div>
-      </div>
-
-      {loading ?
-
-        <div className='upload-matches-loading'>
-          <Loading width={60} height={60} />
-        </div>
-        :
-        <div className='upload-matches-body'>
-          {filtered ?
-
-            Object.values(selectedMatches).map((item, index) =>
-              <UploadMatchesItem
-                key={item.data.fixture.id}
-                shown={true}
-                item={item.data}
-                addMatchhToList={addMatchhToList}
-                selectedMatches={selectedMatches}
-                prevData={{
-                  selection: item.selection,
-                  odds: item.odds,
-                  price: item.price,
-                  type: item.type
-                }}
-              />
-            )
-            :
-            matches.map((item, index) =>
-              <UploadMatchesItem
-                key={item.fixture.id}
-                shown={search === "" || (item.teams.home.name + item.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1}
-                item={item}
-                addMatchhToList={addMatchhToList}
-                selectedMatches={selectedMatches}
-                prevData={selectedMatches[item.fixture.id] ? {
-                  selection: selectedMatches[item.fixture.id].selection,
-                  odds: selectedMatches[item.fixture.id].odds,
-                  price: selectedMatches[item.fixture.id].price,
-                  type: selectedMatches[item.fixture.id].type
-                } : null}
-              />
-            )
-          }
+              <span>Select a date to fetch matches</span>
+            }
+          </div>
         </div>
 
-      }
-      <div className='upload-matches-footer'>
-        <div className='uplaod-matches-footer-filter' style={{opacity: filtered ? 1 : 0.5}} onClick={()=>setFiltered(prev=>!prev)}>
-          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
-          </svg>
-        </div>
-        <div className='uplaod-matches-footer-scroll' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l256 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
-          </svg>
-        </div>
-        <div className='upload-matches-footer-button' onClick={uploading ? null : uploadMatches}>
-          <LoadingButton color='#fff' width={25} height={25} loading={uploading}>
-            UPLOAD | {Object.keys(selectedMatches).length}
-          </LoadingButton>
+        {loading ?
+
+          <div className='upload-matches-loading'>
+            <Loading width={60} height={60} />
+          </div>
+          :
+          <div className='upload-matches-body'>
+            {filtered ?
+
+              Object.values(selectedMatches).map((item, index) =>
+                <UploadMatchesItem
+                  key={item.data.fixture.id}
+                  shown={true}
+                  item={item.data}
+                  addMatchhToList={addMatchhToList}
+                  selectedMatches={selectedMatches}
+                  prevData={{
+                    selection: item.selection,
+                    odds: item.odds,
+                    price: item.price,
+                    type: item.type
+                  }}
+                />
+              )
+              :
+              matches.map((item, index) =>
+                <UploadMatchesItem
+                  key={item.fixture.id}
+                  shown={search === "" || (item.teams.home.name + item.teams.away.name).toLowerCase().indexOf(search.toLowerCase()) > -1}
+                  item={item}
+                  addMatchhToList={addMatchhToList}
+                  selectedMatches={selectedMatches}
+                  prevData={selectedMatches[item.fixture.id] ? {
+                    selection: selectedMatches[item.fixture.id].selection,
+                    odds: selectedMatches[item.fixture.id].odds,
+                    price: selectedMatches[item.fixture.id].price,
+                    type: selectedMatches[item.fixture.id].type
+                  } : null}
+                />
+              )
+            }
+          </div>
+
+        }
+        <div className='upload-matches-footer'>
+          <div className='uplaod-matches-footer-filter' style={{ opacity: filtered ? 1 : 0.5 }} onClick={() => setFiltered(prev => !prev)}>
+            <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z" />
+            </svg>
+          </div>
+          <div className='uplaod-matches-footer-scroll' onClick={() => scrollRef.current && scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+              <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l256 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
+            </svg>
+          </div>
+          <div className='upload-matches-footer-button' onClick={uploading ? null : uploadMatches}>
+            <LoadingButton color='#fff' width={25} height={25} loading={uploading}>
+              UPLOAD | {Object.keys(selectedMatches).length}
+            </LoadingButton>
+          </div>
         </div>
       </div>
     </div>
@@ -285,7 +309,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchhToList, selectedMatches, s
     type: "1 X 2",
     selection: "",
     odds: "",
-    price: 500,
+    price: 1000,
   });
 
   useEffect(() => {

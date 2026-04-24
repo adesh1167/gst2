@@ -10,7 +10,7 @@ import FlutterwaveButton from './payButton2';
 import { useLocation, useNavigate } from 'react-router';
 import { useApp } from '../contexts/appContext';
 
-const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showPrice = true, background = "", color = "", style = {} }) => {
+const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showPrice = true, background = "", color = "", className, style = {} }) => {
 
 
     const { fetchDeepAnalyzerSubscription } = useApp();
@@ -110,6 +110,7 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
             manual={manualLink}
             style={style}
             background={background}
+            className={className}
         />
     )
 }
