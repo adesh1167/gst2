@@ -167,7 +167,7 @@ function App() {
   }, [pathname, tAndCAccepted, menuExpanded, width, height])
 
   useEffect(()=>{
-    if(firstLoad && !isCountrySelected && pathname !== "/country"){
+    if(firstLoad && !isCountrySelected && pathname !== "/country" && pathname !== "/about"){
       navigate("/country", {state: {redirect: pathname}});
     }
     if(firstLoad && isCountrySelected && pathname === "/country"){
@@ -201,7 +201,7 @@ function App() {
           <Route path="/reset-password/:id" element={<ResetPassword />} />
           <Route path="/about" element={<About />} />
         </Routes>
-      {(!tAndCAccepted && pathname != "/about") && <Welcome />}
+      {(!tAndCAccepted && pathname !== "/about") && <Welcome />}
       </main>
       <Toasts />
     </>

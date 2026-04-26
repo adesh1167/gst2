@@ -235,3 +235,305 @@ CONCAT('
 
 </body></html>')
 FROM users WHERE users.id = 14;
+
+INSERT INTO mail_queue(send_to, subject, html_body) SELECT email, "Your Weekend Fixtures Request Has Been Processed",
+CONCAT('
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="supported-color-schemes" content="dark" />
+  <title>Today\'s Analysis Is Ready — GST</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; background-color: #0a0a0f; width: 100% !important; }
+    a { color: inherit; }
+
+    u + #body .gmail-fix { display: block !important; }
+
+    [data-ogsc] body, [data-ogsb] body { background-color: #0a0a0f !important; }
+    [data-ogsc] .force-bg, [data-ogsb] .force-bg { background-color: #0a0a0f !important; }
+    [data-ogsc] .card-bg, [data-ogsb] .card-bg { background-color: #1a1a2e !important; }
+    [data-ogsc] *, [data-ogsb] * { color: inherit !important; }
+
+    /* iOS Mail dark mode override — prevents white background inversion */
+    @media (prefers-color-scheme: dark) {
+      body { background-color: #0a0a0f !important; color: #ffffff !important; }
+      .force-bg { background-color: #0a0a0f !important; }
+      .card-bg { background-color: #1a1a2e !important; }
+      .ios-invert { background-color: #0a0a0f !important; }
+      /* Prevent iOS from applying -apple-color-filter on these elements */
+      body, table, td, div, p, span, a {
+        -webkit-color-filter: none !important;
+        color-filter: none !important;
+      }
+    }
+
+    /* Explicit light mode — lock colors even when system is light */
+    @media (prefers-color-scheme: light) {
+      body { background-color: #0a0a0f !important; }
+      .force-bg { background-color: #0a0a0f !important; }
+      .card-bg { background-color: #1a1a2e !important; }
+    }
+
+    @media only screen and (max-width: 600px) {
+      .email-wrapper { width: 100% !important; }
+      .content-block { padding: 30px 20px !important; }
+      .hero-title { font-size: 28px !important; line-height: 1.2 !important; }
+      .cta-button { padding: 16px 32px !important; font-size: 16px !important; }
+      .stat-cell { display: block !important; width: 100% !important; padding: 10px 0 !important; }
+    }
+  </style>
+</head>
+<body id="body" bgcolor="#0a0a0f" style="margin:0;padding:0;background-color:#0a0a0f;font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;">
+
+  <!-- Preheader hidden preview text -->
+  <div style="display:none;font-size:1px;color:#0a0a0f;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+    Your daily AI-powered sports analysis report is ready. See what our model flagged for today. &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;
+  </div>
+
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#0a0a0f" class="force-bg ios-invert" style="background-color:#0a0a0f;color-scheme:only;">
+    <tr>
+      <td align="center" style="padding:20px 10px;">
+
+        <table class="email-wrapper" role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;width:100%;">
+
+          <!-- HEADER -->
+          <tr>
+            <td style="padding:0 20px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <!-- Logo + Name -->
+                  <td style="padding:12px 0;" valign="middle">
+                    <a href="https://gsportstrade.com" target="_blank" style="text-decoration:none;display:inline-block;">
+                      <img src="https://gsportstrade.com/assets/logo.png" alt="GST Logo" width="30" height="30" style="border-radius:8px;margin-right:10px;display:inline-block;vertical-align:middle;" />
+                      <span style="font-size:18px;font-weight:700;color:#ffffff;vertical-align:middle;letter-spacing:0.5px;">GST</span>
+                    </a>
+                  </td>
+                  <!-- Nav link -->
+                  <td align="right" style="padding:12px 0;" valign="middle">
+                    <a href="https://gsportstrade.com" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#ea580c,#f97316);color:#ffffff;font-size:12px;font-weight:700;padding:7px 18px;border-radius:20px;text-decoration:none;letter-spacing:0.5px;">Open App</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:16px;"></td></tr>
+
+          <!-- HERO -->
+          <tr>
+            <td style="border-radius:20px;overflow:hidden;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td class="content-block" style="padding:50px 40px 40px 40px;text-align:center;">
+
+                    <!-- Live badge -->
+                    <div style="display:inline-block;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.5);border-radius:50px;padding:6px 18px;margin-bottom:24px;">
+                      <span style="color:#22c55e !important;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;"><font color="#22c55e">&#x25CF; Live Now</font></span>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="hero-title" style="font-size:36px;font-weight:900;color:#ffffff !important;line-height:1.15;margin-bottom:16px;letter-spacing:-0.5px;">
+                      <font color="#ffffff">Today\'s AI Analysis<br />
+                      <span style="color:#fb923c !important;"><font color="#fb923c">Report Is Ready</font></span></font>
+                    </h1>
+
+                    <!-- Body -->
+                    <p style="color:#b3b3cc !important;font-size:16px;line-height:1.7;max-width:440px;margin:0 auto 32px auto;">
+                      <font color="#b3b3cc">Our model has finished processing today\'s fixtures. The results — including confidence scores and selections — are now live on your dashboard.</font>
+                    </p>
+
+                    <!-- Primary CTA -->
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                      <tr>
+                        <td style="border-radius:50px;background:linear-gradient(135deg,#ea580c,#f97316);box-shadow:0 8px 30px rgba(234,88,12,0.5);">
+                          <a class="cta-button" href="https://gsportstrade.com" target="_blank" style="display:inline-block;padding:18px 48px;font-size:18px;font-weight:800;color:#ffffff;text-decoration:none;border-radius:50px;letter-spacing:0.5px;">
+                            View Today\'s Report &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:24px;"></td></tr>
+
+          <!-- STATS -->
+          <tr>
+            <td>
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td class="stat-cell" width="33%" style="padding:0 6px 0 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td bgcolor="#1a1a2e" class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;">
+                          <p style="font-size:26px;font-weight:900;color:#fb923c !important;margin-bottom:4px;"><font color="#fb923c">94%+</font></p>
+                          <p style="font-size:11px;color:#808099 !important;text-transform:uppercase;letter-spacing:1.5px;"><font color="#808099">Min. Confidence</font></p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:0 3px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td bgcolor="#1a1a2e" class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;">
+                          <p style="font-size:26px;font-weight:900;color:#fb923c !important;margin-bottom:4px;"><font color="#fb923c">AI</font></p>
+                          <p style="font-size:11px;color:#808099 !important;text-transform:uppercase;letter-spacing:1.5px;"><font color="#808099">Powered Model</font></p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:0 0 0 6px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td bgcolor="#1a1a2e" class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;">
+                          <p style="font-size:26px;font-weight:900;color:#fb923c !important;margin-bottom:4px;"><font color="#fb923c">Daily</font></p>
+                          <p style="font-size:11px;color:#808099 !important;text-transform:uppercase;letter-spacing:1.5px;"><font color="#808099">Fresh Reports</font></p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:24px;"></td></tr>
+
+          <!-- HOW IT WORKS -->
+          <tr>
+            <td bgcolor="#1a1a2e" class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 32px;">
+              <p style="color:#808099 !important;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;"><font color="#808099">Quick Start</font></p>
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                      <td width="30" valign="top" style="color:#ea580c !important;font-weight:800;font-size:14px;padding-right:12px;"><font color="#ea580c">01</font></td>
+                      <td style="color:#ccccdd !important;font-size:14px;"><font color="#ccccdd">Visit the platform and browse today\'s fixture list</font></td>
+                    </tr></table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                      <td width="30" valign="top" style="color:#ea580c !important;font-weight:800;font-size:14px;padding-right:12px;"><font color="#ea580c">02</font></td>
+                      <td style="color:#ccccdd !important;font-size:14px;"><font color="#ccccdd">Select the fixtures you want and add them to your cart</font></td>
+                    </tr></table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                      <td width="30" valign="top" style="color:#ea580c !important;font-weight:800;font-size:14px;padding-right:12px;"><font color="#ea580c">03</font></td>
+                      <td style="color:#ccccdd !important;font-size:14px;"><font color="#ccccdd">Complete checkout and access your selections instantly</font></td>
+                    </tr></table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:24px;"></td></tr>
+
+          <!-- SECONDARY CTA -->
+          <tr>
+            <td style="text-align:center;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                <tr>
+                  <td style="border-radius:50px;border:2px solid rgba(234,88,12,0.6);">
+                    <a href="https://gsportstrade.com" target="_blank" style="display:inline-block;padding:14px 40px;font-size:15px;font-weight:700;color:#fb923c;text-decoration:none;border-radius:50px;letter-spacing:0.5px;">
+                      Go to Dashboard
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="color:#4d4d66 !important;font-size:12px;margin-top:14px;">
+                <font color="#4d4d66">Reports refresh daily. Check back every morning for new analysis.</font>
+              </p>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:32px;"></td></tr>
+
+          <!-- DISCLAIMER -->
+          <tr>
+            <td style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;text-align:center;">
+              <p style="color:#4d4d5e !important;font-size:11px;line-height:1.7;">
+                <font color="#4d4d5e"><strong style="color:#666680 !important;"><font color="#666680">Responsible Use:</font></strong>
+                Our reports are for informational and analytical purposes only. Always act responsibly. 18+ only. GST is not affiliated with any bookmaker or betting operator.</font>
+              </p>
+            </td>
+          </tr>
+
+          <!-- SPACER -->
+          <tr><td style="height:32px;"></td></tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="text-align:center;padding:24px 20px 30px 20px;border-top:1px solid rgba(255,255,255,0.06);">
+
+              <a href="https://gsportstrade.com" target="_blank" style="text-decoration:none;display:inline-block;margin-bottom:8px;">
+                <img src="https://gsportstrade.com/assets/logo.png" alt="GST Logo" width="36" height="36" style="border-radius:10px;display:inline-block;vertical-align:middle;margin-right:8px;" />
+                <span style="font-size:18px;font-weight:900;color:#ffffff;letter-spacing:2px;vertical-align:middle;">GST</span>
+              </a>
+              <p style="color:#4d4d5e !important;font-size:11px;margin-bottom:16px;"><font color="#4d4d5e">Global Sports Trade</font></p>
+
+              <p style="margin-bottom:16px;">
+                <a href="https://gsportstrade.com" target="_blank" style="color:#666680 !important;font-size:12px;text-decoration:none;margin:0 10px;"><font color="#666680">Website</font></a>
+                <a href="https://gsportstrade.com/about" target="_blank" style="color:#666680 !important;font-size:12px;text-decoration:none;margin:0 10px;"><font color="#666680">About</font></a>
+                <a href="mailto:contact.globalsportstrade@gmail.com" style="color:#666680 !important;font-size:12px;text-decoration:none;margin:0 10px;"><font color="#666680">Contact Us</font></a>
+              </p>
+
+              <!-- Physical address (required for CAN-SPAM / GDPR) -->
+              <p style="color:#3d3d4d !important;font-size:11px;line-height:1.8;margin-bottom:16px;">
+                <font color="#3d3d4d">Global Sports Trade Ltd &bull; 124 City Road, London EC1V 2NX, United Kingdom</font>
+              </p>
+
+              <!-- Unsubscribe -->
+              <p style="color:#3d3d4d !important;font-size:11px;line-height:1.8;">
+                <font color="#3d3d4d">You are receiving this because you subscribed to GST daily updates.<br /></font>
+                <a href="https://gsportstrade.com/unsubscribe/', email, '" style="color:rgba(234,88,12,0.7);text-decoration:underline;">Unsubscribe</a>
+                &nbsp;&bull;&nbsp;
+                <a href="https://gsportstrade.com/settings/preferences" style="color:rgba(234,88,12,0.7);text-decoration:underline;">Manage Preferences</a>
+              </p>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+')
+FROM users WHERE users.id = 14;
