@@ -25,14 +25,14 @@ export const countries = {
         manualPaymentDetails: [
             {
                 type: 'bank',
-                accountName: "Abaho(may not show)",
+                accountName: "Abaho (may not show)",
                 accountNumber: "0785143226",
                 bankName: null,
                 network: "MTN",
                 country: "Uganda"
             }, {
                 type: 'bank',
-                accountName: "Abaho(may not show)",
+                accountName: "Abaho (may not show)",
                 accountNumber: "0756876661",
                 bankName: null,
                 network: "Airtel",
@@ -92,7 +92,7 @@ export const countries = {
         manualPaymentDetails: [
             {
                 type: 'bank',
-                accountName: "Abaho(may not show)",
+                accountName: "Abaho (may not show)",
                 accountNumber: "0785143226",
                 bankName: null,
                 network: "MTN",
@@ -100,7 +100,7 @@ export const countries = {
             },
             {
                 type: 'bank',
-                accountName: "Abaho(may not show)",
+                accountName: "Abaho (may not show)",
                 accountNumber: "0756876661",
                 bankName: null,
                 network: "Airtel",

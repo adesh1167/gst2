@@ -43,7 +43,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
             exitable={true}
             onClose={() => navigate(-1)}
             title={`Payment for ${countryDetails.name}`}
-            subtitle="Manual payment options & verification"
+            subtitle="Pay Manually"
             icon={AlertTriangle}
             iconColor="text-amber-500"
             iconBg="bg-amber-500/15"
@@ -69,7 +69,8 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
                     <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {type === "matches" ? "Matches Selected:" : `Subscription (${duration || id}):`}
+                        {/* {type === "matches" ? "Matches Selected:" : `Subscription (${duration || id}):`} */}
+                        Amount:
                     </span>
                     <span className="font-extrabold text-base text-orange-600 dark:text-orange-400">
                         {country} {total}
@@ -78,12 +79,18 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
 
                 {type === "matches" && cart?.length > 0 && (
                     <div className="space-y-1.5 p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-xs">
-                        <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Fixtures:</span>
+                        <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Fixtures ({cart.length}):</span>
                         <ul className="list-disc pl-4 space-y-1 text-gray-600 dark:text-gray-400">
                             {cart.map(item => (
                                 <li key={item.id}>{item.home} vs {item.away}</li>
                             ))}
                         </ul>
+                    </div>
+                )}
+
+                {type === "subscription" && (
+                    <div className="space-y-1.5 p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-xs">
+                        <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Plan: <span className='uppercase'>{duration}</span></span>
                     </div>
                 )}
 
@@ -103,18 +110,18 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                                 <div className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] space-y-2.5">
                                     <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-xs sm:text-sm">
                                         <Building2 className="w-4 h-4 text-orange-500" />
-                                        <span>Bank / Mobile Money Transfer</span>
+                                        <span>{method.bankName ? "Bank" : "Mobile Money"}</span>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-2 text-xs">
                                         <div className="p-2 rounded-lg bg-black/[0.03] dark:bg-white/[0.03]">
-                                            <span className="text-gray-400 block text-[10px] uppercase">Account Name</span>
+                                            <span className="text-gray-600 dark:text-gray-400 block text-[10px] uppercase">Account Name</span>
                                             <span className="font-semibold text-gray-900 dark:text-white">{method.accountName}</span>
                                         </div>
 
                                         <div className="p-2 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] flex items-center justify-between">
                                             <div>
-                                                <span className="text-gray-400 block text-[10px] uppercase">
+                                                <span className="text-gray-600 dark:text-gray-400 block text-[10px] uppercase">
                                                     {method.bankName ? 'Account Number' : 'Number'}
                                                 </span>
                                                 <span className="font-semibold text-gray-900 dark:text-white font-mono">{method.accountNumber}</span>
@@ -130,7 +137,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                                         </div>
 
                                         <div className="p-2 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] col-span-2">
-                                            <span className="text-gray-400 block text-[10px] uppercase">
+                                            <span className="text-gray-600 dark:text-gray-400   block text-[10px] uppercase">
                                                 {method.bankName ? 'Bank' : 'Network'}
                                             </span>
                                             <span className="font-semibold text-gray-900 dark:text-white">
@@ -171,7 +178,12 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                         contact.globalsportstrade@gmail.com
                     </a>
                     <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                        Your selections will be credited to your dashboard within 15 minutes.
+                        {type === "matches" ?
+                            "The match selections will be shown on your dashboard within 15 minutes."
+                            :
+                            "Your subscription will be activated within 15 minutes."
+                        }
+
                     </p>
                 </div>
             </div>

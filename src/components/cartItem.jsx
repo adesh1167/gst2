@@ -8,7 +8,7 @@ const CartItem = ({ item }) => {
     const dispatch = useDispatch();
 
     return (
-        <div className="flex items-center gap-3 w-full mb-2">
+        <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300 w-full mb-2">
             {/* Item details */}
             <div className="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl
                             bg-white/8 border border-black/10 dark:border-white/10 hover:border-orange-500/30 dark:hover:border-orange-500/30
@@ -26,7 +26,7 @@ const CartItem = ({ item }) => {
                     </div>
                 </div>
                 <div className="flex flex-col justify-between items-end self-stretch">
-                    <span className="text-black/80 dark:text-white/80 text-sm font-semibold shrink-0">
+                    <span className="text-gray-600 dark:text-gray-300 text-sm font-semibold shrink-0">
                         {country} {formatNumber(item.price * factor, 0, 0)}
                     </span>
                     <span className="text-black/60 dark:text-white/60 text-xs pb-1.5">{item.game_type}</span>

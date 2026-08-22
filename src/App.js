@@ -148,7 +148,7 @@ function App() {
                 <DesktopMenu />
 
                 {/* Main content — grows to fill remaining width */}
-                <main className="flex-1 w-[60%] h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] flex-shrink-0 relative overflow-hidden">
+                <main className="flex-1 w-[60%] h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] flex-shrink-0 relative overflow-hidden z-[2]">
                     <Routes>
                         <Route
                             path="*"
