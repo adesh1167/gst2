@@ -31,7 +31,7 @@ const Welcome = () => {
                 <div className="w-full flex items-center justify-between gap-3">
                     <Link
                         to="/about"
-                        onClick={handleAccept}
+                        // onClick={handleAccept}
                         className="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
                     >
                         <span>Learn More</span>
@@ -59,8 +59,8 @@ const Welcome = () => {
                 </p>
 
                 <div className="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2.5">
-                    <div className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <div className="font-semibold text-[1.2rem] text-gray-900 dark:text-white flex items-center gap-2">
+                        {/* <ShieldCheck className="w-4 h-4 text-emerald-500" /> */}
                         How it works:
                     </div>
                     <ul className="space-y-2 pl-1">

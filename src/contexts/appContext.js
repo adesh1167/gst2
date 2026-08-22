@@ -39,7 +39,7 @@ const AppContext = ({ children }) => {
             const stored = localStorage.getItem('darkMode');
             if (stored !== null) return JSON.parse(stored);
         } catch (_) {}
-        return true; // default: dark
+        return false; // default: dark
     };
 
     const [darkMode, setDarkModeState] = useState(getInitialDarkMode);

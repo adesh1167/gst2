@@ -18,16 +18,20 @@ const CartItem = ({ item }) => {
                         <span className="font-semibold text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                             {item.home}
                         </span>
-                        <span className="text-black/60 dark:text-white/60 text-[10px] text-center leading-none">v</span>
+                        {/* <span className="text-black/60 dark:text-white/60 text-[10px] text-center leading-none">v</span> */}
+                        <div className="h-[1.5px] my-2 w-full bg-gradient-to-r from-transparent via-gray-500/20 to-transparent" />
                         <span className="font-semibold text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                             {item.away}
                         </span>
                     </div>
-                    <span className="text-black/60 dark:text-white/60 text-xs">{item.game_type}</span>
                 </div>
-                <span className="text-black/80 dark:text-white/80 text-sm font-semibold shrink-0">
-                    {country} {formatNumber(item.price * factor)}
-                </span>
+                <div className="flex flex-col justify-between items-end self-stretch">
+                    <span className="text-black/80 dark:text-white/80 text-sm font-semibold shrink-0">
+                        {country} {formatNumber(item.price * factor, 0, 0)}
+                    </span>
+                    <span className="text-black/60 dark:text-white/60 text-xs pb-1.5">{item.game_type}</span>
+
+                </div>
             </div>
 
             {/* Remove button */}
