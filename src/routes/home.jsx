@@ -1,90 +1,214 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './styles/home.css';
-import Header from '../components/header';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../slices/userReducer';
+import { useSelector } from 'react-redux';
 import Fixtures from '../components/fixtures';
-import { Link, Outlet } from 'react-router';
+import { Link, useLocation, useOutlet } from 'react-router';
 import { selectNetTotal } from '../slices/netTotal';
 import Loading from '../components/loading';
 import formatNumber from '../functions/formatNumber';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CartSvg } from '../components/svgs';
 
 const Home = () => {
-    const { isAuthenticated, user, userQueried } = useSelector(state => state.user);
+    const { userQueried } = useSelector(state => state.user);
     const { country, factor } = useSelector(state => state.data);
     const cart = useSelector(state => state.cart);
     const coupon = useSelector(state => state.data.coupon);
     const netTotal = useSelector(selectNetTotal);
-    const dispatch = useDispatch();
+    const location = useLocation();
+    const outlet = useOutlet();
 
-    const [cartData, setCartData] = useState();
-
-    console.log("User: ", coupon, cart, (coupon?.min_matches && coupon.min_matches <= cart.quantity));
+    const couponActive = coupon && cart.quantity > 0 &&
+        (!coupon.min_matches || coupon.min_matches <= cart.quantity);
 
     return (
         <>
-            <div className="dag-container">
-                {/* <Header /> */}
-                <div className="dag-container04">
-                    <img alt="image" src="/assets/ronaldo.png" className="dag-image1" />
-                    <div className="dag-container05">
-                        <div className="dag-container06">
-                            <span className="dag-digital">
-                                <span>GLOBAL</span>
-                                <br />
-                                <span>SPORTS</span>
-                                <br />
-                                <span>TRADE</span>
-                                <br />
+            <div className="w-full h-full min-h-[100%] overflow-y-scroll bg-gray-50 dark:bg-[#080810]">
+
+                {/* ══════════════════════════════════════════════
+                    HERO
+                ══════════════════════════════════════════════ */}
+                <section className="relative w-full overflow-hidden bg-[#ffffee] dark:bg-[#080810]"
+                    style={{ minHeight: 340 }}>
+
+                    {/* Ambient glow blobs */}
+                    <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full
+                                    bg-orange-600/20 blur-[100px] pointer-events-none" />
+                    <div className="absolute -bottom-10 right-0 w-96 h-96 rounded-full
+                                    bg-orange-500/10 blur-[120px] pointer-events-none" />
+
+                    {/* Grid overlay */}
+                    <div className="absolute inset-0 opacity-[0.04] [--grid-color:#000] dark:[--grid-color:#fff]"
+                        style={{
+                            backgroundImage: 'linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px)',
+                            backgroundSize: '40px 40px'
+                        }} />
+
+                    {/* Player image — right side */}
+                    <div className="absolute right-[-20px] md:right-[20px] bottom-0 h-full flex items-end
+                                    pointer-events-none select-none">
+                        <img
+                            src="/assets/r2.png"
+                            alt=""
+                            aria-hidden
+                            className="h-[320px] sm:h-[360px] object-contain object-bottom
+                                       opacity-80 drop-shadow-2xl"
+                            style={{ filter: 'drop-shadow(-8px 0 40px rgba(234,88,12,0.35))' }}
+                        />
+                    </div>
+
+                    {/* Hero copy */}
+                    <div className="relative z-10 px-6 lg:px-10 pt-12 pb-16 max-w-lg">
+                        <motion.div
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.55 }}
+                        >
+                            {/* Pill badge */}
+                            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold
+                                             tracking-widest uppercase text-orange-600 dark:text-orange-400 bg-white/80 dark:bg-orange-500/10
+                                             border border-orange-500/25 rounded-full px-3 py-1 mb-5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
+                                AI-Powered Predictions
                             </span>
-                            <span className="dag-text09">Accuracy with AI</span>
-                        </div>
-                    </div>
-                </div>
-                {userQueried ?
-                    <Fixtures />
-                    :
-                    <div className='dag-container07'>
-                        <div className='dag-container08' />
-                        <div className='dag-container09'>
-                            <div className='dag-container10'>
-                                <div className="main-loading">
-                                    <Loading color='#ea580c'/>
-                                </div>
 
+                            <h1 className="text-4xl sm:text-5xl font-black leading-[1.05] text-vlack dark:text-white mb-4">
+                                Global<br />
+                                <span className="text-transparent bg-clip-text
+                                                 bg-gradient-to-r from-orange-400 to-orange-600">
+                                    Sports
+                                </span>
+                                <br />Trade
+                            </h1>
+
+                            <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-7 max-w-xs">
+                                Every prediction is generated by AI with&nbsp;
+                                <strong className="text-orange-400 font-semibold">94%+ accuracy</strong>.
+                                Pick your matches, pay, and win.
+                            </p>
+
+                            <div className="flex items-center gap-3 flex-wrap">
+                                <Link
+                                    to="/about"
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                                               bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm
+                                               transition-all duration-200 shadow-lg shadow-orange-900/40
+                                               hover:shadow-orange-500/40 hover:-translate-y-0.5"
+                                >
+                                    How It Works
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </Link>
+                                <Link
+                                    to="/deep-analyzer"
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                                                bg-[#0d0d14]/90 dark:bg-[#0d0d14] hover:bg-white/12 text-white font-semibold text-sm
+                                               border border-purple-900 hover:border-purple-500/50
+                                               shadow-lg shadow-black/40
+                                               transition-all duration-200 hover:-translate-y-0.5"
+                                >
+                                    <span className="rainbow-text-active font-bold">Deep Analyzer</span>
+                                </Link>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
-                }
-                <Link className="dag-container18" to="/cart">
-                    {(coupon && cart.quantity > 0 && (!coupon.min_matches || (coupon?.min_matches && coupon.min_matches <= cart.quantity))) &&
-                        <div className="coupon-indicator">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10" height="10" fill="white">
-                                <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
-                            </svg>
-                            <span>{parseInt(coupon.percent_off * 100)}% OFF</span>
-                        </div>
-                    }
-                    <div className="dag-container19">
-                        <span className="dag-text26" id="checkoutCurrencyCont" />
-                        <span className="dag-text27" id="checkoutPriceCont">
-                            PAY {country} {formatNumber(netTotal * factor)}
-                        </span>
-                    </div>
-                    <div className="dag-container20">
-                        <svg viewBox="0 0 1024 1024" className="dag-icon6">
-                            <path d="M726 768q34 0 59 26t25 60-25 59-59 25-60-25-26-59 26-60 60-26zM42 86h140l40 84h632q18 0 30 13t12 31q0 2-6 20l-152 276q-24 44-74 44h-318l-38 70-2 6q0 10 10 10h494v86h-512q-34 0-59-26t-25-60q0-20 10-40l58-106-154-324h-86v-84zM298 768q34 0 60 26t26 60-26 59-60 25-59-25-25-59 25-60 59-26z" />
-                        </svg>
-                    </div>
-                    <div className="items-count" id="itemsCountCont">
-                        <span> {cart.quantity}</span>
-                    </div>
-                </Link>
-            </div>
-            {<Outlet />}
-        </>
 
-    )
-}
+                    {/* Stat chips */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                        className="relative z-10 flex items-center gap-3 px-6 pb-8 flex-wrap"
+                    >
+                        {[
+                            { label: 'Accuracy', value: '94%+' },
+                            { label: 'Min. Odds', value: '2.0' },
+                            { label: 'AI Powered', value: '✓' },
+                        ].map(s => (
+                            <div key={s.label}
+                                className="flex items-center gap-2 bg-white/60 dark:bg-orange-500/10 border border-orange-400 dark:border-white/10
+                                            rounded-xl px-4 py-2 backdrop-blur-sm">
+                                <span className="text-orange-600 dark:text-orange-400 font-black text-sm">{s.value}</span>
+                                <span className="text-orange-600 dark:text-orange-400 text-xs">{s.label}</span>
+                            </div>
+                        ))}
+                    </motion.div>
+
+                    {/* Bottom fade into content */}
+                    <div className="absolute bottom-0 left-0 right-0 h-8
+                                    bg-gradient-to-b from-transparent to-gray-50 dark:to-[#080810]" />
+                </section>
+
+                {/* ══════════════════════════════════════════════
+                    PREDICTIONS CONTENT
+                ══════════════════════════════════════════════ */}
+                {userQueried ? (
+                    <Fixtures />
+                ) : (
+                    <div className="w-full flex items-center justify-center py-24">
+                        <Loading color="#ea580c" />
+                    </div>
+                )}
+            </div>
+
+            {/* ══════════════════════════════════════════════
+                CART FAB
+            ══════════════════════════════════════════════ */}
+            {cart.quantity > 0 && (
+                <motion.div
+                    initial={{ y: 80, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 80, opacity: 0 }}
+                    className="block lg:hidden fixed bottom-5 right-5 z-[15]"
+                >
+                    <Link
+                        to="/cart"
+                        className="relative flex items-center gap-3 pl-4 pr-5 py-3
+                                   bg-orange-500 hover:bg-orange-400
+                                   text-white font-bold rounded-2xl
+                                   shadow-[0_8px_32px_rgba(234,88,12,0.55)]
+                                   hover:shadow-[0_12px_40px_rgba(234,88,12,0.7)]
+                                   hover:-translate-y-1 transition-all duration-200"
+                    >
+                        {/* Coupon badge */}
+                        {couponActive && (
+                            <span className="absolute -top-2.5 right-3 flex items-center gap-1
+                                             bg-green-500 text-white text-[10px] font-bold
+                                             px-2 py-0.5 rounded-full border-2 border-white
+                                             shadow-sm whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="8" height="8" fill="white">
+                                    <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                                </svg>
+                                {parseInt(coupon.percent_off * 100)}% OFF
+                            </span>
+                        )}
+
+                        {/* Cart icon + count bubble */}
+                        <div className="relative">
+                            <CartSvg size={26} />
+                            <span className="absolute -top-1.5 -right-2 w-4 h-4 bg-white text-orange-500
+                                             text-[10px] font-black rounded-full flex items-center justify-center">
+                                {cart.quantity}
+                            </span>
+                        </div>
+
+                        {/* Price */}
+                        <div className="flex flex-col leading-tight">
+                            <span className="text-orange-100 text-[10px] font-medium">Checkout</span>
+                            <span className="text-white text-sm font-extrabold tracking-tight">
+                                {country} {formatNumber(netTotal * factor)}
+                            </span>
+                        </div>
+                    </Link>
+                </motion.div>
+            )}
+
+            <AnimatePresence mode="sync">
+                {outlet && React.cloneElement(outlet, { key: location.pathname })}
+            </AnimatePresence>
+        </>
+    );
+};
 
 export default Home;

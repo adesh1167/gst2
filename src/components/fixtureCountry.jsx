@@ -3,158 +3,338 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem, removeItem } from '../slices/cartReducer'
 import { getFixtureDate } from '../functions/formatDate'
 import formatNumber from '../functions/formatNumber'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Calendar, ShoppingCart, ShoppingCartIcon } from 'lucide-react'
+import { CartSvg } from './svgs'
 
-const FixtureCountry = ({ country }) => {
-
-    return (
-        <div className="dag-country">
-            <div className="country-name">
-                <img
-                    alt="image"
-                    src={country.flag || "/assets/earth.svg"}
-                    className="dag-image2"
-                />
-                <span className="dag-text11">{country.name}</span>
-            </div>
-            {Object.values(country.leagues).map(league =>
-                <FixtureLeague key={league.name} league={league} />
-            )}
+/* ════════════════════════════════════════════════
+   COUNTRY SECTION
+════════════════════════════════════════════════ */
+const FixtureCountry = ({ country }) => (
+    <div className="w-full px-3 sm:px-5 mb-1">
+        <div className="flex items-center gap-3 py-3 mt-3">
+            <img
+                src={country.flag || '/assets/earth.svg'}
+                alt={country.name}
+                className="h-5 w-5 object-contain rounded-sm shrink-0"
+            />
+            <span className="text-[11px] font-black uppercase tracking-[0.18em]
+                             text-gray-500 dark:text-white/30 whitespace-nowrap">
+                {country.name}
+            </span>
+            <div className="flex-1 h-px bg-gradient-to-r from-gray-200 dark:from-white/10 to-transparent" />
         </div>
-    )
-}
 
+        {Object.values(country.leagues).map(league => (
+            <FixtureLeague key={league.name} league={league} />
+        ))}
+    </div>
+);
+
+/* ════════════════════════════════════════════════
+   LEAGUE SECTION
+════════════════════════════════════════════════ */
 function FixtureLeague({ league }) {
-
-    // console.log("Here: ", league.fixtures)
-
     return (
-        <div className="dag-league">
-            <div className='dag-league-name'>
-                <span className="dag-text12">{league.name}</span>
-                <img
-                    alt="image"
-                    src={league.logo}
-                    className="dag-league-logo"
-                />
+        <div className="mb-4 px-2">
+            <div className="flex items-center gap-2 px-1 mb-2.5">
+                {league.logo && (
+                    <img src={league.logo} alt={league.name}
+                         className="h-4 w-4 object-contain opacity-60 shrink-0" />
+                )}
+                <span className="text-[11px] font-semibold text-gray-400 dark:text-white/30 tracking-wide">
+                    {league.name}
+                </span>
             </div>
-            {Object.values(league.fixtures).map((fixture) =>
-                <Fixture key={fixture.id} fixture={fixture} />
-            )}
+
+            <div className="flex flex-col gap-3">
+                {Object.values(league.fixtures).map(fixture => (
+                    <Fixture key={fixture.id} fixture={fixture} />
+                ))}
+            </div>
         </div>
-    )
+    );
 }
 
+/* ════════════════════════════════════════════════
+   FIXTURE CARD
+════════════════════════════════════════════════ */
 function Fixture({ fixture }) {
-
     const { country, factor } = useSelector(state => state.data);
     const { isAdmin, dashboard } = useSelector(state => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
+    const isAdminShown = isAdmin && dashboard === 'admin';
     const cart = useSelector(state => state.cart.items);
     const [inCart, setInCart] = useState(false);
     const dispatch = useDispatch();
 
-    // console.log(fixture);
-
     const teams = fixture.match_data.teams;
 
     useEffect(() => {
-        setInCart(cart.find(item => item.id === fixture.id) || false)
-    }, [cart])
+        setInCart(!!cart.find(item => item.id === fixture.id));
+    }, [cart]); // eslint-disable-line
 
     function addToCart() {
-        // console.log("Added to cart: ", fixture)
         dispatch(addItem({
             home: teams.home.name,
             away: teams.away.name,
             price: fixture.price,
             game_type: fixture.game_type,
             odds: fixture.odds,
-            id: fixture.id
-        }))
+            id: fixture.id,
+        }));
     }
+    function removeFromCart() { dispatch(removeItem(fixture.id)); }
 
-    function removeFromCart() {
-        dispatch(removeItem(fixture.id))
-    }
+    const priceLabel = formatNumber(fixture.price * (factor || 1));
 
     return (
-        <div className={`dag-match ${inCart ? "match-added" : ""}`} onClick={inCart ? removeFromCart : addToCart}>
-            <div className="dag-container11">
-                <span>
-                    {/* <span>{fixture.selection}</span> */}
-                    {/* <br /> */}
-                    {isAdminShown ?
-                        <>
-                            <span>{fixture.id}</span>
-                            <br />
-                            <span>{fixture.selection}</span>
-                            <br />
-                            <span>{fixture.odds}</span>
-                            <br />
-                            <span>{formatNumber(fixture.price * (factor || 1))}</span>
-                        </>
-                        :
-                        <>
-                            <span>{country}</span>
-                            <br />
-                            <span>{formatNumber(fixture.price * (factor || 1))}</span>
-                        </>
+        <motion.div
+            layout
+            whileTap={{ scale: 0.975 }}
+            onClick={inCart ? removeFromCart : addToCart}
+            className={`
+                relative w-full rounded-2xl overflow-hidden cursor-pointer select-none
+                transition-all duration-300
+                ${inCart
+                    /* in-cart: green glow ring */
+                    ? 'shadow-[0_0_0_2px_rgba(34,197,94,0.55),0_6px_24px_rgba(34,197,94,0.12)]'
+                    /* default light: elevated shadow + faint border */
+                    : 'shadow-[0_2px_12px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.06)] border border-gray-200/80'
+                    + ' dark:border dark:border-white/[0.10]'
+                    + ' dark:shadow-[0_2px_16px_rgba(0,0,0,0.4)]'
+                    + ' hover:shadow-[0_6px_24px_rgba(0,0,0,0.13)] dark:hover:shadow-[0_6px_24px_rgba(234,88,12,0.14)]'
+                    + ' hover:border-orange-200 dark:hover:border-orange-500/30'
+                }
+            `}
+        >
+            {/* ── Background ───────────────────────────────── */}
+            <div className={`
+                absolute inset-0 transition-all duration-300
+                ${inCart
+                    ? 'bg-gradient-to-br from-green-950 via-green-900/50 to-emerald-950 dark:from-green-950/60 dark:via-green-800/60 dark:to-emerald-950/70'
+                    : 'bg-white dark:bg-[#13131f]'
+                }
+            `} />
 
+            {/* Subtle pitch stripes – decorative, dark mode only */}
+            <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-[0.035]"
+                 style={{
+                     backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 30px,#aaa 30px,#aaa 31px)',
+                 }} />
+
+            {/* ── TOP BAR ──────────────────────────────────── */}
+            <div className="relative z-10 flex items-center justify-between gap-2
+                            px-4 pt-3 pb-2.5
+                            border-b border-black/[0.06] dark:border-white/[0.07]">
+
+                {/* Left: date + game-type badge + admin ID */}
+                <div className={`flex items-center gap-2 min-w-0 ${inCart ? 'text-green-100' : 'text-gray-500 dark:text-white/85'}`}>
+                    <Calendar size={14}/>
+                    <span className={`text-[11px] font-medium truncate`}>
+                        {getFixtureDate(fixture.match_data.fixture.date, country)}
+                    </span>
+
+                    <span className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-semibold
+                        ${inCart
+                            ? 'bg-green-500/20 text-green-100'
+                            : 'bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-white/80'
+                        }`}>
+                        {fixture.game_type}
+                    </span>
+
+                    {isAdminShown && (
+                        <span className="text-[10px] text-orange-400 font-mono shrink-0">
+                            #{fixture.id}
+                        </span>
+                    )}
+                </div>
+
+                {/* Right: price tag */}
+                <div className={`
+                    shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold
+                    ${inCart
+                        ? 'bg-green-500/40 dark:bg-green-500/15 text-green-100 border border-green-400 dark:border-green-500/25'
+                        : 'bg-orange-500 text-white shadow-sm shadow-orange-900/25'
                     }
-                    {/* <br /> */}
-                </span>
+                `}>
+                    {inCart && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                             className="w-3 h-3 fill-current shrink-0">
+                            <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                        </svg>
+                    )}
+                    {/* Admin shows selection alongside price; regular users just price */}
+                    <span>
+                        {country} {priceLabel}
+                        {isAdminShown && (
+                            <span className="opacity-90 font-semibold"> · {fixture.selection}</span>
+                        )}
+                    </span>
+                </div>
             </div>
-            <div className="dag-container12">
-                <div
-                    className="dag-container13"
-                    style={{ flexDirection: "column" }}
-                >
-                    <div className="dag-container14">
-                        <img
-                            alt="image"
-                            src={teams.home.logo}
-                            className="dag-image2"
-                        />
-                        <span className="dag-text17">
-                            <span>{teams.home.name}</span>
-                            <br />
-                        </span>
+
+            {/* ── MATCH ROW ────────────────────────────────── */}
+            <div className="relative z-10 flex items-center justify-between px-5 py-5 gap-2">
+
+                {/* Home team */}
+                <div className="flex-1 flex flex-col items-center gap-2.5 min-w-0">
+                    <div className={`
+                        w-14 h-14 rounded-2xl flex items-center justify-center
+                        ${inCart
+                            ? 'bg-green-500/15'
+                            : 'bg-gray-50 dark:bg-white/[0.07] border border-gray-100 dark:border-white/[0.08]'
+                        }
+                    `}>
+                        <img src={teams.home.logo} alt={teams.home.name}
+                             className="w-9 h-9 object-contain" />
                     </div>
-                    <div
-                        className="dag-container15"
-                        style={{ alignSelf: "flex-start" }}
+                    <span className={`
+                        text-xs font-bold text-center leading-snug w-full line-clamp-2
+                        ${inCart ? 'text-white/90 dark:text-green-200' : 'text-gray-800 dark:text-white/90'}
+                    `}>
+                        {teams.home.name}
+                    </span>
+                </div>
+
+                {/* VS chip */}
+                <div className="flex flex-col items-center shrink-0 gap-1.5 px-1">
+                    <div className={`
+                        w-11 h-11 rounded-full flex items-center justify-center
+                        border-2 text-[11px] font-black tracking-tight
+                        ${inCart
+                            ? 'border-green-100/60 text-green-100 bg-green-500/10'
+                            : 'border-gray-200 dark:border-white/15 text-gray-400 dark:text-white/40 bg-white dark:bg-white/[0.04]'
+                        }
+                    `}>
+                        VS
+                    </div>
+                    <div className="flex gap-1">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className={`w-1 h-1 rounded-full
+                                ${inCart ? 'bg-green-200/60 dark:bg-green-500/40' : 'bg-gray-200 dark:bg-white/15'}`} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Away team */}
+                <div className="flex-1 flex flex-col items-center gap-2.5 min-w-0">
+                    <div className={`
+                        w-14 h-14 rounded-2xl flex items-center justify-center
+                        ${inCart
+                            ? 'bg-green-500/15'
+                            : 'bg-gray-50 dark:bg-white/[0.07] border border-gray-100 dark:border-white/[0.08]'
+                        }
+                    `}>
+                        <img src={teams.away.logo} alt={teams.away.name}
+                             className="w-9 h-9 object-contain" />
+                    </div>
+                    <span className={`
+                        text-xs font-bold text-center leading-snug w-full line-clamp-2
+                        ${inCart ? 'text-white/90 dark:text-green-200' : 'text-gray-800 dark:text-white/90'}
+                    `}>
+                        {teams.away.name}
+                    </span>
+                </div>
+            </div>
+
+            {/* ── ACTION STRIP ─────────────────────────────── */}
+            <div className={`
+                relative z-10 flex items-center justify-between gap-3
+                px-4 py-3
+                border-t border-black/[0.05] dark:border-white/[0.06]
+                transition-colors duration-200
+                ${inCart
+                    ? 'bg-green-500/[0.08]'
+                    : 'bg-gray-50/90 dark:bg-white/[0.025]'
+                }
+            `}>
+
+                {inCart ? (
+                    /* ── In-cart: status on left ── */
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-green-500
+                                        flex items-center justify-center shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                 className="w-3 h-3 fill-white">
+                                <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                            </svg>
+                        </div>
+                        <div className="flex flex-col leading-tight">
+                            <span className="text-xs font-bold text-green-400">Added to cart</span>
+                            <span className="text-[10px] text-green-200 dark:tex-green-500/60">Tap to remove</span>
+                        </div>
+                    </div>
+                ) : (
+                    /* ── Default: nothing on the left (spacer) ── */
+                    <div />
+                )}
+
+                {/* Right side: admin odds pill OR cart button */}
+                <div className="flex items-center gap-2 shrink-0">
+
+                    {/* Odds — admin only */}
+                    {isAdminShown && (
+                        <div className={`
+                            flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold
+                            ${inCart
+                                ? 'bg-green-500/40 dark:bg-green-500/15 text-green-200 border border-green-400 dark:border-green-500/25'
+                                : 'bg-white dark:bg-white/[0.08] text-gray-600 dark:text-white/55'
+                                  + ' border border-gray-200 dark:border-white/[0.12]'
+                            }
+                        `}>
+                            <span className="text-[9px] font-semibold opacity-55 uppercase tracking-wide">
+                                odds
+                            </span>
+                            <span className="font-extrabold">{formatNumber(fixture.odds)}</span>
+                        </div>
+                    )}
+
+                    {/* Add/remove button */}
+                    <button
+                        type="button"
+                        aria-label={inCart ? 'Remove from cart' : 'Add to cart'}
+                        className={`
+                            flex items-center gap-2 px-4 py-2 rounded-xl
+                            text-xs font-bold transition-all duration-200
+                            ${inCart
+                                ? 'bg-red-500/20 text-red-500/90 border border-red-500/45 hover:bg-red-500/25'
+                                : 'bg-orange-500 hover:bg-orange-400 text-white shadow-sm shadow-orange-900/20'
+                            }
+                        `}
                     >
-                        <span className="dag-text21">
-                            <span>{teams.away.name}</span>
-                            <br />
-                        </span>
-                        <img
-                            alt="image"
-                            src={teams.away.logo}
-                            className="dag-image3"
-                        />
-                    </div>
-                </div>
-                <div className="dag-container16">
-                    <span>{getFixtureDate(fixture.match_data.fixture.date, country)}</span>
-                    <span>Game Type: {fixture.game_type}</span>
+                        {inCart ? (
+                            <>
+                                {/* X icon */}
+                                <svg viewBox="0 0 1024 1024" className="w-3.5 h-3.5 fill-current shrink-0">
+                                    <path d="M1014.662 822.66l-310.644-310.65 310.644-310.65c3.344-3.346 5.762-7.254 7.312-11.416 4.246-11.376 1.824-24.682-7.324-33.83l-146.746-146.746c-9.148-9.146-22.45-11.566-33.828-7.32-4.16 1.55-8.07 3.968-11.418 7.31l-310.648 310.652-310.648-310.65c-3.346-3.342-7.254-5.76-11.414-7.31-11.38-4.248-24.682-1.826-33.83 7.32l-146.748 146.748c-9.148 9.148-11.568 22.452-7.322 33.828 1.552 4.16 3.97 8.072 7.312 11.416l310.65 310.648-310.65 310.652c-3.342 3.346-5.76 7.254-7.314 11.414-4.248 11.376-1.826 24.682 7.322 33.83l146.748 146.746c9.15 9.148 22.452 11.568 33.83 7.322 4.16-1.552 8.07-3.97 11.416-7.312l310.648-310.65 310.648 310.65c3.348 3.344 7.254 5.762 11.414 7.314 11.378 4.246 24.684 1.826 33.828-7.322l146.746-146.748c9.148-9.148 11.57-22.454 7.324-33.83-1.552-4.16-3.97-8.068-7.314-11.414z"/>
+                                </svg>
+                                Remove
+                            </>
+                        ) : (
+                            <>
+                                {/* Cart + icon */}
+                                <CartSvg size={18}/>
+                                Add
+                            </>
+                        )}
+                    </button>
                 </div>
             </div>
-            {inCart ?
-                <div className="dag-container17 add-to-cart">
-                    <svg viewBox="0 0 1024 1024" className="dag-icon4">
-                        <path d="M1014.662 822.66c-0.004-0.004-0.008-0.008-0.012-0.010l-310.644-310.65 310.644-310.65c0.004-0.004 0.008-0.006 0.012-0.010 3.344-3.346 5.762-7.254 7.312-11.416 4.246-11.376 1.824-24.682-7.324-33.83l-146.746-146.746c-9.148-9.146-22.45-11.566-33.828-7.32-4.16 1.55-8.070 3.968-11.418 7.31 0 0.004-0.004 0.006-0.008 0.010l-310.648 310.652-310.648-310.65c-0.004-0.004-0.006-0.006-0.010-0.010-3.346-3.342-7.254-5.76-11.414-7.31-11.38-4.248-24.682-1.826-33.83 7.32l-146.748 146.748c-9.148 9.148-11.568 22.452-7.322 33.828 1.552 4.16 3.97 8.072 7.312 11.416 0.004 0.002 0.006 0.006 0.010 0.010l310.65 310.648-310.65 310.652c-0.002 0.004-0.006 0.006-0.008 0.010-3.342 3.346-5.76 7.254-7.314 11.414-4.248 11.376-1.826 24.682 7.322 33.83l146.748 146.746c9.15 9.148 22.452 11.568 33.83 7.322 4.16-1.552 8.070-3.97 11.416-7.312 0.002-0.004 0.006-0.006 0.010-0.010l310.648-310.65 310.648 310.65c0.004 0.002 0.008 0.006 0.012 0.008 3.348 3.344 7.254 5.762 11.414 7.314 11.378 4.246 24.684 1.826 33.828-7.322l146.746-146.748c9.148-9.148 11.57-22.454 7.324-33.83-1.552-4.16-3.97-8.068-7.314-11.414z" />
-                    </svg>
-                </div>
-                :
-                <div className="dag-container17 add-to-cart">
-                    <svg viewBox="0 0 1024 1024" className="dag-icon4">
-                        <path d="M306 630q0 10 10 10h494v86h-512q-34 0-59-26t-25-60q0-20 10-40l58-106-154-324h-86v-84h140q40 84 80 170 10 18 46 95t56 119h300q150-272 164-300l74 42-164 298q-24 44-74 44h-318l-38 70zM726 768q34 0 59 26t25 60-25 59-59 25-60-25-26-59 26-60 60-26zM298 768q34 0 60 26t26 60-26 59-60 25-59-25-25-59 25-60 59-26zM470 384v-128h-128v-86h128v-128h84v128h128v86h-128v128h-84z" />
-                    </svg>
-                </div>
-            }
-        </div>
-    )
+
+            {/* In-cart animated border */}
+            <AnimatePresence>
+                {inCart && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 rounded-2xl pointer-events-none
+                                   ring-2 ring-green-500/50"
+                    />
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
 }
 
-export default FixtureCountry
+export default FixtureCountry;

@@ -1,6 +1,4 @@
-
-
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FixtureCountry from './fixtureCountry';
 import axios from 'axios';
@@ -9,166 +7,185 @@ import { setFixtures, setFixturesLoaded } from '../slices/fixturesReducer';
 import Loading from './loading';
 import { Link, useNavigationType } from 'react-router';
 import Banners from './banners';
+import { motion } from 'framer-motion';
 
 const Fixtures = () => {
+    const { fixtures, fixturesLoaded } = useSelector(state => state.fixtures);
+    const { isAdmin, dashboard } = useSelector(state => state.user);
+    const isAdminShown = isAdmin && dashboard === "admin";
+    const [error, setError] = useState(null);
+    const navType = useNavigationType();
+    const [firstLoad, setFirstLoad] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-  const { fixtures, fixturesLoaded } = useSelector(state => state.fixtures);
-  const { user, isAdmin, dashboard } = useSelector(state => state.user);
-  const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
-  const [error, setError] = useState(null);
-  const navType = useNavigationType();
-  const [firstLoad, setFirstLoad] = useState(false);
-  const [loading, setLoading] = useState(true);
+    const roleData = useRef({
+        fixturesUrl: isAdminShown
+            ? `${baseApiUrl}/get-matches-admin.php`
+            : `${baseApiUrl}/get-matches.php`,
+    });
 
-  const roleData = useRef({
-    fixturesUrl: isAdminShown ? `${baseApiUrl}/get-matches-admin.php` : `${baseApiUrl}/get-matches.php`,
-  })
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
-  useLayoutEffect(() => {
-    // return;
-    if (!firstLoad) {
-      if (fixturesLoaded) {
-        if (navType !== "PUSH") {
-          setLoading(false);
+    useLayoutEffect(() => {
+        if (!firstLoad) {
+            if (fixturesLoaded) { if (navType !== "PUSH") setLoading(false); else fetchFixtures(); }
+            else fetchFixtures();
         } else {
-          fetchFixtures();
+            if (fixturesLoaded) { if (navType !== "PUSH") setLoading(false); }
+            else fetchFixtures();
         }
-      } else {
-        fetchFixtures();
-      }
-    } else {
-      if (fixturesLoaded) {
-        if (navType !== "PUSH") {
-          setLoading(false);
-        } else {
-          // fetchFixtures();
-        }
-      } else {
-        fetchFixtures();
-      }
+        if (!firstLoad) setFirstLoad(true);
+    }, [fixturesLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    function fetchFixtures() {
+        setLoading(true);
+        axios({ url: roleData.current.fixturesUrl, method: "GET" })
+            .then(res => { if (error) setError(null); dispatch(setFixtures(res.data.matches)); })
+            .catch(() => setError("Please check your network and reload"))
+            .finally(() => { setLoading(false); if (!fixturesLoaded) dispatch(setFixturesLoaded(true)); });
     }
 
-    if (!firstLoad) setFirstLoad(true);
-  }, [fixturesLoaded]) //dashboard change will trigger fixturesLoaded change which will in turn trigger reload here
+    const fixturesLength = useMemo(() =>
+        Object.values(fixtures)
+            .flatMap(c => Object.values(c.leagues))
+            .flatMap(l => Object.values(l.fixtures)).length
+        , [fixtures]);
 
-  function fetchFixtures() {
-    setLoading(true);
-    axios({
-      url: roleData.current.fixturesUrl,
-      method: "GET",
-    }).then((res) => {
-      // console.log(res.data);
-      // if(res.status === "success"){
-      if (error) setError(null)
-      dispatch(setFixtures(res.data.matches))
-      // } else {
-      //   console.log("Error fetching fixtures");
-      // }
-    }).catch((err) => {
-      console.log(err);
-      setError("Please check your network and reload")
-    }).finally(() => {
-      setLoading(false);
-      // setFirstLoad(true); //setFirstLoad must still be called explicitly because fixturesLoaded won't trigger a rerender (true to true) when a push occurs
-      if (!fixturesLoaded) dispatch(setFixturesLoaded(true))
-      // else setFirstLoad(true); //called inside else (setFirstLoad will be set implicity in useEffect[fixturesLoaded]) on first visit. will be called expicitly here on subsequent nav pushes
-    })
-  }
+    const countryList = Object.values(fixtures);
 
-  useEffect(() => {
-    // setFirstLoad(fixturesLoaded && navType !== "PUSH");
-  }, [fixturesLoaded])
+    return (
+        <div className="w-full bg-gray-50 dark:bg-[#080810]">
 
-  const fixturesLength = useMemo(() =>
-    Object.values(fixtures).flatMap(country => Object.values(country.leagues)).flatMap(league => Object.values(league.fixtures)).length
-    , [fixtures])
-
-  console.log("Fixtures: ", roleData.current, fixturesLoaded, firstLoad, dashboard, isAdmin, fixturesLength);
-
-  return (
-    <div className="dag-container07">
-      <div className="dag-container08" />
-      <div className="dag-container09">
-        <Banners />
-        {(fixturesLength > 0) &&
-          <span className="dag-text10">
-            Available Predictions <span id="predictionsCount">
-              {(firstLoad && fixturesLength > 0) && `(${fixturesLength})`}
-            </span>
-          </span>}
-        <div className="dag-container10" id="countriesContainer">
-          {error ?
-            <div
-              className='home-message'
-            >
-              <div style={{ fontWeight: "bold" }}>Unable To Load Predictions</div>
-              <div style={{ marginTop: 15 }}>
-                Please reload or contact us via email if problem persists
-              </div>
+            {/* ── Deep Analyzer promo banner ──── */}
+            <div className="px-4 pt-6">
+                <Banners />
             </div>
-            :
-            !loading ?
-              (Object.values(fixtures).length > 0 ?
-                <>
-                  <FixtureCountry country={Object.values(fixtures)[0]} />
-                  <div className="banner">
-                    <div className="banner-cont">
-                      <h2 className='my-4'>Welcome to GST</h2>
-                      <div className="">
-                        <p className='my-3'> Every game is at least 2 odds </p>
-                        <p className='my-3'> Assurance is 99.99+ </p>
-                        <p className='mt-3 mb-8'> All games are predicted using AI </p>
-                      </div>
+
+            {/* ── Section header ─────────────── */}
+            {fixturesLength > 0 && (
+                <div className="flex items-center justify-between px-5 pt-2 pb-4">
+                    <div>
+                        <h2 className="text-base font-extrabold text-gray-900 dark:text-white tracking-tight">
+                            Today's Fixtures
+                        </h2>
+                        <p className="text-xs text-gray-500 dark:text-gray-500 mt-0.5">
+                            {firstLoad ? `${fixturesLength} match${fixturesLength !== 1 ? 'es' : ''} available` : 'Loading...'}
+                        </p>
                     </div>
-                    <Link className="banner-button" to="/about">
-                      Learn More
-                    </Link>
-                  </div>
-                  {Object.values(fixtures).filter((d, i) => i > 0).map((country, index) => (
-                    <FixtureCountry key={index} country={country} />
-                  ))}
-                </>
-                :
-                <div
-                  className='home-message'
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM159.3 388.7c-2.6 8.4-11.6 13.2-20 10.5s-13.2-11.6-10.5-20C145.2 326.1 196.3 288 256 288s110.8 38.1 127.3 91.3c2.6 8.4-2.1 17.4-10.5 20s-17.4-2.1-20-10.5C340.5 349.4 302.1 320 256 320s-84.5 29.4-96.7 68.7zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-                  </svg>
-
-                  <div style={{ fontWeight: "bold" }}>No Prediction Online</div>
-                  <div style={{ marginTop: 15 }}>
-                    Contact your local agent for exclusive fixtures today
-                  </div>
+                    {/* Live indicator */}
+                    <span className="flex items-center gap-1.5 text-[11px] font-semibold text-green-500
+                                     bg-green-500/10 border border-green-500/25 rounded-full px-3 py-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        Live
+                    </span>
                 </div>
-              )
+            )}
 
+            {/* ── Main content ───────────────── */}
+            <div className="w-full pb-4">
+                {error ? (
+                    <EmptyState
+                        icon="😞"
+                        title="Unable To Load Fixtures"
+                        body={error}
+                    />
+                ) : !loading ? (
+                    countryList.length > 0 ? (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            {countryList.map((country, i) => (
+                                <React.Fragment key={country.name}>
+                                    <FixtureCountry country={country} />
+                                    {/* Mid-list promo card after first country */}
+                                    {i === 0 && countryList.length > 1 && (
+                                        <MidBanner />
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <EmptyState
+                            icon="🔮"
+                            title="No Fixtures Online"
+                            body="Contact your local agent for exclusive fixtures today"
+                        />
+                    )
+                ) : (
+                    <div className="flex flex-col items-center gap-3 py-20">
+                        <Loading color="#ea580c" />
+                        <p className="text-xs text-gray-500 dark:text-gray-600 mt-2 animate-pulse">
+                            Fetching fixtures
+                        </p>
+                    </div>
+                )}
+            </div>
 
-              :
-              <div className="main-loading">
-                <Loading color='#ea580c'/>
-              </div>
-          }
+            {/* ── Footer ─────────────────────── */}
+            <footer className="flex flex-col items-center py-8 px-4 pb-24 md:pb-8
+                               border-t border-gray-200 dark:border-white/5">
+                <div className="flex items-center gap-2 mb-2">
+                    <img src="/assets/logo.png" alt="GST" className="w-6 h-6 rounded object-cover" />
+                    <span className="font-extrabold text-sm text-gray-700 dark:text-white/60">GST</span>
+                </div>
+                <p className="text-xs text-gray-400 dark:text-white/25">
+                    Gamble Responsibly &nbsp;·&nbsp; 18+ Legal Betting
+                </p>
+            </footer>
         </div>
-        <footer className='home-footer'>
-          <div className="dag-container02">
-            <img alt="image" src="/assets/logo.png" className="dag-image" />
-            <span className="dag-text">
-              <span>GST</span>
-            </span>
-          </div>
-          <div className="footer-text">
-            <span>Gamble Responsibly</span>
-            <span> | </span>
-            <span>18+ Legal Betting</span>
-          </div>
-        </footer>
-      </div>
-    </div>
+    );
+};
 
-  )
+/* ── Reusable empty/error state ── */
+function EmptyState({ icon, title, body }) {
+    return (
+        <div className="flex flex-col items-center justify-center px-8 py-20 gap-3 text-center">
+            <span className="text-5xl mb-2">{icon}</span>
+            <p className="font-bold text-gray-700 dark:text-white/60 text-base">{title}</p>
+            <p className="text-sm text-gray-400 dark:text-white/30 max-w-xs">{body}</p>
+        </div>
+    );
 }
 
-export default Fixtures
+/* ── Mid-list "how it works" card ── */
+function MidBanner() {
+    return (
+        <div className="text-center mx-4 my-6 rounded-2xl overflow-hidden
+                        bg-gradient-to-br from-gray-900 to-gray-800
+                        dark:from-white/5 dark:to-white/3
+                        border border-gray-700 dark:border-white/8
+                        p-5">
+            <h3 className="text-white font-bold text-base mb-3">How GST Works</h3>
+            <div className="grid grid-cols-3 gap-3">
+                {[
+                    { step: '01', label: 'Pick matches', icon: '🎯' },
+                    { step: '02', label: 'Pay & unlock', icon: '🔓' },
+                    { step: '03', label: 'Stake & win', icon: '🏆' },
+                ].map(s => (
+                    <div key={s.step} className="flex flex-col items-center text-center gap-1">
+                        <span className="text-2xl">{s.icon}</span>
+                        <span className="text-[10px] font-black text-orange-400 tracking-widest">{s.step}</span>
+                        <span className="text-[11px] text-gray-300 dark:text-white/50 font-medium">{s.label}</span>
+                    </div>
+                ))}
+            </div>
+            <div className='text-right'>
+                <Link
+                    to="/about"
+                    className="mt-6 inline-flex items-center gap-1 text-xs text-orange-400
+                           hover:text-orange-300 font-semibold transition-colors"
+                >
+                    Learn more
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                </Link>
+
+            </div>
+        </div>
+    );
+}
+
+export default Fixtures;

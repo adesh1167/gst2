@@ -10,6 +10,7 @@ import SelectCurrency from './selectCurrency'
 import Coupons from './admin/coupons'
 import EditCoupon from './admin/editCoupon'
 import ManualPayment from '../components/manualPayment'
+import MainCart from '../components/mainCart'
 
 const AdminRoutes = () => {
 
@@ -31,7 +32,7 @@ const AdminRoutes = () => {
                     <Route index element={<Navigate to="/admin" />} />
                     <Route path="country" element={isAfrica ? <SelectCountry exitable={false} /> : <SelectCurrency exitable={false} />} />
                     <Route path="change-country" element={isAfrica ? <SelectCountry /> : <SelectCurrency />} />
-                    <Route path="cart" element={<Cart />}>
+                    <Route path="cart" element={<MainCart />}>
                         <Route path="manual-payment" element={<ManualPayment />} />
                     </Route>
                     <Route path="coupon/:id" element={<Coupon />} />

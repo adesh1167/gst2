@@ -12,6 +12,7 @@ import Loading from "../components/loading";
 import Header from "../components/header";
 import SelectCurrency from "./selectCurrency";
 import ManualPayment from "../components/manualPayment";
+import MainCart from "../components/mainCart";
 
 const UserRoutes = ({ }) => {
 
@@ -32,7 +33,7 @@ const UserRoutes = ({ }) => {
                 <Route path="/" element={<Home />}>
                     <Route path="country" element={isAfrica ? <SelectCountry exitable={false} /> : <SelectCurrency exitable={false} />} />
                     <Route path="change-country" element={isAfrica ? <SelectCountry /> : <SelectCurrency />} />
-                    <Route path="cart" element={<Cart />}>
+                    <Route path="cart" element={<MainCart />}>
                         <Route path="manual-payment" element={<ManualPayment />} />
                     </Route>
                     <Route path="coupon/:id" element={<Coupon />} />

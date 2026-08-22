@@ -369,7 +369,7 @@ const DeepAnalyzerTool = () => {
             transition={{ duration: 1 }}
         >
             {/* Analysis Section */}
-            <section className='min-h-[calc(100vh-10rem)] font-[raleway]'>
+            <section className='min-h-[calc(100vh-14rem)] font-[raleway]'>
                 <button
                     className="mb-6 text-sm text-purple-400 hover:underline"
                     onClick={() => navigate('/deep-analyzer')}
@@ -377,7 +377,7 @@ const DeepAnalyzerTool = () => {
                     ← Back to matches
                 </button>
                 {error ?
-                    <div className="flex items-center justify-center min-h-[calc(100vh-15rem)] p-8">
+                    <div className="flex items-center justify-center min-h-[calc(100vh-16rem)] p-8">
                         <div className="text-gray-400">{error}</div>
                     </div>
                     :

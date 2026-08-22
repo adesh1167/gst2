@@ -1,132 +1,91 @@
-import { useRef } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
-import Header from '../components/header';
-import './styles/login.css';
 import { baseApiUrl } from '../data/url';
 import { useDispatch } from 'react-redux';
-import { login } from '../slices/userReducer';
 import { Link, useNavigate } from 'react-router';
-import Loading from '../components/loading';
 import { useForm } from 'react-hook-form';
 import { showToast } from '../slices/toastsReducer';
-import PasswordEye from '../components/passwordEye';
 import LoadingButton from '../components/loadingButton';
+import './styles/login.css';
 
 const ForgotPassword = () => {
-
     const [loading, setLoading] = useState(false);
-    const [passwordVisible, setPasswordVisible] = useState(false);
     const [success, setSuccess] = useState(false);
     const formRef = useRef(null);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const { register, handleSubmit, watch, formState: {
-        errors,
-        isSubmitting,
-    } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-
-    async function doLogin(e) {
+    async function doReset() {
         setLoading(true);
-
         try {
             const res = await axios({
                 url: `${baseApiUrl}/reset-password.php`,
                 method: 'POST',
                 data: new FormData(formRef.current),
             });
-
-            // console.log(res.data);
             if (res.data.status === "success") {
-                // dispatch(login(res.data.data));
-                // navigate('/', { replace: true });
-                dispatch(showToast({
-                    message: res.data.message,
-                    type: "success",
-                    duration: 4000
-                }))
+                dispatch(showToast({ message: res.data.message, type: "success", duration: 4000 }));
                 setSuccess(true);
             } else {
-                dispatch(showToast({
-                    message: res.data.message || "Unknown error occurred",
-                    type: "error",
-                    duration: 5000
-                }))
+                dispatch(showToast({ message: res.data.message || "Unknown error", type: "error", duration: 5000 }));
             }
-        } catch (err) {
-            console.log(err);
-            dispatch(showToast({
-                message: "Unable to login, check network and try again",
-                type: "error",
-                duration: 5000
-            }))
+        } catch {
+            dispatch(showToast({ message: "Unable to send reset link, check network and try again", type: "error", duration: 5000 }));
         } finally {
-            // console.log('finally');
             setLoading(false);
         }
     }
 
-
     return (
-        <div className='register-container'>
-            {/* <Header /> */}
-            <div className="register-container04 fixed">
-                <form ref={formRef} className="register-form" id="loginForm" noValidate="novalidate" onSubmit={handleSubmit(doLogin)}>
-                    <div className="register-container05">
-                        <div className="register-title">FORGOT PASSWORD</div>
-                        <div className="register-container09">
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="Email"
-                                className="register-textinput input valid"
-                                {...register("email", {
-                                    required: "Email is required",
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: "Invalid email address"
-                                    }
-                                })}
-                            />
-                            {errors.email &&
-                                <span className="validation-message">{errors.email.message}</span>
-                            }
-                        </div>
-                        {success ?
-                            <p className="register-success-text">Check your email for the reset link</p>
-                            :
+        <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[50px] z-[1]">
+            <form
+                ref={formRef}
+                onSubmit={handleSubmit(doReset)}
+                noValidate
+                className="w-[90%] max-w-md m-3 p-6 pb-10 rounded-2xl
+                           bg-black/55 backdrop-blur-sm border border-white/15
+                           shadow-xl flex flex-col gap-4"
+            >
+                <h1 className="text-white font-bold text-xl text-center mb-2">FORGOT PASSWORD</h1>
 
-                            <button
-                                type="submit"
-                                className="register-button button"
-                                id="submitButton"
-                            >
-                                <LoadingButton loading={loading} color='#fff'>Reset Password</LoadingButton>
-                            </button>}
-                        <div className="register-container13">
-                            <span>
-                                Don't have an account yet?{" "}
-                                <Link to="/register" className="register-link link">
-                                    Register
-                                </Link>
-                            </span>
-                        </div>
-                        <div className="register-container13">
-                            <span>
-                                Remember Password?{" "}
-                                <Link to="/login" className="register-link link">
-                                    Login
-                                </Link>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                <div className="flex flex-col gap-1">
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        className="w-full bg-white/10 border border-white/20 text-white placeholder-white/40
+                                   rounded-xl px-4 py-3 text-base focus:outline-none focus:border-orange-500/70 transition-colors"
+                        {...register("email", {
+                            required: "Email is required",
+                            pattern: { value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email" }
+                        })}
+                    />
+                    {errors.email && <span className="text-orange-300 text-sm">{errors.email.message}</span>}
+                </div>
+
+                {success ? (
+                    <p className="text-green-400 font-semibold text-center">Check your email for the reset link</p>
+                ) : (
+                    <button
+                        type="submit"
+                        className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-base transition-colors shadow-lg"
+                    >
+                        <LoadingButton loading={loading} color="#fff">Reset Password</LoadingButton>
+                    </button>
+                )}
+
+                <div className="text-center text-white text-sm">
+                    Don't have an account?{" "}
+                    <Link to="/register" className="font-bold underline hover:text-orange-300 transition-colors">Register</Link>
+                </div>
+                <div className="text-center text-white text-sm">
+                    Remember password?{" "}
+                    <Link to="/login" className="font-bold underline hover:text-orange-300 transition-colors">Login</Link>
+                </div>
+            </form>
         </div>
-    )
-}
+    );
+};
 
 export default ForgotPassword;

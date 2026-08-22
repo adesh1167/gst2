@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectNetTotal } from '../slices/netTotal';
 import formatNumber from '../functions/formatNumber';
-import { redirect, useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3';
@@ -12,25 +12,21 @@ import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 import { unavailablePayments } from '../data/unavaiablePayments';
 
-const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {} }) => {
-
+const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {}, className = "" }) => {
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-    const navCounter = useRef(0);
 
     const netTotal = useSelector(selectNetTotal);
     const { user, isAuthenticated, isAdmin, dashboard } = useSelector((state) => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
+    const isAdminShown = isAdmin && dashboard === "admin";
     const { country, factor } = useSelector((state) => state.data);
     const cart = useSelector((state) => state.cart);
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const handlePayment = useFlutterwave(config);
-
     const dispatch = useDispatch();
-    const location = useLocation();
 
     function initiatePayment() {
         if (isAuthenticated) {
@@ -38,21 +34,17 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                 const data = {
                     items: cart?.items?.map(item => item.id),
                     coupon: coupon?.coupon
-                }
-                // console.log(data);
+                };
                 setLoading(true);
                 axios({
                     url: `${baseApiUrl}/initiate-payment.php`,
                     method: "POST",
                     data: data,
                 }).then((res) => {
-                    // console.log(res.data);
                     if (res.data.status === "success") {
                         if (window.confirm(`Are you sure you want to pay ${res.data.data.currency} ${res.data.data.price}`)) {
                             const conf = {
-                                // public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : 'FLWPUBK-f2801afdf127dbb02f2adced0d298880-X',
-                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X", //Ameer',
-                                // public_key: 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X',
+                                public_key: isAdminShown ? 'FLWPUBK_TEST-7217bfc9bf24794b1d11bba35c1bab18-X' : "FLWPUBK-e0e52c06b42b3123b8656c9a879c2215-X",
                                 tx_ref: res.data.data.tx_ref,
                                 amount: res.data.data.price,
                                 currency: res.data.data.currency,
@@ -67,8 +59,7 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                                     description: 'Pay For Matches',
                                     logo: 'https://globalsportstrade.vercel.app/assets/logo.png',
                                 },
-                            }
-                            // console.log("Config: ", conf);
+                            };
                             setConfig(conf);
                         }
                     } else if (res.data.status === "update") {
@@ -76,31 +67,31 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                             message: "Some matches are no longer available. Cart has been updated",
                             type: "warning",
                             duration: 5000
-                        }))
+                        }));
                         setTimeout(() => {
                             dispatch(showToast({
                                 message: "Verify new cart items and checkout again",
                                 type: "info",
                                 duration: 5000
-                            }))
-                        }, 3000)
+                            }));
+                        }, 3000);
                         dispatch(removeItems(res.data.removed_items));
                     } else if (res.data.status === "login") {
-
+                        navigate("/login", { state: { redirect: pathname } });
                     } else {
                         dispatch(showToast({
                             message: res.data.message,
                             type: "error",
                             duration: 3000
-                        }))
+                        }));
                     }
                 }).catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     dispatch(showToast({
-                        message: "An error occured, please try again later",
+                        message: "An error occurred, please try again later",
                         type: "error",
                         duration: 3000
-                    }))
+                    }));
                 }).finally(() => {
                     setLoading(false);
                 });
@@ -110,55 +101,49 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                 message: "Please login to continue",
                 type: "error",
                 duration: 3000
-            }))
-            navigate("/login", { state: { redirect: pathname}});
+            }));
+            navigate("/login", { state: { redirect: pathname } });
         }
     }
 
-
     function checkOut() {
         setLoading(true);
-        // navCounter.current = 0;
         setIsPaymentOpen(true);
         if (unavailablePayments.includes(country)) {
             setTimeout(() => {
-                setLoading(false)
+                setLoading(false);
                 closePaymentModal();
                 setIsPaymentOpen(false);
-                // document.querySelectorAll('iframe[src*="flutterwave"]').forEach(el => el.remove());
                 navigate("/cart/manual-payment");
-            }, [100]);
+            }, 100);
             return;
         }
 
         handlePayment({
             callback: (response) => {
-                // console.log(response);
-                if (response.status == 'successful' || response.status == 'completed') {
+                if (response.status === 'successful' || response.status === 'completed') {
                     confirmPayment(response.tx_ref);
                 } else {
                     dispatch(showToast({
                         message: "Payment failed, please try again",
                         type: "error",
                         duration: 3000
-                    }))
+                    }));
                     setLoading(false);
                 }
-                setTimeout(closePaymentModal(), 2000);
+                setTimeout(() => closePaymentModal(), 2000);
                 setIsPaymentOpen(false);
-                // navigate(-navCounter.current);
             },
             onClose: () => {
                 dispatch(showToast({
                     message: "Payment abandoned, check My Matches to confirm if payment was successful",
-                    type: "warn",
+                    type: "warning",
                     duration: 5000
-                }))
+                }));
                 setLoading(false);
-                setIsPaymentOpen(false)
-                // navigate(-navCounter.current);
+                setIsPaymentOpen(false);
             }
-        })
+        });
 
         setConfig(null);
     }
@@ -167,44 +152,37 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
         axios({
             url: `${baseApiUrl}/${isAdminShown ? "confirm-payment-test" : "confirm-payment"}.php`,
             method: "POST",
-            data: {
-                tx_ref
-            }
+            data: { tx_ref }
         }).then((res) => {
-            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(showToast({
                     message: "Payment successful",
                     type: "success",
                     duration: 5000
-                }))
+                }));
                 setTimeout(() => {
                     dispatch(showToast({
                         message: "Redirecting to My Matches",
                         type: "info",
                         duration: 4000
-                    }))
+                    }));
                 }, 1000);
                 if (emptyCartFlag) emptyCart();
                 setTimeout(() => navigate("/my-matches"), 3000);
-            } else if (res.data.status === "update") {
-
-            } else if (res.data.status === "login") {
-
             } else {
                 dispatch(showToast({
                     message: res.data.message,
                     type: "warning",
                     duration: 3000
-                }))
+                }));
             }
         }).catch((err) => {
-            console.log(err);
+            console.error(err);
             dispatch(showToast({
-                message: "An error occured, check your network and try again",
+                message: "An error occurred, check your network and try again",
                 type: "error",
                 duration: 3000
-            }))
+            }));
         }).finally(() => {
             setLoading(false);
         });
@@ -214,38 +192,42 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
         if (config) {
             checkOut();
         }
-    }, [config])
+    }, [config]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-
         const removeFlutterwaveIframes = () => {
             const iframes = document.querySelectorAll('iframe[src*="flutterwave"]');
             iframes.forEach(iframe => iframe.remove());
         };
 
         if (!isPaymentOpen) {
-            // Wait a moment for modal to fully close
             setTimeout(removeFlutterwaveIframes, 1000);
         }
-    }, [isPaymentOpen])
+    }, [isPaymentOpen]);
 
-    // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
+    const defaultBg = background || "linear-gradient(135deg, #ea580c 0%, #f97316 100%)";
 
     return (
-        <div className="cart-container42" id="paymentButton" onClick={loading ? null : initiatePayment} style={{
-            backgroundColor: background,
-            color: color,
-            ...style
-        }}>
-            <span>
-                <span id="paymentPriceCont">
-                    <LoadingButton loading={loading} height={26} width={26} color='#fff'>
-                        {title} {showPrice && `${country}${formatNumber(netTotal * factor)}`}
-                    </LoadingButton>
-                </span>
-            </span>
-        </div>
-    )
-}
+        <button
+            type="button"
+            onClick={loading ? null : initiatePayment}
+            disabled={loading}
+            style={{
+                background: defaultBg,
+                color: color || '#fff',
+                ...style
+            }}
+            className={`min-w-[140px] px-6 py-3 rounded-xl font-bold text-sm text-white
+                       shadow-sm hover:shadow
+                       hover:brightness-105 active:scale-[0.98] transition-all
+                       flex items-center justify-center cursor-pointer select-none
+                       disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
+        >
+            <LoadingButton loading={loading} height={24} width={24} color="#fff">
+                {title} {showPrice && `${country} ${formatNumber(netTotal * factor)}`}
+            </LoadingButton>
+        </button>
+    );
+};
 
 export default PayButton;
