@@ -203,6 +203,7 @@ function App() {
         </Routes>
       {(!tAndCAccepted && pathname !== "/about") && <Welcome />}
       </main>
+      
       <Toasts />
     </>
   );
