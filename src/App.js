@@ -185,7 +185,7 @@ function App() {
                 </AnimatePresence>
             </div>
 
-            <Toasts />
+            <Toasts/>
         </>
     );
 }

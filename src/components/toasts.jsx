@@ -44,9 +44,9 @@ const Toasts = () => {
 
     return (
         <div className="fixed top-16 right-3 sm:right-6 z-50 flex flex-col items-end gap-2.5 max-w-[92vw] sm:max-w-sm pointer-events-none">
-            <AnimatePresence mode="popLayout">
-                {toasts.slice(-4).map(toast => (
-                    <ToastItem key={toast.id} toast={toast} />
+            <AnimatePresence mode="sync">
+                {toasts.slice(0,3).map(toast => (
+                    <ToastItem key={toast.id.toString()} toast={toast} />
                 ))}
             </AnimatePresence>
         </div>
@@ -76,11 +76,11 @@ const ToastItem = ({ toast }) => {
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, y: -16, scale: 0.92, x: 20 }}
-            animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.88, x: 30, transition: { duration: 0.2 } }}
+            initial={{ opacity: 0, scale: 0.92, x: 100 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.88, height: 0, x: 100, transition: { duration: 0.2 } }}
             transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-            className={`pointer-events-auto flex items-start gap-3 w-full p-3.5 sm:p-4 rounded-xl
+            className={`relative pointer-events-auto flex items-center gap-3 w-full p-3.5 sm:p-4 rounded-xl
                         bg-white/95 dark:bg-[#12131f]/95 backdrop-blur-md
                         border border-black/10 dark:border-white/10
                         border-l-4 ${config.border}
