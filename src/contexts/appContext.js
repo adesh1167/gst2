@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 import React from 'react'
 import { baseApiUrl } from "../data/url";
@@ -13,12 +13,57 @@ const AuthContext = createContext();
 const AppContext = ({ children }) => {
 
     const [menuExpanded, setMenuExpanded] = useState(false);
+
+    // skip ref: when a nav action inside the menu triggers a route change that
+    // would normally close the mobile menu, skip=true tells the close effect to
+    // stand down for one tick (e.g. admin dashboard switch)
+    const menuSkip = useRef(false);
+
+    const closeMenu = useCallback(() => {
+        setMenuExpanded(false);
+    }, []);
+
+    const skipNextClose = useCallback(() => {
+        menuSkip.current = true;
+    }, []);
     const [deepAnalyzerMatches, setDeepAnalyzerMatches] = useState({
         loaded: false,
         matches: [],
     });
     const {pathname} = useLocation();
     const {firstLoad, version, newPaths} = useSelector(state => state.data)
+
+    // ── Dark Mode ──────────────────────────────────────────────────────────────
+    const getInitialDarkMode = () => {
+        try {
+            const stored = localStorage.getItem('darkMode');
+            if (stored !== null) return JSON.parse(stored);
+        } catch (_) {}
+        return false; // default: dark
+    };
+
+    const [darkMode, setDarkModeState] = useState(getInitialDarkMode);
+
+    useEffect(() => {
+        const root = document.documentElement;
+        if (darkMode) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+        try {
+            localStorage.setItem('darkMode', JSON.stringify(darkMode));
+        } catch (_) {}
+    }, [darkMode]);
+
+    const toggleDarkMode = useCallback(({status}) => { //status = light/dark
+        if(status){
+            setDarkModeState(status === "light" ? false : true)
+        } else{
+            setDarkModeState(prev => !prev);
+        }
+    }, []);
+    // ──────────────────────────────────────────────────────────────────────────
 
     const [deepAnalyzerUpcoming, setDeepAnalyzerUpcoming] = useState({
         pageSize: 20,
@@ -75,14 +120,11 @@ const AppContext = ({ children }) => {
         }
     }, [firstLoad, version])
 
-    // console.log("New Paths: ", newPaths);
-
     const fetchDeepAnalyzerMatches = useCallback(() => {
         axios({
             method: "GET",
             url: `${baseApiUrl}/get-matches.php`,
         }).then((res) => {
-            // console.log(res.data);
             setDeepAnalyzerMatches(prev => ({
                 ...prev,
                 loaded: true,
@@ -100,43 +142,36 @@ const AppContext = ({ children }) => {
         const pageSize = deepAnalyzerUpcoming.pageSize || 4;
         const page = newPage ?? (deepAnalyzerUpcoming.page || 1);
 
-        // console.log(pageSize, page, deepAnalyzerUpcoming.page);
         if(deepAnalyzerUpcoming.matches[page]) return;
         axios({
             method: "GET",
             url: `${baseApiUrl}/get-matches-by-page.php?page=${page}&pageSize=${pageSize}`,
         }).then((res) => {
-            // console.log(res.data);
-            // if (res.data.success) {
-                const allLoaded = res.data.matches.length < pageSize;
-                if(res.data.matches.length === 0) {
-                    setDeepAnalyzerUpcoming(prev => ({
-                        ...prev,
-                        page: page - 1,
-                        loaded: true,
-                        allLoaded: true
-                    }))
-
-                    return;
-                }
-
+            const allLoaded = res.data.matches.length < pageSize;
+            if(res.data.matches.length === 0) {
                 setDeepAnalyzerUpcoming(prev => ({
                     ...prev,
+                    page: page - 1,
                     loaded: true,
-                    pages: Math.max(page, deepAnalyzerUpcoming.pages),
-                    matches: {
-                        ...prev.matches,
-                        [page]: res.data.matches.map(match => ({
-                            ...match,
-                            ...JSON.parse(match.match_data),
-                            match_data: null
-                        }))
-                    },
-                    allLoaded
-                }));
-            // } else {
+                    allLoaded: true
+                }))
+                return;
+            }
 
-            // }
+            setDeepAnalyzerUpcoming(prev => ({
+                ...prev,
+                loaded: true,
+                pages: Math.max(page, deepAnalyzerUpcoming.pages),
+                matches: {
+                    ...prev.matches,
+                    [page]: res.data.matches.map(match => ({
+                        ...match,
+                        ...JSON.parse(match.match_data),
+                        match_data: null
+                    }))
+                },
+                allLoaded
+            }));
         })
     }, [deepAnalyzerUpcoming]);
 
@@ -145,7 +180,6 @@ const AppContext = ({ children }) => {
             method: "GET",
             url: `${baseApiUrl}/get-deep-analyzer-subscription.php`,
         }).then((res) => {
-            // console.log(res.data);
             if (res.data.status === "success") {
                 dispatch(setDeepAnalyzerSubscription(res.data.data));
             } else {
@@ -169,13 +203,14 @@ const AppContext = ({ children }) => {
                 return [];
             }
         }).catch(err => {
-            // console.log(err);
             return [];
-        }   )
+        })
     }, []);
 
     const value = useMemo(() => ({
         menuExpanded, setMenuExpanded,
+        closeMenu, skipNextClose, menuSkip,
+        darkMode, toggleDarkMode,
         deepAnalyzerMatches, setDeepAnalyzerMatches,
         deepAnalyzerUpcoming, setDeepAnalyzerUpcoming,
         deepAnalyzerTab, setDeepAnalyzerTab,
@@ -183,9 +218,7 @@ const AppContext = ({ children }) => {
         fetchDeepAnalyzerUpcoming,
         fetchDeepAnalyzerSubscription,
         searchMatches,
-    }), [menuExpanded, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab])
-
-    // console.log("DeepAnalyzerUpcoming: ", deepAnalyzerUpcoming)
+    }), [menuExpanded, darkMode, closeMenu, skipNextClose, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab])
 
     return (
         <AuthContext.Provider value={value}>

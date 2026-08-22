@@ -1,64 +1,110 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeToast } from '../slices/toastsReducer';
-import { toastColors } from '../data/toastColors';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from 'lucide-react';
+
+const toastConfig = {
+    success: {
+        icon: CheckCircle2,
+        border: 'border-emerald-500',
+        bgLight: 'bg-emerald-500/10',
+        bgDark: 'dark:bg-emerald-500/15',
+        iconColor: 'text-emerald-500 dark:text-emerald-400',
+        glow: 'shadow-emerald-500/10',
+    },
+    error: {
+        icon: AlertCircle,
+        border: 'border-rose-500',
+        bgLight: 'bg-rose-500/10',
+        bgDark: 'dark:bg-rose-500/15',
+        iconColor: 'text-rose-500 dark:text-rose-400',
+        glow: 'shadow-rose-500/10',
+    },
+    warning: {
+        icon: AlertTriangle,
+        border: 'border-amber-500',
+        bgLight: 'bg-amber-500/10',
+        bgDark: 'dark:bg-amber-500/15',
+        iconColor: 'text-amber-500 dark:text-amber-400',
+        glow: 'shadow-amber-500/10',
+    },
+    info: {
+        icon: Info,
+        border: 'border-blue-500',
+        bgLight: 'bg-blue-500/10',
+        bgDark: 'dark:bg-blue-500/15',
+        iconColor: 'text-blue-500 dark:text-blue-400',
+        glow: 'shadow-blue-500/10',
+    },
+};
 
 const Toasts = () => {
-
     const { toasts } = useSelector(state => state.toasts);
 
     return (
-        toasts.length > 0 &&
-        <div className="toasts">
-            {toasts.filter((t, index) => index < 3).map(toast =>
-                <Toast key={toast.id} toast={toast} />
-            )}
+        <div className="fixed top-16 right-3 sm:right-6 z-50 flex flex-col items-end gap-2.5 max-w-[92vw] sm:max-w-sm pointer-events-none">
+            <AnimatePresence mode="sync">
+                {toasts.slice(0,3).map(toast => (
+                    <ToastItem key={toast.id.toString()} toast={toast} />
+                ))}
+            </AnimatePresence>
         </div>
+    );
+};
 
-    )
-}
-
-const Toast = ({ toast }) => {
-
-
-    const [shown, setShown] = useState(false);
-
+const ToastItem = ({ toast }) => {
     const dispatch = useDispatch();
+    const timerRef = useRef(null);
 
-    function closeToast() {
-        setShown(false);
-        if(closeTimeOut.current) clearTimeout(closeTimeOut.current);
-        setTimeout(() => {
-            dispatch(removeToast(toast.id))
-        }, 200)
-    }
+    const type = toast.type || 'info';
+    const config = toastConfig[type] || toastConfig.info;
+    const IconComponent = config.icon;
 
-    const closeTimeOut = useRef(null);
+    const handleDismiss = () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+        dispatch(removeToast(toast.id));
+    };
 
     useEffect(() => {
-        
-        setTimeout(()=>setShown(true), 50);
-        closeTimeOut.current = setTimeout(() => {
-            closeToast();
-        }, toast.duration || 3000)
-    }, [])
+        timerRef.current = setTimeout(handleDismiss, toast.duration || 3500);
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, [toast.id, toast.duration]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className={`toast ${shown ? "shown" : ""}`} style={{ borderColor: toastColors[toast.type] || 'orange' }}>
-            <span className="toast-message">{toast.message}</span>
-            <div className="close-toast" onClick={closeToast}>
-                <svg
-                    viewBox="0 0 1024 1024"
-                    fill="black"
-                    width="14px"
-                    height="14px"
-                    className="close-toast-button"
-                >
-                    <path d="M1014.662 822.66c-0.004-0.004-0.008-0.008-0.012-0.010l-310.644-310.65 310.644-310.65c0.004-0.004 0.008-0.006 0.012-0.010 3.344-3.346 5.762-7.254 7.312-11.416 4.246-11.376 1.824-24.682-7.324-33.83l-146.746-146.746c-9.148-9.146-22.45-11.566-33.828-7.32-4.16 1.55-8.070 3.968-11.418 7.31 0 0.004-0.004 0.006-0.008 0.010l-310.648 310.652-310.648-310.65c-0.004-0.004-0.006-0.006-0.010-0.010-3.346-3.342-7.254-5.76-11.414-7.31-11.38-4.248-24.682-1.826-33.83 7.32l-146.748 146.748c-9.148 9.148-11.568 22.452-7.322 33.828 1.552 4.16 3.97 8.072 7.312 11.416 0.004 0.002 0.006 0.006 0.010 0.010l310.65 310.648-310.65 310.652c-0.002 0.004-0.006 0.006-0.008 0.010-3.342 3.346-5.76 7.254-7.314 11.414-4.248 11.376-1.826 24.682 7.322 33.83l146.748 146.746c9.15 9.148 22.452 11.568 33.83 7.322 4.16-1.552 8.070-3.97 11.416-7.312 0.002-0.004 0.006-0.006 0.010-0.010l310.648-310.65 310.648 310.65c0.004 0.002 0.008 0.006 0.012 0.008 3.348 3.344 7.254 5.762 11.414 7.314 11.378 4.246 24.684 1.826 33.828-7.322l146.746-146.748c9.148-9.148 11.57-22.454 7.324-33.83-1.552-4.16-3.97-8.068-7.314-11.414z" />
-                </svg>
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.92, x: 100 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.88, height: 0, x: 100, transition: { duration: 0.2 } }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className={`relative pointer-events-auto flex items-center gap-3 w-full p-3.5 sm:p-4 rounded-xl
+                        bg-white/95 dark:bg-[#12131f]/95 backdrop-blur-md
+                        border border-black/10 dark:border-white/10
+                        border-l-4 ${config.border}
+                        shadow-lg ${config.glow}
+                        text-light-primary dark:text-dark-primary`}
+            role="alert"
+        >
+            <div className={`p-1 rounded-lg ${config.bgLight} ${config.bgDark} shrink-0 mt-0.5`}>
+                <IconComponent className={`w-4 h-4 ${config.iconColor}`} />
             </div>
-        </div>
-    )
-}
 
-export default Toasts
+            <div className="flex-1 text-xs sm:text-sm font-medium leading-relaxed break-words pr-1">
+                {toast.message}
+            </div>
+
+            <button
+                onClick={handleDismiss}
+                className="shrink-0 p-1 -mr-1 -mt-1 rounded-lg text-black/40 hover:text-black/80 dark:text-white/40 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                aria-label="Close notification"
+            >
+                <X className="w-3.5 h-3.5" />
+            </button>
+        </motion.div>
+    );
+};
+
+export default Toasts;

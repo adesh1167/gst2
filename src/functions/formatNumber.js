@@ -1,11 +1,11 @@
-export default function formatNumber(number) {
+export default function formatNumber(number, min = 2, max = 2) {
     if (typeof number !== 'number' || isNaN(number)) {
         try {
-            return Number(number).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            return Number(number).toLocaleString('en-US', {minimumFractionDigits: min, maximumFractionDigits: max});
         } catch (error) {
             
         }
     } else{
-        return number.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        return number.toLocaleString('en-US', {minimumFractionDigits: min, maximumFractionDigits: max});
     }
 }
