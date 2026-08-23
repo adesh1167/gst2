@@ -155,7 +155,7 @@ const Cart = ({ aside = false }) => {
                                         placeholder="Promo Code"
                                         value={couponText}
                                         onChange={e => setCouponText(e.target.value)}
-                                        className="w-36 bg-white/8 dark:bg-gray-700 border border-[2px] border-gray-200 dark:border-white/20 text-gray-900 dark:text-white placeholder-black/30 dark:placeholder:text-white/30
+                                        className="sans w-36 bg-white/70 dark:bg-gray-700/20 border border-[2px] border-gray-500 dark:border-white/70 text-gray-700 dark:text-gray-300 placeholder-black/30 dark:placeholder:text-white/30
                                                rounded-lg px-3 py-2 text-base focus:outline-none focus:border-orange-500/60 dark:focus:border-orange-500/60
                                                transition-colors"
                                     />
