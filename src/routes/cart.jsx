@@ -197,9 +197,9 @@ const Cart = ({ aside = false }) => {
                                                 </svg>
                                             </div>
                                             <p className="text-xs text-green-600/80 dark:text-green-200/80">{coupon.message}</p>
-                                            <div className="flex justify-between font-extrabold text-green-600 dark:text-green-300 text-sm">
+                                            <div className="flex justify-between font-extrabold text-green-600 dark:text-green-300 text-md">
                                                 <span>NEW TOTAL</span>
-                                                <span className="sans">{country} {formatNumber(netTotal)}</span>
+                                                <span className="sans font-[900]">{country} {formatNumber(netTotal)}</span>
                                             </div>
                                         </div>
                                     )
