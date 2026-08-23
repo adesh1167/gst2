@@ -235,7 +235,7 @@ const About = () => {
                                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                                 className={`group relative p-6 rounded-2xl bg-white/70 dark:bg-[#121320]/80 backdrop-blur-md
                                             border border-black/5 dark:border-white/10 ${step.border}
-                                            hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300 flex flex-col justify-between`}
+                                            hover:shadow-xl hover:shadow-orange-500/5 [transition-property:color,background-color,border-color,box-shadow] duration-300 flex flex-col justify-between`}
                             >
                                 <div>
                                     <div className="flex items-center justify-between mb-4">
@@ -288,7 +288,7 @@ const About = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: idx * 0.15 }}
-                                className={`${idx === 0 ? 'xl:col-span-2' : ''} relative rounded-3xl bg-white/80 dark:bg-[#121320]/90 backdrop-blur-md border border-black/10 dark:border-white/10 overflow-hidden shadow-xl shadow-black/5 hover:border-orange-500/40 transition-all flex flex-col justify-between p-6 sm:p-8`}
+                                className={`${idx === 0 ? 'xl:col-span-2' : ''} relative rounded-3xl bg-white/80 dark:bg-[#121320]/90 backdrop-blur-md border border-black/10 dark:border-white/10 overflow-hidden shadow-xl shadow-black/5 hover:border-orange-500/40 [transition-property:color,background-color,border-color,box-shadow] duration-300 flex flex-col justify-between p-6 sm:p-8`}
                             >
                                 <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} pointer-events-none`} />
 
@@ -342,7 +342,7 @@ const About = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.4, delay: idx * 0.1 }}
-                                className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white/60 dark:bg-[#121320]/60 backdrop-blur-md border border-black/5 dark:border-white/10 hover:border-orange-500/30 transition-all"
+                                className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white/60 dark:bg-[#121320]/60 backdrop-blur-md border border-black/5 dark:border-white/10 hover:border-orange-500/30 [transition-property:color,background-color,border-color,box-shadow] duration-300"
                             >
                                 <div className="p-3 rounded-xl bg-orange-500/10 text-orange-500 shrink-0">
                                     <Icon className="w-5 h-5" />

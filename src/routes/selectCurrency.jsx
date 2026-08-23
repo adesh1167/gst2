@@ -44,7 +44,7 @@ const SelectCurrency = ({ exitable = true }) => {
                 dispatch(showToast({
                     message: 'Currency updated successfully',
                     type: 'success',
-                    duration: 2000
+                    duration: 3000
                 }));
                 navigate(-1);
                 dispatch(setCurrency(res.data.currency));

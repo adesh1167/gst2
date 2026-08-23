@@ -40,7 +40,7 @@ const SelectCountry = ({ exitable = true }) => {
                 dispatch(showToast({
                     message: 'Country updated successfully',
                     type: 'success',
-                    duration: 2000
+                    duration: 3000
                 }));
                 navigate(-1);
                 dispatch(setCountry(res.data.country));

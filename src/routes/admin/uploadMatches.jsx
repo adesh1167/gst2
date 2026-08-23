@@ -285,65 +285,6 @@ const UploadMatches = () => {
           </div>
         </div>
 
-        {/* Date Fetch Controls */}
-        <div className="max-w-5xl mx-auto px-4 pb-3 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
-          {/* Quick Presets */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mr-1 hidden sm:inline-block">
-              Fetch:
-            </span>
-            <button
-              type="button"
-              onClick={() => fetchMatches(0)}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 0
-                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
-                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
-                }`}
-            >
-              Today
-            </button>
-            <button
-              type="button"
-              onClick={() => fetchMatches(1)}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 1
-                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
-                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
-                }`}
-            >
-              Tomorrow
-            </button>
-            <button
-              type="button"
-              onClick={() => fetchMatches(2)}
-              className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 2
-                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
-                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
-                }`}
-            >
-              Day After
-            </button>
-          </div>
-
-          {/* Custom Date Picker */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-lg px-2.5 py-1">
-              <Calendar className="w-3.5 h-3.5 text-gray-400" />
-              <input
-                type="date"
-                value={customDate}
-                onChange={(e) => setCustomDate(e.target.value)}
-                className="bg-transparent text-xs font-semibold text-gray-800 dark:text-gray-200 focus:outline-none"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={() => fetchMatches(undefined, false)}
-              className="px-3 py-1.5 rounded-lg font-bold text-xs text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 shadow-sm active:scale-95 transition-all"
-            >
-              Fetch
-            </button>
-          </div>
-        </div>
 
         {/* Status Bar */}
         <div className="max-w-5xl mx-auto px-4 py-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
@@ -384,12 +325,73 @@ const UploadMatches = () => {
             <span className="whitespace-nowrap">{filtered ? 'Show All' : `Show Staged (${selectedCount})`}</span>
           </button>
         </div>
+
       </div>
 
       {/* ══════════════════════════════════════════════
           SCROLLABLE MATCH LIST
       ══════════════════════════════════════════════ */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 pb-28">
+        {/* Date Fetch Controls */}
+        <div className="max-w-5xl mx-auto px-0 pb-3 flex flex-col w-full justify-between gap-3 text-xs sm:text-sm">
+          {/* Quick Presets */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mr-1 hidden sm:inline-block">
+              Fetch:
+            </span>
+            <button
+              type="button"
+              onClick={() => fetchMatches(0)}
+              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 0
+                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
+                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
+                }`}
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              onClick={() => fetchMatches(1)}
+              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 1
+                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
+                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
+                }`}
+            >
+              Tomorrow
+            </button>
+            <button
+              type="button"
+              onClick={() => fetchMatches(2)}
+              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 2
+                ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
+                : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
+                }`}
+            >
+              Day After
+            </button>
+          </div>
+
+          {/* Custom Date Picker */}
+          <div className="flex items-center gap-2">
+            <div className="flex-1 flex items-center gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-lg px-2.5 py-1">
+              <Calendar className="w-3.5 h-3.5 text-gray-400" />
+              <input
+                type="date"
+                value={customDate}
+                onChange={(e) => setCustomDate(e.target.value)}
+                className="w-full bg-transparent text-xs py-[2px] font-semibold text-gray-800 dark:text-gray-200 focus:outline-none"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => fetchMatches(undefined, false)}
+              className="px-6 py-1.5 rounded-lg font-bold text-xs text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 shadow-sm active:scale-95 transition-all"
+            >
+              Fetch
+            </button>
+          </div>
+        </div>
+
         <div className="max-w-5xl mx-auto space-y-3">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-3">
@@ -626,7 +628,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
                 {item.teams?.home?.name}
               </span>
             </div>
-            <div className="flex items-end text-[10px] font-bold text-orange-500 pl-0 py-0">VS</div>
+            <div className="flex items-end text-[10px] font-bold text-orange-500 pl-0 py-0.5">VS</div>
             <div className="flex items-center gap-2">
               {/* {item.teams?.away?.logo && (
                 <img
@@ -668,7 +670,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
           {/* Type */}
           <div>
-            <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Type
             </label>
             <input
@@ -687,7 +689,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
 
           {/* Selection */}
           <div>
-            <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Selection
             </label>
             <input
@@ -706,7 +708,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
 
           {/* Odds */}
           <div>
-            <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Odds
             </label>
             <input
@@ -726,7 +728,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
 
           {/* Price */}
           <div>
-            <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Price
             </label>
             <input

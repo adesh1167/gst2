@@ -60,9 +60,9 @@ const Home = () => {
                     {/* Hero copy */}
                     <div className="relative z-10 px-6 lg:px-10 pt-12 pb-16 max-w-lg">
                         <motion.div
-                            initial={{ opacity: 0, y: 24 }}
+                            initial={{ opacity: 0, y: 54, transition: {delay: 1} }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.55 }}
+                            transition={{ duration: 1 }}
                         >
                             {/* Pill badge */}
                             <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold

@@ -6,7 +6,7 @@ import { AiSvg } from "./svgs";
 export default function Banner() {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 20, transition: {delay: 1}}}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="group relative overflow-hidden rounded-2xl
@@ -15,7 +15,7 @@ export default function Banner() {
                        shadow-xl shadow-purple-900/20
                        hover:shadow-2xl hover:shadow-purple-800/30
                        hover:border-purple-500/40
-                       transition-all duration-500"
+                       [transition-property:color,background-color,border-color,box-shadow] duration-500"
         >
             {/* ── Ambient glow blobs ── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">

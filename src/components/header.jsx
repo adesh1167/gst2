@@ -27,6 +27,8 @@ const Header = () => {
 
     const toggle = () => setMenuExpanded(v => !v);
 
+    console.log("Panel Closed: ", panelClosed)
+
     return (
         <header
             className="fixed top-0 left-0 right-0 h-[50px] lg:h-[80px] z-[20]
@@ -63,7 +65,7 @@ const Header = () => {
 
                 {/* Admin badge — mobile only, when panel is closed */}
                 {panelClosed && isAdminShown && (
-                    <span className="lg:hidden text-xs font-bold text-orange-500 dark:text-orange-400 tracking-widest uppercase">
+                    <span className="text-xs font-bold text-orange-500 dark:text-orange-400 tracking-widest uppercase">
                         ADMIN
                     </span>
                 )}

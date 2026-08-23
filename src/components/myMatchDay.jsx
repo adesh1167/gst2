@@ -50,7 +50,7 @@ const MyMatchItem = ({ item }) => {
                 </div>
 
                 <div className="flex w-full">
-                    <div className="flex-1 flex flex-col justify-between pr-4 overflow-hidden gap-1.5">
+                    <div className="flex-1 flex flex-col justify-between pr-4 overflow-hidden gap-0.5">
                         {/* Teams */}
 
                         {/* League */}
