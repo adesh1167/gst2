@@ -124,11 +124,11 @@ const PayButtonCryptoStart = ({
             id="paymentButton"
             onClick={loading ? null : initiatePayment}
             disabled={loading}
-            style={{
-                backgroundColor: defaultBg,
-                color: color || '#fff',
-                ...style
-            }}
+            // style={{
+            //     backgroundColor: defaultBg,
+            //     color: color || '#fff',
+            //     ...style
+            // }}
             className={`min-w-[140px] px-6 py-3 rounded-xl font-bold text-sm text-white
                        border border-white/10 hover:border-white/20
                        shadow-sm hover:shadow

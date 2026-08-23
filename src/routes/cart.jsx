@@ -225,7 +225,7 @@ const Cart = ({ aside = false }) => {
                                         payload={{ items: cart?.map(i => i.id), coupon: coupon?.coupon }}
                                         ready={cart.length > 0}
                                         initiateLink={`${baseApiUrl}/initiate-payment-crypto.php`}
-                                        className='border border-[#555]'
+                                        className='border border-[#333] bg-gray-800 text-white dark:bg-white/80 dark:text-gray-700'
                                     />
                                 </div>
                             ) : (

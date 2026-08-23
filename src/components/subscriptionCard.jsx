@@ -38,6 +38,7 @@ const SubscriptionCard = ({ price, description, title, frequency, type }) => {
                     payload={{
                         type: type
                     }}
+                    className="border border-[#666] bg-black/50 text-white"
                     defaultCurrency={false}
                     ready={true}
                     background={isAfrica ? "" : "rgb(152 112 202)"}
