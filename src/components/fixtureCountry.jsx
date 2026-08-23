@@ -19,7 +19,7 @@ const FixtureCountry = ({ country }) => (
                 className="h-5 w-5 object-contain rounded-sm shrink-0"
             />
             <span className="text-[11px] font-black uppercase tracking-[0.18em]
-                             text-gray-500 dark:text-white/30 whitespace-nowrap">
+                             text-gray-500 dark:text-white/60 whitespace-nowrap">
                 {country.name}
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-gray-200 dark:from-white/10 to-transparent" />

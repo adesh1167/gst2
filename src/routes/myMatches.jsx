@@ -13,7 +13,7 @@ const MyMatches = () => {
     const { userQueried } = useSelector(state => state.user);
 
     return (
-        <div className="w-full min-h-full bg-light-bg dark:bg-dark-bg">
+        <div className="w-full min-h-full bg-white dark:bg-dark-bg">
             {userQueried && true ? (
                 <MyMatchesContent />
             ) : (
@@ -86,13 +86,13 @@ const MyMatchesContent = () => {
     }, [matchesLoaded]);
 
     return (
-        <div className="w-full min-h-full bg-light-bg dark:bg-dark-bg">
+        <div className="w-full min-h-full bg-white dark:bg-dark-bg">
             <div className="my-matches-container04 w-full
-                            bg-light-bg dark:bg-dark-bg px-0">
+                            bg-white dark:bg-dark-bg px-0">
                 <div className="flex flex-col items-center min-h-[calc(100dvh-50px)] lg:min-h-[calc(100dvh-80px)] w-full px-3 py-3 gap-3">
 
                     {/* Description banner */}
-                    <div className="w-full mt-4 px-4 py-3 rounded-xl font-semibold text-center text-sm
+                    <div className="w-full my-4 px-4 py-3 rounded-xl font-semibold text-center text-sm
                                     bg-green-500/8 border border-green-500/30 text-green-400
                                     my-matches-description tracking-wide">
                         All recent matches you bought will appear here
