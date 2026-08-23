@@ -77,10 +77,10 @@ const MyMatchItem = ({ item }) => {
                                         shadow-sm dark:shadow-none 
                                         leading-[13px]
                                         transition-colors duration-200">
-                            <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold mb-0.5">
+                            <span className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wider font-bold mb-0.5">
                                 Selection
                             </span>
-                            <span className="font-black text-orange-600 dark:text-orange-400 text-sm leading-none">
+                            <span className="font-black text-orange-400 dark:text-orange-600 text-sm leading-none">
                                 {item.selection}
                             </span>
                         </div>
