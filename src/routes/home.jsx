@@ -60,7 +60,7 @@ const Home = () => {
                     {/* Hero copy */}
                     <div className="relative z-10 px-6 lg:px-10 pt-12 pb-16 max-w-lg">
                         <motion.div
-                            initial={{ opacity: 0, y: 54, transition: {delay: 1} }}
+                            initial={{ opacity: 0, y: 54, transition: { delay: 1 } }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1 }}
                         >
@@ -172,17 +172,25 @@ const Home = () => {
                                    hover:-translate-y-1 transition-all duration-200"
                     >
                         {/* Coupon badge */}
-                        {couponActive && (
-                            <span className="absolute -top-2.5 right-3 flex items-center gap-1
+                        <AnimatePresence>
+                            {couponActive && (
+                                <motion.span
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className={`absolute -top-[0px] right-[0px] flex items-center gap-1
                                              bg-green-500 text-white text-[10px] font-bold
-                                             px-2 py-0.5 rounded-full border-2 border-white
-                                             shadow-sm whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="8" height="8" fill="white">
-                                    <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
-                                </svg>
-                                {parseInt(coupon.percent_off * 100)}% OFF
-                            </span>
-                        )}
+                                             px-2 py-0.5 rounded-bl-[14px] rounded-tr-[14px] ${couponActive ? "border-b-[2px] border-l-[2px]" : ""} border-white dark:border-black/80
+                                             shadow-sm whitespace-nowrap`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="8" height="8" fill="white">
+                                        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                                    </svg>
+                                    {parseInt(coupon.percent_off * 100)}% OFF
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
 
                         {/* Cart icon + count bubble */}
                         <div className="relative">
@@ -195,7 +203,7 @@ const Home = () => {
 
                         {/* Price */}
                         <div className="flex flex-col leading-tight">
-                            <span className="text-orange-100 text-[10px] font-medium">Checkout</span>
+                            <span className="text-orange-100 text-[10px] font-bold">Pay</span>
                             <span className="text-white text-sm font-extrabold tracking-tight">
                                 {country} {formatNumber(netTotal * factor)}
                             </span>
