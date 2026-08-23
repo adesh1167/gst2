@@ -35,7 +35,7 @@ export default function Banner() {
                     animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                               w-32 h-32 rounded-full bg-blue-600/15 blur-[50px]"
+                               w-32 h-32 rounded-full bg-blue-600/15 blur-[60px]"
                 />
             </div>
 

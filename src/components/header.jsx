@@ -31,7 +31,7 @@ const Header = () => {
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 h-[50px] lg:h-[80px] z-[20]
+            className="fixed top-0 left-0 right-0 h-[60px] lg:h-[80px] z-[20]
                        flex items-center justify-between px-3 lg:px-5
                        bg-white/95 dark:bg-[#0a0a0f]/95
                        backdrop-blur-sm

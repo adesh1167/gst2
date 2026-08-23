@@ -306,7 +306,7 @@ export default function AnalyzerHome() {
                         }
                     }
                     ref={searchRef}
-                    className={`h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] ${searching ? "fixed w-full right-0 z-10 overflow-hidden" : "relative"}`}
+                    className={`h-[calc(100dvh-60px)] lg:h-[calc(100dvh-80px)] ${searching ? "fixed w-full right-0 z-10 overflow-hidden" : "relative"}`}
                 >
                     <form onSubmit={(e) => e.preventDefault()} className="mx-auto max-w-2xl">
                         <div className="relative">

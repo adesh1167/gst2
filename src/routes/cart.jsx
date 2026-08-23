@@ -101,7 +101,7 @@ const Cart = ({ aside = false }) => {
 
                         {/* Scrollable content */}
                         <div className="cart-container">
-                            <div className="flex flex-col flex-1 gap-2.5 w-full min-h-[50px] pt-[120px] px-5 pb-2 text-sm">
+                            <div className="flex flex-col flex-1 gap-2.5 w-full min-h-[60px] pt-[120px] px-5 pb-2 text-sm">
                                 {cart.length > 0 ? (
                                     cart.map(item => <CartItem key={item.id} item={item} />)
                                 ) : (

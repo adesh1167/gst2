@@ -248,7 +248,7 @@ const UploadMatches = () => {
   }, [filtered, selectedMatches, matches, search, renderAll]);
 
   return (
-    <div className="relative w-full h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] overflow-hidden bg-gray-50 dark:bg-[#080810] text-gray-900 dark:text-white flex flex-col">
+    <div className="relative w-full h-[calc(100dvh-60px)] lg:h-[calc(100dvh-80px)] overflow-hidden bg-gray-50 dark:bg-[#080810] text-gray-900 dark:text-white flex flex-col">
       {/* ══════════════════════════════════════════════
           TOP CONTROLS & HEADER
       ══════════════════════════════════════════════ */}

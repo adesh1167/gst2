@@ -12,7 +12,7 @@ const DesktopMenu = () => (
         className="hidden md:flex flex-col
                    w-64 xl:w-72 shrink-0
                    sticky top-[80px] self-start
-                   h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)]
+                   h-[calc(100dvh-60px)] lg:h-[calc(100dvh-80px)]
                    border-r border-black/10 dark:border-white/10
                    overflow-hidden"
     >

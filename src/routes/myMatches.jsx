@@ -17,7 +17,7 @@ const MyMatches = () => {
             {userQueried && true ? (
                 <MyMatchesContent />
             ) : (
-                <div className="w-full pt-[50px]">
+                <div className="w-full pt-[60px]">
                     <div className="w-full min-h-full flex items-center justify-center">
                         <Loading color="#ea580c" />
                     </div>
@@ -89,7 +89,7 @@ const MyMatchesContent = () => {
         <div className="w-full min-h-full bg-white dark:bg-dark-bg">
             <div className="my-matches-container04 w-full
                             bg-white dark:bg-dark-bg px-0">
-                <div className="flex flex-col items-center min-h-[calc(100dvh-50px)] lg:min-h-[calc(100dvh-80px)] w-full px-3 py-3 gap-3">
+                <div className="flex flex-col items-center min-h-[calc(100dvh-60px)] lg:min-h-[calc(100dvh-80px)] w-full px-3 py-3 gap-3">
 
                     {/* Description banner */}
                     <div className="w-full my-4 px-4 py-3 rounded-xl font-semibold text-center text-sm

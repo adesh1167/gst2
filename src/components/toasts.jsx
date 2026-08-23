@@ -43,7 +43,7 @@ const Toasts = () => {
     const { toasts } = useSelector(state => state.toasts);
 
     return (
-        <div className="fixed top-16 lg:top-[90px] right-3 md:right-4 z-50 flex flex-col items-end gap-2.5 max-w-[70vw] md:max-[300px] pointer-events-none">
+        <div className="fixed top-[calc(10px+60px)] lg:top-[calc(10px+80px)] right-3 md:right-4 z-50 flex flex-col items-end gap-2.5 max-w-[70vw] md:max-[300px] pointer-events-none">
             <AnimatePresence mode="sync">
                 {toasts.slice(0,3).map(toast => (
                     <ToastItem key={toast.id.toString()} toast={toast} />

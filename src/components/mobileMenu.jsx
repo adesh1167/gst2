@@ -61,7 +61,7 @@ const MobileMenu = () => {
                             initial="hidden"
                             animate="visible"
                             exit="exit"
-                            className="fixed top-0 pt-[50px] right-0 z-[19] h-[100dvh] w-[78%] max-w-[300px]
+                            className="fixed top-0 pt-[60px] right-0 z-[19] h-[100dvh] w-[78%] max-w-[300px]
                                        shadow-2xl overflow-hidden"
                         >
                             <MenuContent onClose={closeMenu} variant="mobile" />

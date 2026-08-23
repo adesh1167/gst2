@@ -43,7 +43,7 @@ const Home = () => {
                     :
                     <div className='dag-container07 w-full h-auto relative mt-[300px] min-h-full overflow-x-hidden text-center mx-2.5 pt-0 px-0 mb-0 pb-0'>
                         <div className='dag-container08 flex-[0_0_auto] w-full h-10 flex mb-[-1px] bg-gradient-to-b from-transparent to-[#fdfdee]' />
-                        <div className='dag-container09 flex-[0_0_auto] w-full h-auto min-h-[calc(100vh-50px)] flex items-start pt-5 flex-col pb-[140px] bg-[#fdfdee]'>
+                        <div className='dag-container09 flex-[0_0_auto] w-full h-auto min-h-[calc(100vh-60px)] flex items-start pt-5 flex-col pb-[140px] bg-[#fdfdee]'>
                             <div className='dag-container10 w-full h-auto flex flex-col pb-5 bg-[#fdfdee]'>
                                 <div className="main-loading w-full h-[200px] flex items-center justify-center">
                                     <Loading color='#ea580c'/>
@@ -53,7 +53,7 @@ const Home = () => {
                         </div>
                     </div>
                 }
-                <Link className="dag-container18 fill-white flex-[0_0_auto] text-white right-[25px] bottom-[15px] h-[50px] flex fixed shadow-[0_0_5px_0_rgba(0,0,0,0.5)] items-center border-white border-2 pl-[15px] rounded-[20px] pr-[15px] bg-green-600" to="/cart">
+                <Link className="dag-container18 fill-white flex-[0_0_auto] text-white right-[25px] bottom-[15px] h-[60px] flex fixed shadow-[0_0_5px_0_rgba(0,0,0,0.5)] items-center border-white border-2 pl-[15px] rounded-[20px] pr-[15px] bg-green-600" to="/cart">
                     <div className="dag-container19 flex-[0_0_auto] w-auto h-auto flex items-center flex-row border-r border-r-white pr-2.5">
                         <span className="dag-text26 text-sm" id="checkoutCurrencyCont" />
                         <span className="dag-text27 text-lg font-semibold" id="checkoutPriceCont">

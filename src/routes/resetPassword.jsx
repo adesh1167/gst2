@@ -63,7 +63,7 @@ const ResetPassword = () => {
     const password = watch("password");
 
     return (
-        <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[50px] z-[1]">
+        <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[60px] z-[1]">
             {data.first_name && (
                 <div className="fixed right-5 top-[62px] text-white font-bold uppercase text-sm">
                     {data.first_name} {data.last_name}

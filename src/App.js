@@ -142,13 +142,13 @@ function App() {
               On lg+: horizontal flex → [DesktopMenu sidebar | main content]
               On mobile: just the main content (menu is the overlay above)
             */}
-            <div className="flex pt-[50px] lg:pt-[80px] min-h-[100dvh] bg-light-bg dark:bg-dark-bg">
+            <div className="flex pt-[60px] lg:pt-[80px] min-h-[100dvh] bg-light-bg dark:bg-dark-bg">
 
                 {/* Static sidebar — rendered in flow, lg+ only */}
                 <DesktopMenu />
 
                 {/* Main content — grows to fill remaining width */}
-                <main className="flex-1 w-[60%] h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] flex-shrink-0 relative overflow-hidden z-[2]">
+                <main className="flex-1 w-[60%] h-[calc(100dvh-60px)] lg:h-[calc(100dvh-80px)] flex-shrink-0 relative overflow-hidden z-[2]">
                     <Routes>
                         <Route
                             path="*"

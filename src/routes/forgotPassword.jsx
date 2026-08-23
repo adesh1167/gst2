@@ -38,7 +38,7 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[50px] z-[1]">
+        <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[60px] z-[1]">
             <form
                 ref={formRef}
                 onSubmit={handleSubmit(doReset)}

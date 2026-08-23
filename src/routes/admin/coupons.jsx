@@ -100,7 +100,7 @@ const Coupons = () => {
   }, [coupons, search]);
 
   return (
-    <div className="relative w-full h-[calc(100dvh-50px)] lg:h-[calc(100dvh-80px)] overflow-y-auto bg-gray-50 dark:bg-[#080810] text-gray-900 dark:text-white flex flex-col">
+    <div className="relative w-full h-[calc(100dvh-60px)] lg:h-[calc(100dvh-80px)] overflow-y-auto bg-gray-50 dark:bg-[#080810] text-gray-900 dark:text-white flex flex-col">
       {/* ══════════════════════════════════════════════
           TOP CONTROLS & HEADER
       ══════════════════════════════════════════════ */}

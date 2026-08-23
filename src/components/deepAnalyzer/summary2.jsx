@@ -12,7 +12,7 @@ function SummaryPanel({ open, onClose, report }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-[50px] inset-0 z-5 flex items-center justify-center p-6"
+            className="fixed top-[60px] inset-0 z-5 flex items-center justify-center p-6"
         >
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
             <motion.div

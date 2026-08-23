@@ -37,7 +37,7 @@ const ModalWrapper = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={handleBackdropClick}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[calc(1rem+50px)] lg:pt-[calc(1rem+80px)] bg-black/75 backdrop-blur-md overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[calc(1rem+60px)] lg:pt-[calc(1rem+80px)] bg-black/75 backdrop-blur-md overflow-y-auto"
         >
             <motion.div
                 initial={{ opacity: 0, scale: 0.94, y: 15 }}
