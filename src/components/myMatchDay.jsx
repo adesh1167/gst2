@@ -33,7 +33,7 @@ const MyMatchDay = ({ day }) => {
 
 const MyMatchItem = ({ item }) => {
     return (
-        <div className="group flex items-start justify-between px-4 py-4 
+        <div className="group flex items-start justify-between px-4 py-2 
                         border-b border-gray-100 dark:border-white/5 last:border-0
                         transition-colors duration-200 text-sm">
 
@@ -50,7 +50,7 @@ const MyMatchItem = ({ item }) => {
                 </div>
 
                 <div className="flex w-full">
-                    <div className="flex-1 flex flex-col justify-between pr-4 overflow-hidden gap-0.5">
+                    <div className="flex-1 flex flex-col justify-between pr-4 overflow-hidden">
                         {/* Teams */}
 
                         {/* League */}
