@@ -110,11 +110,11 @@ const MyMatchesContent = () => {
                             </Link>
                         </div>
                     ) : loading ? (
-                        <div className="flex-1 flex items-center justify-center py-16">
+                        <div className="flex-1 flex items-center justify-center pb-16">
                             <Loading color="#ea580c" />
                         </div>
                     ) : error ? (
-                        <div className="flex-1 flex items-center justify-center py-16">{error}</div>
+                        <div className="flex-1 flex items-center justify-center pb-16">{error}</div>
                     ) : matches.length > 0 ? (
                         <div className="w-full flex flex-col gap-4" id="slips">
                             {matches.map((match, i) => (

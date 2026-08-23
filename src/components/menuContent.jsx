@@ -13,6 +13,7 @@ import Switch from './switch';
 import { logout, switchDashboard } from '../slices/userReducer';
 import { showToast } from '../slices/toastsReducer';
 import { AiSvg, BallSvg, CartSvg } from './svgs';
+import { Globe, Ticket, Upload } from 'lucide-react';
 
 /* ── Shared row styles ─────────────────────────────────────────────────── */
 const ROW_BASE =
@@ -62,11 +63,13 @@ const MenuContent = ({ onClose }) => {
     const [switching, setSwitching] = useState(false);
 
     const { user, isAuthenticated, isAdmin, dashboard } = useSelector(s => s.user);
-    const { newPaths } = useSelector(s => s.data);
+    const { newPaths, continent } = useSelector(s => s.data);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
 
     const isAdminShown = useMemo(() => isAdmin && dashboard === 'admin', [isAdmin, dashboard]);
+    const isAfrica = continent === "AF" ? true : false;
+
     const close = () => onClose?.();
 
     /* ── Logout ────────────────────────────────────────── */
@@ -99,6 +102,7 @@ const MenuContent = ({ onClose }) => {
         cart: newPaths.find(p => p.startsWith('/cart')),
         about: newPaths.find(p => p.startsWith('/about')),
         contact: newPaths.find(p => p.startsWith('/contact')),
+        country: newPaths.find(p => p.startsWith('/change-country')) || newPaths.find(p => p.startsWith('/change-currency')),
     }), [newPaths]);
 
     /* ── NavLink row ───────────────────────────────────── */
@@ -164,7 +168,7 @@ const MenuContent = ({ onClose }) => {
             <nav className="flex flex-col flex-1 py-2 pr-0">
 
                 {/* Home */}
-                <NavRow key={"home"} to={isAdminShown ? '/admin' : '/'} end  newBadge={hasNew.home}>
+                <NavRow key={"home"} to={isAdminShown ? '/admin' : '/'} end newBadge={hasNew.home}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={ICON_BASE}>
                         <path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
                     </svg>
@@ -180,7 +184,7 @@ const MenuContent = ({ onClose }) => {
                     {({ isActive }) => (
                         <span className={`${ROW_BASE} ${isActive ? ROW_ACTIVE : ROW_INACTIVE} ${hasNew.deepAnalyzer ? NEW_CLS : ''}`}>
                             {/* AI circuit icon */}
-                            <AiSvg className={`${ICON_BASE} text-purple-900`}  />
+                            <AiSvg className={`${ICON_BASE} text-purple-900`} />
                             {/* Rainbow gradient text — active state inverts the gradient for legibility */}
                             <span className={isActive ? 'rainbow-text-active' : 'rainbow-text'}>
                                 Deep Analyzer
@@ -199,6 +203,12 @@ const MenuContent = ({ onClose }) => {
                 <NavRow to="/cart" close={close} newBadge={hasNew.cart}>
                     <CartSvg className={ICON_BASE} />
                     Cart
+                </NavRow>
+
+                {/* Country */}
+                <NavRow to="/change-country" close={close} newBadge={hasNew.country}>
+                    <Globe className={ICON_BASE} style={{ fill: "transparent" }} />
+                    Change {isAfrica ? "Country" : "Currency"}
                 </NavRow>
 
                 {/* About */}
@@ -222,9 +232,7 @@ const MenuContent = ({ onClose }) => {
                 {/* Admin: Upload Matches */}
                 {isAdminShown && (
                     <NavRow close={close} to="/admin/upload-matches">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className={ICON_BASE}>
-                            <path d="M288 109.3L288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-242.7-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352l128 0c0 35.3 28.7 64 64 64s64-28.7 64-64l128 0c35.3 0 64 28.7 64 64l0 32c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64l0-32c0-35.3 28.7-64 64-64z" />
-                        </svg>
+                        <Upload className={ICON_BASE} style={{fill: "transparent"}}/>
                         Upload Matches
                     </NavRow>
                 )}
@@ -232,9 +240,7 @@ const MenuContent = ({ onClose }) => {
                 {/* Admin: Coupons */}
                 {isAdminShown && (
                     <NavRow close={close} to="/admin/coupons">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className={ICON_BASE}>
-                            <path d="M64 64C28.7 64 0 92.7 0 128l0 64c0 8.8 7.4 15.7 15.7 18.6C34.5 217.1 48 235 48 256s-13.5 38.9-32.3 45.4C7.4 304.3 0 311.2 0 320l0 64c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-64c0-8.8-7.4-15.7-15.7-18.6C541.5 294.9 528 277 528 256s13.5-38.9 32.3-45.4C568.6 207.7 576 200.8 576 192l0-64c0-35.3-28.7-64-64-64L64 64zm64 112l0 160c0 8.8 7.2 16 16 16l288 0c8.8 0 16-7.2 16-16l0-160c0-8.8-7.2-16-16-16l-288 0c-8.8 0-16 7.2-16 16z" />
-                        </svg>
+                        <Ticket className={ICON_BASE} style={{fill: "transparent"}}/>
                         Coupons
                     </NavRow>
                 )}

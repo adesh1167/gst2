@@ -105,7 +105,7 @@ const Cart = ({ aside = false }) => {
                                 {cart.length > 0 ? (
                                     cart.map(item => <CartItem key={item.id} item={item} />)
                                 ) : (
-                                    <div className="flex flex-col flex-1 items-center justify-center py-10 gap-3 text-black/60 dark:text-white/60">
+                                    <div className="flex flex-col flex-1 items-center justify-center py-4 gap-3 text-black/60 dark:text-white/60">
                                         <img src="/assets/empty-cart.png" alt="empty" className="w-12 opacity-30 dark:invert" />
                                         <span className="text-lg">Cart is empty</span>
                                     </div>
@@ -145,7 +145,7 @@ const Cart = ({ aside = false }) => {
                             </div>
 
                             {/* Summary + coupon */}
-                            <div className="w-full border-y border-white/10 bg-white/[0.03] px-5 py-5 flex flex-col gap-3">
+                            <div className="w-full mb-4 border-y border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-5 py-5 flex flex-col gap-3">
                                 <h3 className="text-lg font-bold">SUMMARY</h3>
 
                                 {/* Coupon input */}

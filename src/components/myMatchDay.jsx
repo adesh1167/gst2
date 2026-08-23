@@ -39,7 +39,7 @@ const MyMatchItem = ({ item }) => {
 
             {/* Teams + league info */}
             <div className="flex flex-col w-full gap-2">
-                <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white/95 overflow-hidden text-base">
+                <div className="flex items-center gap-2 font-bold text-gray-700 dark:text-gray-300 overflow-hidden text-base">
                     <div className="overflow-hidden flex-shrink truncate">
                         <span className="team-name">{item.home}</span>
                     </div>
