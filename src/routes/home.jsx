@@ -167,8 +167,7 @@ const Home = () => {
                         className="relative flex items-center gap-3 pl-4 pr-5 py-3
                                    bg-orange-500 hover:bg-orange-400
                                    text-white font-bold rounded-2xl
-                                   shadow-[0_8px_32px_rgba(234,88,12,0.55)]
-                                   hover:shadow-[0_12px_40px_rgba(234,88,12,0.7)]
+                                   shadow-[0_0px_18px_rgba(234,88,12,0.55)]
                                    hover:-translate-y-1 transition-all duration-200"
                     >
                         {/* Coupon badge */}
@@ -179,9 +178,9 @@ const Home = () => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.3 }}
-                                    className={`absolute -top-[0px] right-[0px] flex items-center gap-1
+                                    className={`absolute -top-[2px] -right-[2px] flex items-center gap-1
                                              bg-green-500 text-white text-[10px] font-bold
-                                             px-2 py-0.5 rounded-bl-[14px] rounded-tr-[14px] ${couponActive ? "border-b-[2px] border-l-[2px]" : ""} border-white dark:border-black/80
+                                             px-2 py-0.5 rounded-bl-[14px] rounded-tr-[14px] ${couponActive ? "border-b-[2px] border-l-[2px]" : ""} border-[#edc] dark:border-black/80
                                              shadow-sm whitespace-nowrap`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="8" height="8" fill="white">
