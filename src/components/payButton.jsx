@@ -223,7 +223,7 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                        flex items-center justify-center cursor-pointer select-none
                        disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
         >
-            <LoadingButton loading={loading} height={24} width={24} color="#fff">
+            <LoadingButton loading={loading} size={24} color="#fff">
                 {title} {showPrice && `${country} ${formatNumber(netTotal * factor)}`}
             </LoadingButton>
         </button>

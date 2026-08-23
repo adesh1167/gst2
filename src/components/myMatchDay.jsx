@@ -39,7 +39,7 @@ const MyMatchItem = ({ item }) => {
 
             {/* Teams + league info */}
             <div className="flex flex-col w-full gap-1">
-                <div className="flex items-center gap-2 font-[500] text-gray-600 dark:text-gray-400 overflow-hidden text-sm">
+                <div className="flex items-center gap-2 font-[600] text-gray-600 dark:text-gray-400 overflow-hidden text-sm">
                     <div className="overflow-hidden flex-shrink truncate">
                         <span className="team-name">{item.home}</span>
                     </div>
@@ -77,7 +77,7 @@ const MyMatchItem = ({ item }) => {
                                         shadow-sm dark:shadow-none 
                                         leading-[13px]
                                         transition-colors duration-200">
-                            <span className="text-[10px] text-black/70 dark:text-white/50 uppercase tracking-wider font-bold mb-0.5">
+                            <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold mb-0.5">
                                 Selection
                             </span>
                             <span className="font-black text-orange-600 dark:text-orange-400 text-sm leading-none">
