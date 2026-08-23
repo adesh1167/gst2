@@ -77,7 +77,7 @@ const SelectCurrency = ({ exitable = true }) => {
             subtitle="Choose currency for billing & checkout"
             icon={Coins}
         >
-            <form onSubmit={loading ? e => e.preventDefault() : handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={loading ? e => e.preventDefault() : handleSubmit} className="flex flex-col flex-1 overflow-hidden p-6 space-y-4">
                 <div className="space-y-2.5">
                     {CURRENCIES.map(currency => {
                         const isSelected = localCurrency === currency.code;

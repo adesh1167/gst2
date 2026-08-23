@@ -66,7 +66,7 @@ const SelectCountry = ({ exitable = true }) => {
             subtitle="Choose your region for local currency & odds"
             icon={Globe}
         >
-            <form onSubmit={loading ? e => e.preventDefault() : handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={loading ? e => e.preventDefault() : handleSubmit} className="flex flex-col flex-1 overflow-hidden p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
                     {Object.values(countries).map(country => {
                         const isSelected = localCountry === country.code;

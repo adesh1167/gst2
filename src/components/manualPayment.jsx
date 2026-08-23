@@ -72,7 +72,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                         {/* {type === "matches" ? "Matches Selected:" : `Subscription (${duration || id}):`} */}
                         Amount:
                     </span>
-                    <span className="font-extrabold text-base text-orange-600 dark:text-orange-400">
+                    <span className="sans font-extrabold text-base text-orange-600 dark:text-orange-400">
                         {country} {total}
                     </span>
                 </div>
