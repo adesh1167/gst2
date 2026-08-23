@@ -7,35 +7,35 @@ import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from 'lucide-react'
 const toastConfig = {
     success: {
         icon: CheckCircle2,
-        border: 'border-emerald-500',
+        border: 'border-emerald-500 dark:border-emerald-500/50',
         bgLight: 'bg-emerald-500/10',
         bgDark: 'dark:bg-emerald-500/15',
         iconColor: 'text-emerald-500 dark:text-emerald-400',
-        glow: 'shadow-emerald-500/10',
+        glow: 'shadow-emerald-700/10',
     },
     error: {
         icon: AlertCircle,
-        border: 'border-rose-500',
+        border: 'border-rose-500 dark:border-rose-500/50',
         bgLight: 'bg-rose-500/10',
         bgDark: 'dark:bg-rose-500/15',
         iconColor: 'text-rose-500 dark:text-rose-400',
-        glow: 'shadow-rose-500/10',
+        glow: 'shadow-rose-700/10',
     },
     warning: {
         icon: AlertTriangle,
-        border: 'border-amber-500',
+        border: 'border-amber-500 dark:border-amber-500/50',
         bgLight: 'bg-amber-500/10',
         bgDark: 'dark:bg-amber-500/15',
         iconColor: 'text-amber-500 dark:text-amber-400',
-        glow: 'shadow-amber-500/10',
+        glow: 'shadow-amber-700/10',
     },
     info: {
         icon: Info,
-        border: 'border-blue-500',
+        border: 'border-blue-500 dark:border-blue-500/50',
         bgLight: 'bg-blue-500/10',
         bgDark: 'dark:bg-blue-500/15',
         iconColor: 'text-blue-500 dark:text-blue-400',
-        glow: 'shadow-blue-500/10',
+        glow: 'shadow-blue-700/10',
     },
 };
 
@@ -43,7 +43,7 @@ const Toasts = () => {
     const { toasts } = useSelector(state => state.toasts);
 
     return (
-        <div className="fixed top-16 right-3 sm:right-6 z-50 flex flex-col items-end gap-2.5 max-w-[92vw] sm:max-w-sm pointer-events-none">
+        <div className="fixed top-16 lg:top-[90px] right-3 md:right-4 z-50 flex flex-col items-end gap-2.5 max-w-[70vw] md:max-[300px] pointer-events-none">
             <AnimatePresence mode="sync">
                 {toasts.slice(0,3).map(toast => (
                     <ToastItem key={toast.id.toString()} toast={toast} />
@@ -80,11 +80,11 @@ const ToastItem = ({ toast }) => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.88, height: 0, x: 100, transition: { duration: 0.2 } }}
             transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-            className={`relative pointer-events-auto flex items-center gap-3 w-full p-3.5 sm:p-4 rounded-xl
+            className={`relative pointer-events-auto flex items-center gap-3 p-2 md:p-4 rounded-xl
                         bg-white/95 dark:bg-[#12131f]/95 backdrop-blur-md
-                        border border-black/10 dark:border-white/10
-                        border-l-4 ${config.border}
-                        shadow-lg ${config.glow}
+                        border
+                        border-l-4 ${config.border || "border-black/10 dark:border-white/10"}
+                        shadow-md ${config.glow}
                         text-light-primary dark:text-dark-primary`}
             role="alert"
         >
@@ -101,7 +101,7 @@ const ToastItem = ({ toast }) => {
                 className="shrink-0 p-1 -mr-1 -mt-1 rounded-lg text-black/40 hover:text-black/80 dark:text-white/40 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                 aria-label="Close notification"
             >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
             </button>
         </motion.div>
     );

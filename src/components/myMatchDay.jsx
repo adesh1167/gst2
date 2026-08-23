@@ -38,8 +38,8 @@ const MyMatchItem = ({ item }) => {
                         transition-colors duration-200 text-sm">
 
             {/* Teams + league info */}
-            <div className="flex flex-col w-full gap-2">
-                <div className="flex items-center gap-2 font-bold text-gray-700 dark:text-gray-300 overflow-hidden text-base">
+            <div className="flex flex-col w-full gap-1">
+                <div className="flex items-center gap-2 font-bold text-gray-700 dark:text-gray-300 overflow-hidden text-sm">
                     <div className="overflow-hidden flex-shrink truncate">
                         <span className="team-name">{item.home}</span>
                     </div>
@@ -70,7 +70,7 @@ const MyMatchItem = ({ item }) => {
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-2 shrink-0 pt-0.5">
-                        <div className="flex flex-col items-center px-4 py-2
+                        <div className="flex flex-col items-center px-4 py-1
                                         bg-orange-50 dark:bg-orange-500/15 
                                         border border-orange-200 dark:border-orange-500/30 
                                         rounded-xl min-w-[76px] 
@@ -79,7 +79,7 @@ const MyMatchItem = ({ item }) => {
                             <span className="text-[10px] text-orange-600/70 dark:text-white/50 uppercase tracking-wider font-bold mb-0.5">
                                 Selection
                             </span>
-                            <span className="font-black text-orange-600 dark:text-orange-400 text-base leading-none">
+                            <span className="font-black text-orange-600 dark:text-orange-400 text-sm leading-none">
                                 {item.selection}
                             </span>
                         </div>
