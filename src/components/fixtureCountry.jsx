@@ -165,7 +165,7 @@ function Fixture({ fixture }) {
                     )}
                     {/* Admin shows selection alongside price; regular users just price */}
                     <span>
-                        {country} {priceLabel}
+                        {country} <span className="sans">{priceLabel}</span>
                         {isAdminShown && (
                             <span className="opacity-90 font-semibold"> · {fixture.selection}</span>
                         )}

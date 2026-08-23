@@ -26,7 +26,7 @@ const CartItem = ({ item }) => {
                     </div>
                 </div>
                 <div className="flex flex-col justify-between items-end self-stretch">
-                    <span className="text-gray-600 dark:text-gray-300 text-sm font-semibold shrink-0">
+                    <span className="text-sm font-semibold shrink-0 sans">
                         {country} {formatNumber(item.price * factor, 0, 0)}
                     </span>
                     <span className="text-black/60 dark:text-white/60 text-xs pb-1.5">{item.game_type}</span>

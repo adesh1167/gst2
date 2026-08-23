@@ -38,6 +38,10 @@ body {
 /* ── Scroll lock ────────────────────────────────────────────────────────── */
 .scroll-lock { overflow: hidden; }
 
+.sans{
+  font-family: sans-serif;
+}
+
 /* ── Rainbow gradient (Deep Analyzer nav item) ──────────────────────────── */
 .rainbow-text, .ai .rainbow-text-active {
   background: linear-gradient(to right, red, orange, blue, purple, green, black, red);

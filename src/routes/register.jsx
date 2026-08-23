@@ -150,7 +150,7 @@ const Register = () => {
                     className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold
                                text-base transition-colors shadow-lg"
                 >
-                    <LoadingButton loading={loading} color="#fff">Register</LoadingButton>
+                    <LoadingButton size={24} loading={loading} color="#fff">Register</LoadingButton>
                 </button>
 
                 <div className="text-center text-white text-sm mt-1">

@@ -140,7 +140,7 @@ const ResetPassword = () => {
                                 type="submit"
                                 className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-base transition-colors shadow-lg"
                             >
-                                <LoadingButton loading={loading} color="#fff">Update Password</LoadingButton>
+                                <LoadingButton loading={loading} size={24} color="#fff">Update Password</LoadingButton>
                             </button>
 
                             <div className="text-center text-sm text-white flex items-center justify-center gap-3">

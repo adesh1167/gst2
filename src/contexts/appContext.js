@@ -8,6 +8,8 @@ import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
 import { useLocation } from "react-router";
 import { setNewPaths } from "../slices/dataReducer";
 
+const VERSION = "3.0.0";
+
 const AuthContext = createContext();
 
 const AppContext = ({ children }) => {
@@ -107,15 +109,8 @@ const AppContext = ({ children }) => {
 
     useEffect(()=>{
         if(firstLoad){
-            const localVersion = localStorage.getItem('version');
-            if(localVersion){
-                const parsedLocalVersion = JSON.parse(localVersion);
-                if(parsedLocalVersion != version){
-                    localStorage.setItem('version', JSON.stringify(version));
-                    window.location.reload();
-                }
-            } else {
-                localStorage.setItem('version', JSON.stringify(version));
+            if(VERSION < version){
+                window.location.reload();
             }
         }
     }, [firstLoad, version])

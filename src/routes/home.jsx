@@ -180,7 +180,7 @@ const Home = () => {
                                     transition={{ duration: 0.3 }}
                                     className={`absolute -top-[2px] -right-[2px] flex items-center gap-1
                                              bg-green-500 text-white text-[10px] font-bold
-                                             px-2 py-0.5 rounded-bl-[14px] rounded-tr-[14px] ${couponActive ? "border-b-[2px] border-l-[2px]" : ""} border-[#edc] dark:border-black/80
+                                             pl-2 pr-3 py-0.5 rounded-bl-[14px] rounded-tr-[14px] ${couponActive ? "border-b-[2px] border-l-[2px]" : ""} border-[#edc] dark:border-black/80
                                              shadow-sm whitespace-nowrap`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="8" height="8" fill="white">
@@ -204,7 +204,7 @@ const Home = () => {
                         <div className="flex flex-col leading-tight">
                             <span className="text-orange-100 text-[10px] font-bold">Pay</span>
                             <span className="text-white text-sm font-extrabold tracking-tight">
-                                {country} {formatNumber(netTotal * factor)}
+                                {country} <span className="sans">{formatNumber(netTotal * factor)}</span>
                             </span>
                         </div>
                     </Link>

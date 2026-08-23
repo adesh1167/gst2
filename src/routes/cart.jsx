@@ -156,15 +156,15 @@ const Cart = ({ aside = false }) => {
                                         value={couponText}
                                         onChange={e => setCouponText(e.target.value)}
                                         className="w-36 bg-white/8 dark:bg-gray-700 border border-[2px] border-gray-200 dark:border-white/20 text-gray-900 dark:text-white placeholder-black/30 dark:placeholder:text-white/30
-                                               rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-orange-500/60 dark:focus:border-orange-500/60
+                                               rounded-lg px-3 py-2 text-base focus:outline-none focus:border-orange-500/60 dark:focus:border-orange-500/60
                                                transition-colors"
                                     />
                                     <button
                                         type="submit"
-                                        className="font-bold text-orange-600 dark:text-orange-400 border-2 border-orange-500/60 bg-orange-500/15
+                                        className="self-stretch font-bold text-orange-600 dark:text-orange-400 border-2 border-orange-500/60 bg-orange-500/15
                                                hover:bg-orange-500/25 rounded-lg px-4 py-2 text-sm transition-colors"
                                     >
-                                        <LoadingButton color="#fff" loading={couponLoading}>APPLY</LoadingButton>
+                                        <LoadingButton size={20} loading={couponLoading}>APPLY</LoadingButton>
                                     </button>
                                 </form>
 
@@ -172,6 +172,7 @@ const Cart = ({ aside = false }) => {
                                 <div className="flex justify-between font-bold">
                                     <span>TOTAL</span>
                                     <span
+                                        className="sans"
                                         style={{
                                             textDecoration: couponActive ? 'line-through' : 'none',
                                             opacity: couponActive ? 0.45 : 1,
@@ -189,16 +190,16 @@ const Cart = ({ aside = false }) => {
                                         </p>
                                     ) : (
                                         <div className="rounded-xl bg-green-300/10 border border-green-500/50 px-4 py-3 flex flex-col gap-2">
-                                            <div className="flex items-center justify-between text-green-600 dark:text-green-400 text-sm font-semibold">
+                                            <div className="flex items-center justify-between text-green-600 dark:text-green-300 text-sm font-semibold">
                                                 <span>{coupon.coupon} applied</span>
                                                 <svg width={16} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
                                                     <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
                                                 </svg>
                                             </div>
-                                            <p className="text-xs text-green-600/80 dark:text-green-300/80">{coupon.message}</p>
-                                            <div className="flex justify-between font-extrabold text-green-600 dark:text-green-400 text-sm">
+                                            <p className="text-xs text-green-600/80 dark:text-green-200/80">{coupon.message}</p>
+                                            <div className="flex justify-between font-extrabold text-green-600 dark:text-green-300 text-sm">
                                                 <span>NEW TOTAL</span>
-                                                <span>{country} {formatNumber(netTotal)}</span>
+                                                <span className="sans">{country} {formatNumber(netTotal)}</span>
                                             </div>
                                         </div>
                                     )

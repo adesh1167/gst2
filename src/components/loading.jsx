@@ -15,7 +15,7 @@ const Loading = ({width = 50, height = 50, color = "black", style={}}) => {
     cx={50}
     cy={50}
     fill="none"
-    stroke={color}
+    stroke={"currentColor"}
     strokeWidth={10}
     r={35}
     strokeDasharray="164.93361431346415 56.97787143782138"

@@ -114,13 +114,13 @@ const SelectCountry = ({ exitable = true }) => {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-white
+                    className="w-full py-3 px-4 rounded-xl font-bold text-md text-white
                                bg-gradient-to-r from-orange-600 to-orange-500
                                hover:from-orange-500 hover:to-orange-400
                                active:scale-[0.99] transition-all
                                shadow-sm hover:shadow disabled:opacity-60"
                 >
-                    <LoadingButton width={18} height={18} color="#fff" loading={loading}>
+                    <LoadingButton size={22} color="#fff" loading={loading}>
                         Update Country
                     </LoadingButton>
                 </button>

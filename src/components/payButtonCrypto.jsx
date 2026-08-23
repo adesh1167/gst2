@@ -136,7 +136,7 @@ const PayButtonCryptoStart = ({
                        flex items-center justify-center cursor-pointer select-none
                        disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
         >
-            <LoadingButton loading={loading} height={24} width={24} color="#fff">
+            <LoadingButton className={"sans"} loading={loading} height={24} width={24} color="#fff">
                 {title} {showPrice && amountText}
             </LoadingButton>
         </button>
