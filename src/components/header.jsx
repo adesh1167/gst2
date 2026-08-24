@@ -40,7 +40,7 @@ const Header = () => {
         >
             {/* Brand */}
             <div className="flex items-center gap-2">
-                <img src="/assets/logo.png" alt="GST" className="w-8 h-8 rounded-lg object-cover" />
+                <img src="/assets/logo.png" alt="GST" className="w-8 h-8 ml-1 rounded-lg object-cover" />
                 <span className="font-extrabold text-lg text-gray-900 dark:text-white tracking-wide">GST</span>
             </div>
 

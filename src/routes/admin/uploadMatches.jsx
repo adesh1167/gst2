@@ -614,7 +614,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
       {/* Main Content Area */}
       <div className="p-4 space-y-0.5 md:space-y-3.5">
         {/* Teams Matchup Header */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 -mb-3 md:mb-0">
           <div className="flex-1 text:sm 2md:flex lg:block xl:flex gap-2 min-w-0">
             <div className="flex items-center gap-2">
               {/* {item.teams?.home?.logo && (
@@ -624,7 +624,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
                   className="w-5 h-5 object-contain shrink-0"
                 />
               )} */}
-              <span className="font-bold text-sm text-gray-600 dark:text-gray-400 truncate">
+              <span className="font-bold text-xs text-gray-600 dark:text-gray-400 truncate">
                 {item.teams?.home?.name}
               </span>
             </div>
@@ -637,7 +637,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
                   className="w-5 h-5 object-contain shrink-0"
                 />
               )} */}
-              <span className="font-bold text-sm text-gray-600 dark:text-gray-400 truncate">
+              <span className="font-bold text-xs text-gray-600 dark:text-gray-400 truncate">
                 {item.teams?.away?.name}
               </span>
             </div>
@@ -678,11 +678,11 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
               placeholder="GameType"
               value={data.type}
               onChange={(e) => handleFieldChange('type', e.target.value)}
-              className="w-full px-3 py-2 md:py-1.5 rounded-xl text-base font-semibold
+              className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold
                          bg-black/[0.03] dark:bg-black/30
-                         border border-black/20 dark:border-white/20
-                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
-                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
+                         border-2 border-black/10 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/50
+                         outline-none focus:outline-none focus:border-2 focus:border-orange-500/60 focus:bg-white/30 dark:focus:bg-black/30 dark:focus:border-orange-500/60
                          transition-all text-center"
             />
           </div>
@@ -699,9 +699,9 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
               onChange={(e) => handleFieldChange('selection', e.target.value)}
               className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold
                          bg-black/[0.03] dark:bg-black/30
-                         border border-black/20 dark:border-white/20
-                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
-                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
+                         border-2 border-black/10 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/50
+                         outline-none focus:outline-none focus:border-2 focus:border-orange-500/60 focus:bg-white/30 dark:focus:bg-black/30 dark:focus:border-orange-500/60
                          transition-all text-center"
             />
           </div>
@@ -719,9 +719,9 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
               onChange={(e) => handleFieldChange('odds', e.target.value)}
               className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold font-mono
                          bg-black/[0.03] dark:bg-black/30
-                         border border-black/20 dark:border-white/20
-                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30 
-                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
+                         border-2 border-black/10 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/50
+                         outline-none focus:outline-none focus:border-2 focus:border-orange-500/60 focus:bg-white/30 dark:focus:bg-black/30 dark:focus:border-orange-500/60
                          transition-all text-center"
             />
           </div>
@@ -738,9 +738,9 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
               onChange={(e) => handleFieldChange('price', e.target.value)}
               className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold font-mono
                          bg-black/[0.03] dark:bg-black/30
-                         border border-black/20 dark:border-white/20
-                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
-                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
+                         border-2 border-black/10 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/50
+                         outline-none focus:outline-none focus:border-2 focus:border-orange-500/60 focus:bg-white/30 dark:focus:bg-black/30 dark:focus:border-orange-500/60
                          transition-all text-center"
             />
           </div>
