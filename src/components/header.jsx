@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useApp } from '../contexts/appContext';
 import { Moon, Sun } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { set } from 'react-hook-form';
 
 const Header = () => {
     const { isAdmin, dashboard } = useSelector(s => s.user);
@@ -20,10 +22,18 @@ const Header = () => {
 
     // Track whether the panel has fully closed so we can show ADMIN label
     const [panelClosed, setPanelClosed] = useState(true);
+    const [hydrated, setHydrated] = useState(false);
+
     useEffect(() => {
         if (menuExpanded) setPanelClosed(false);
         else setTimeout(() => setPanelClosed(true), 320);
     }, [menuExpanded]);
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setHydrated(true);
+        }, 2000)
+    }, [])
 
     const toggle = () => setMenuExpanded(v => !v);
 
@@ -48,31 +58,46 @@ const Header = () => {
             <div className="flex items-center gap-2">
 
                 {/* Dark / light toggle — always visible */}
-                <button
-                    onClick={toggleDarkMode}
-                    aria-label="Toggle dark mode"
-                    className="w-9 h-9 flex items-center justify-center rounded-full
+                <AnimatePresence>
+                    {((!menuExpanded && !isAdmin) || isAdmin) && (
+                        <motion.button
+                            initial={hydrated ? {rotate: 360, opacity: 0.3, right: -30, top:100, marginLeft: "-0.5rem" } : {}}
+                            animate={{ rotate: 0, opacity: 1, right: 0, top:0, marginLeft: "0", }}
+                            exit={{ rotate: 360, opacity: 0.3, right: -30, top: 100, marginLeft: "-0.5rem" }}
+                            transition={{duration: 0.4}}
+                            onClick={toggleDarkMode}
+                            aria-label="Toggle dark mode"
+                            className="relative w-9 h-9 flex items-center justify-center rounded-full
                                hover:bg-gray-200 dark:hover:bg-white/20
                                text-gray-700 dark:text-gray-200 transition-colors bg-transparent"
-                >
-                    {darkMode ? (
-                        /* Sun */
-                        <Sun size={20}/>
-                    ) : (
-                        <Moon size={20}/>
+                        >
+                            {darkMode ? (
+                                /* Sun */
+                                <Sun size={20} />
+                            ) : (
+                                <Moon size={20} />
+                            )}
+                        </motion.button>
                     )}
-                </button>
+                </AnimatePresence>
 
                 {/* Admin badge — mobile only, when panel is closed */}
-                {panelClosed && isAdminShown && (
-                    <span className="text-xs font-bold text-orange-500 dark:text-orange-400 tracking-widest uppercase">
-                        ADMIN
-                    </span>
-                )}
+                <AnimatePresence>
+                    {!menuExpanded && isAdminShown && (
+                        <motion.span
+                            className="text-xs font-bold text-orange-500 dark:text-orange-400 tracking-widest uppercase"
+                            initial={{ opacity: 0, width: 0, marginLeft: "-0.5rem" }}
+                            animate={{ opacity: 1, width: 'auto', marginLeft: "0", }}
+                            exit={{ opacity: 0, width: 0, marginLeft: "-0.5rem" }}
+                        >
+                            ADMIN
+                        </motion.span>
+                    )}
+                </AnimatePresence>
 
                 {/* Hamburger — mobile only */}
                 <div
-                    className={`lg:hidden menu-container relative flex items-center justify-center
+                    className={`md:hidden menu-container relative flex items-center justify-center
                                w-9 h-9 cursor-pointer rounded-full
                                 transition-colors
                                ${menuExpanded ? 'expanded' : ''}`}

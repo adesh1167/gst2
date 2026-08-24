@@ -373,13 +373,13 @@ const UploadMatches = () => {
 
           {/* Custom Date Picker */}
           <div className="flex items-center gap-2">
-            <div className="flex-1 flex items-center gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/20 dark:border-white/20 rounded-lg px-2.5 py-1">
+            <div className="flex-1 flex items-center h-9 gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/20 dark:border-white/20 rounded-lg px-2.5">
               <Calendar className="w-3.5 h-3.5 text-gray-400" />
               <input
                 type="date"
                 value={customDate}
                 onChange={(e) => setCustomDate(e.target.value)}
-                className="w-full bg-transparent text-xs py-1.5 font-semibold text-gray-800 dark:text-gray-200 focus:outline-none focus:border-orange-500"
+                className="w-full bg-transparent text-xs font-semibold text-gray-800 dark:text-gray-200 focus:outline-none focus:border-orange-500"
               />
             </div>
             <button

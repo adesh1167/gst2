@@ -15,6 +15,13 @@ const AuthContext = createContext();
 const AppContext = ({ children }) => {
 
     const [menuExpanded, setMenuExpanded] = useState(false);
+    const [windowSize, setWindowSize ] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        isMd: window.innerWidth > 768,
+        isLg: window.innerWidth > 1024,
+        isXl: window.innerWidth > 1440,
+    })
 
     // skip ref: when a nav action inside the menu triggers a route change that
     // would normally close the mobile menu, skip=true tells the close effect to
@@ -45,6 +52,22 @@ const AppContext = ({ children }) => {
     };
 
     const [darkMode, setDarkModeState] = useState(getInitialDarkMode);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+                isMd: window.innerWidth > 768,
+                isLg: window.innerWidth > 1024,
+                isXl: window.innerWidth > 1440,
+            })
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, [])
 
     useEffect(() => {
         const root = document.documentElement;
@@ -114,6 +137,12 @@ const AppContext = ({ children }) => {
             }
         }
     }, [firstLoad, version])
+
+    useEffect(() => {
+        if(windowSize.isMd && menuExpanded){
+            setMenuExpanded(false);
+        }
+    }, [windowSize, menuExpanded])
 
     const fetchDeepAnalyzerMatches = useCallback(() => {
         axios({
@@ -213,7 +242,8 @@ const AppContext = ({ children }) => {
         fetchDeepAnalyzerUpcoming,
         fetchDeepAnalyzerSubscription,
         searchMatches,
-    }), [menuExpanded, darkMode, closeMenu, skipNextClose, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab])
+        windowSize,
+    }), [menuExpanded, darkMode, closeMenu, skipNextClose, deepAnalyzerMatches, deepAnalyzerUpcoming, deepAnalyzerTab, windowSize])
 
     return (
         <AuthContext.Provider value={value}>

@@ -3,7 +3,7 @@
  * All styling is Tailwind-only (no .menu CSS class dependency).
  * Shared by DesktopMenu and MobileMenu.
  */
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -14,6 +14,7 @@ import { logout, switchDashboard } from '../slices/userReducer';
 import { showToast } from '../slices/toastsReducer';
 import { AiSvg, BallSvg, CartSvg } from './svgs';
 import { Globe, Ticket, Upload } from 'lucide-react';
+import { useApp } from '../contexts/appContext';
 
 /* ── Shared row styles ─────────────────────────────────────────────────── */
 const ROW_BASE =
@@ -66,6 +67,8 @@ const MenuContent = ({ onClose }) => {
     const { newPaths, continent } = useSelector(s => s.data);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
+
+    const { darkMode, toggleDarkMode } = useApp();
 
     const isAdminShown = useMemo(() => isAdmin && dashboard === 'admin', [isAdmin, dashboard]);
     const isAfrica = continent === "AF" ? true : false;
@@ -137,6 +140,14 @@ const MenuContent = ({ onClose }) => {
                             <Switch on={isAdminShown} switching={switching} toggle={doSwitchDashboard} />
                         </div>
                     )}
+
+                    {isAdmin || (
+
+                        <div className="flex items-center justify-between mt-3 px-1">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">Dark Mode</span>
+                            <Switch on={darkMode} switching={switching} toggle={toggleDarkMode} />
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="px-4 py-3 border-b border-black/10 dark:border-white/10 shrink-0">
@@ -160,6 +171,10 @@ const MenuContent = ({ onClose }) => {
                                 Register
                             </Link>
                         )}
+                    </div>
+                    <div className="flex items-center justify-between mt-3 px-1">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">Dark Mode</span>
+                        <Switch on={darkMode} switching={switching} toggle={toggleDarkMode} />
                     </div>
                 </div>
             )}
@@ -232,7 +247,7 @@ const MenuContent = ({ onClose }) => {
                 {/* Admin: Upload Matches */}
                 {isAdminShown && (
                     <NavRow close={close} to="/admin/upload-matches">
-                        <Upload className={ICON_BASE} style={{fill: "transparent"}}/>
+                        <Upload className={ICON_BASE} style={{ fill: "transparent" }} />
                         Upload Matches
                     </NavRow>
                 )}
@@ -240,7 +255,7 @@ const MenuContent = ({ onClose }) => {
                 {/* Admin: Coupons */}
                 {isAdminShown && (
                     <NavRow close={close} to="/admin/coupons">
-                        <Ticket className={ICON_BASE} style={{fill: "transparent"}}/>
+                        <Ticket className={ICON_BASE} style={{ fill: "transparent" }} />
                         Coupons
                     </NavRow>
                 )}
