@@ -263,11 +263,11 @@ const UploadMatches = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by team, league, or country..."
-              className="w-full pl-10 pr-10 py-2.5 rounded-xl text-sm font-medium
+              className="w-full pl-10 pr-10 py-2 rounded-xl text-base font-medium
                          bg-black/[0.04] dark:bg-white/[0.06]
-                         border border-black/10 dark:border-white/10
+                         border border-black/20 dark:border-white/20
                          text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500
-                         focus:outline-none focus:border-orange-500/60 focus:ring-2 focus:ring-orange-500/20
+                         outline-none focus:outline-none focus:border-orange-500/60 dark:focus:border-orange-500/60 focus:ring-2 focus:ring-orange-500/20
                          transition-all"
             />
             {search.length > 0 && (
@@ -342,7 +342,7 @@ const UploadMatches = () => {
             <button
               type="button"
               onClick={() => fetchMatches(0)}
-              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 0
+              className={`flex-1 px-3 py-2.5 rounded-lg font-bold transition-all ${activeDateOffset === 0
                 ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
                 : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
                 }`}
@@ -352,7 +352,7 @@ const UploadMatches = () => {
             <button
               type="button"
               onClick={() => fetchMatches(1)}
-              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 1
+              className={`flex-1 px-3 py-2.5 rounded-lg font-bold transition-all ${activeDateOffset === 1
                 ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
                 : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
                 }`}
@@ -362,7 +362,7 @@ const UploadMatches = () => {
             <button
               type="button"
               onClick={() => fetchMatches(2)}
-              className={`flex-1 px-3 py-1.5 rounded-lg font-bold transition-all ${activeDateOffset === 2
+              className={`flex-1 px-3 py-2.5 rounded-lg font-bold transition-all ${activeDateOffset === 2
                 ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/30'
                 : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300'
                 }`}
@@ -373,19 +373,19 @@ const UploadMatches = () => {
 
           {/* Custom Date Picker */}
           <div className="flex items-center gap-2">
-            <div className="flex-1 flex items-center gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-lg px-2.5 py-1">
+            <div className="flex-1 flex items-center gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/20 dark:border-white/20 rounded-lg px-2.5 py-1">
               <Calendar className="w-3.5 h-3.5 text-gray-400" />
               <input
                 type="date"
                 value={customDate}
                 onChange={(e) => setCustomDate(e.target.value)}
-                className="w-full bg-transparent text-xs py-[2px] font-semibold text-gray-800 dark:text-gray-200 focus:outline-none"
+                className="w-full bg-transparent text-xs py-1.5 font-semibold text-gray-800 dark:text-gray-200 focus:outline-none focus:border-orange-500"
               />
             </div>
             <button
               type="button"
               onClick={() => fetchMatches(undefined, false)}
-              className="px-6 py-1.5 rounded-lg font-bold text-xs text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 shadow-sm active:scale-95 transition-all"
+              className="px-6 py-2.5 rounded-lg font-bold text-xs text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 shadow-sm active:scale-95 transition-all"
             >
               Fetch
             </button>
@@ -537,7 +537,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
   const handleFieldChange = (field, value) => {
     const updated = { ...data, [field]: value };
     setData(updated);
-    if (isAdded) {
+    // if (isAdded) {
       addMatchToList(
         {
           ...updated,
@@ -551,7 +551,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
         },
         item.fixture.id
       );
-    }
+    // }
   };
 
   function toggleMatch() {
@@ -612,7 +612,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
       </div>
 
       {/* Main Content Area */}
-      <div className="p-4 space-y-3.5">
+      <div className="p-4 space-y-0.5 md:space-y-3.5">
         {/* Teams Matchup Header */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex-1 text:sm 2md:flex lg:block xl:flex gap-2 min-w-0">
@@ -624,11 +624,11 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
                   className="w-5 h-5 object-contain shrink-0"
                 />
               )} */}
-              <span className="font-bold text-sm text-gray-900 dark:text-white truncate">
+              <span className="font-bold text-sm text-gray-600 dark:text-gray-400 truncate">
                 {item.teams?.home?.name}
               </span>
             </div>
-            <div className="flex items-end text-[10px] font-bold text-orange-500 pl-0 py-0.5">VS</div>
+            <div className="flex items-end text-[10px] font-bold text-orange-500/70 pl-0 py-0.5">VS</div>
             <div className="flex items-center gap-2">
               {/* {item.teams?.away?.logo && (
                 <img
@@ -637,7 +637,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
                   className="w-5 h-5 object-contain shrink-0"
                 />
               )} */}
-              <span className="font-bold text-sm text-gray-900 dark:text-white truncate">
+              <span className="font-bold text-sm text-gray-600 dark:text-gray-400 truncate">
                 {item.teams?.away?.name}
               </span>
             </div>
@@ -667,80 +667,80 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
         </div>
 
         {/* Input Configuration Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-1 scale-[0.8] origin-bottom-left w-[125%] md:scale-[1] md:w-full">
           {/* Type */}
           <div>
-            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            {/* <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Type
-            </label>
+            </label> */}
             <input
               type="text"
-              placeholder="e.g. 1 X 2"
+              placeholder="GameType"
               value={data.type}
               onChange={(e) => handleFieldChange('type', e.target.value)}
-              className="w-full px-3 py-2 rounded-xl text-xs font-semibold
-                         bg-black/[0.03] dark:bg-white/[0.05]
-                         border border-black/10 dark:border-white/10
-                         text-gray-900 dark:text-white placeholder-gray-400
-                         focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30
+              className="w-full px-3 py-2 md:py-1.5 rounded-xl text-base font-semibold
+                         bg-black/[0.03] dark:bg-black/30
+                         border border-black/20 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
+                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
                          transition-all text-center"
             />
           </div>
 
           {/* Selection */}
           <div>
-            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            {/* <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Selection
-            </label>
+            </label> */}
             <input
               type="text"
-              placeholder="e.g. Home"
+              placeholder="Selection"
               value={data.selection}
               onChange={(e) => handleFieldChange('selection', e.target.value)}
-              className="w-full px-3 py-2 rounded-xl text-xs font-semibold
-                         bg-black/[0.03] dark:bg-white/[0.05]
-                         border border-black/10 dark:border-white/10
-                         text-gray-900 dark:text-white placeholder-gray-400
-                         focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30
+              className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold
+                         bg-black/[0.03] dark:bg-black/30
+                         border border-black/20 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
+                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
                          transition-all text-center"
             />
           </div>
 
           {/* Odds */}
           <div>
-            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            {/* <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Odds
-            </label>
+            </label> */}
             <input
               type="number"
               step="0.01"
-              placeholder="e.g. 1.85"
+              placeholder="Odds"
               value={data.odds}
               onChange={(e) => handleFieldChange('odds', e.target.value)}
-              className="w-full px-3 py-2 rounded-xl text-xs font-semibold font-mono
-                         bg-black/[0.03] dark:bg-white/[0.05]
-                         border border-black/10 dark:border-white/10
-                         text-gray-900 dark:text-white placeholder-gray-400
-                         focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30
+              className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold font-mono
+                         bg-black/[0.03] dark:bg-black/30
+                         border border-black/20 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30 
+                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
                          transition-all text-center"
             />
           </div>
 
           {/* Price */}
           <div>
-            <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
+            {/* <label className="block text-[10px] pl-1 uppercase font-bold tracking-wider text-gray-400 dark:text-gray-500 mb-1">
               Price
-            </label>
+            </label> */}
             <input
               type="number"
-              placeholder="e.g. 1000"
+              placeholder="Price"
               value={data.price}
               onChange={(e) => handleFieldChange('price', e.target.value)}
-              className="w-full px-3 py-2 rounded-xl text-xs font-semibold font-mono
-                         bg-black/[0.03] dark:bg-white/[0.05]
-                         border border-black/10 dark:border-white/10
-                         text-gray-900 dark:text-white placeholder-gray-400
-                         focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30
+              className="w-full px-3 py-2.5 md:py-1.5 rounded-xl text-base font-semibold font-mono
+                         bg-black/[0.03] dark:bg-black/30
+                         border border-black/20 dark:border-white/20
+                         text-gray-700 dark:text-gray-300 placeholder-gray-400/30
+                         outline-none focus:outline-none focus:border-orange-500 focus:bg-white dark:focus:bg-black/30 dark:focus:border-orange-500
                          transition-all text-center"
             />
           </div>
