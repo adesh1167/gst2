@@ -160,8 +160,8 @@ const About = () => {
     return (
         <div className="w-full min-h-full overflow-y-auto bg-light-bg dark:bg-dark-bg text-light-primary dark:text-dark-primary transition-colors duration-300">
             <SEO
-                title="About Us | AI Prediction Engine & Methodology | Global Sports Trade"
-                description="Discover how Global Sports Trade utilizes neural networks, multi-variable tactical data, and a 94%+ conviction threshold for high-accuracy match forecasting."
+                title="About Us | Global Sports Trade"
+                description="Discover how Global Sports Trade utilizes neural networks and multi-variable tactical data for high-accuracy match forecasting."
                 keywords="about global sports trade, sports AI engine, machine learning football, mathematical sports predictions, responsible staking"
                 jsonLd={aboutSchema}
             />

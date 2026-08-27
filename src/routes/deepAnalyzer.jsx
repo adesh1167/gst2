@@ -59,8 +59,8 @@ export default function DeepAnalyzer() {
     return (
         <div className="min-h-full bg-gradient-to-b from-black via-gray-900 to-[#07070a] text-gray-100 font-sans overflow-hidden margin orbitron-regular">
             <SEO
-                title="Deep Analyzer | AI Tactical Insights & Match Predictions | Global Sports Trade"
-                description="Explore deep tactical fixture breakdowns, predictive neural momentum analytics, xG metrics, and comprehensive sports forecasting powered by AI."
+                title="Deep Analyzer | AI Tactical Insights & Match Predictions"
+                description="Explore deep tactical, predictive neural momentum analytics and comprehensive sports forecasting powered by AI."
                 keywords="deep analyzer, AI match prediction, football tactical insights, soccer neural forecasting, match statistics AI"
                 jsonLd={analyzerSchema}
             />
