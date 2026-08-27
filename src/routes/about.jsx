@@ -148,12 +148,12 @@ const About = () => {
         "@context": "https://schema.org",
         "@type": "AboutPage",
         "name": "About Global Sports Trade",
-        "url": "https://globalsportstrade.com/about",
+        "url": "https://gsportstrade.com/about",
         "description": "Learn about Global Sports Trade's AI-driven predictive modeling, neural algorithms, 94%+ safety threshold, and responsible gaming mission.",
         "publisher": {
             "@type": "Organization",
             "name": "Global Sports Trade",
-            "url": "https://globalsportstrade.com"
+            "url": "https://gsportstrade.com"
         }
     };
 

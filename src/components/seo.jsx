@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
-const DEFAULT_BASE_URL = 'https://globalsportstrade.com';
+const DEFAULT_BASE_URL = 'https://gsportstrade.com';
 const DEFAULT_IMAGE = `${DEFAULT_BASE_URL}/og-banner.jpg`;
 const SITE_NAME = 'Global Sports Trade';
 

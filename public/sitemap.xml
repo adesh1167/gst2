@@ -4,31 +4,31 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://globalsportstrade.com/</loc>
+    <loc>https://gsportstrade.com/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://globalsportstrade.com/about</loc>
+    <loc>https://gsportstrade.com/about</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://globalsportstrade.com/deep-analyzer</loc>
+    <loc>https://gsportstrade.com/deep-analyzer</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://globalsportstrade.com/login</loc>
+    <loc>https://gsportstrade.com/login</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://globalsportstrade.com/register</loc>
+    <loc>https://gsportstrade.com/register</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

@@ -26,7 +26,7 @@ const Home = () => {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Global Sports Trade",
-        "url": "https://globalsportstrade.com",
+        "url": "https://gsportstrade.com",
         "applicationCategory": "SportsApplication",
         "operatingSystem": "All",
         "description": "AI-powered sports match forecasting and statistical analysis platform delivering high-accuracy mathematical insights.",
