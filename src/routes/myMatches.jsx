@@ -8,12 +8,17 @@ import { setMatchesLoaded, setMyMatches } from "../slices/myMatchesReducer";
 import MyMatchDay from "../components/myMatchDay";
 import { Link, useLocation, useNavigationType } from "react-router";
 import { showToast } from "../slices/toastsReducer";
+import SEO from "../components/seo";
 
 const MyMatches = () => {
     const { userQueried } = useSelector(state => state.user);
 
     return (
         <div className="w-full min-h-full bg-white dark:bg-dark-bg">
+            <SEO
+                title="My Matches | Global Sports Trade"
+                description="View and track your unlocked AI sports predictions and match analytics dashboard on Global Sports Trade."
+            />
             {userQueried && true ? (
                 <MyMatchesContent />
             ) : (

@@ -2,10 +2,11 @@ import { useRef, useState } from 'react';
 import axios from 'axios';
 import { baseApiUrl } from '../data/url';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { showToast } from '../slices/toastsReducer';
 import LoadingButton from '../components/loadingButton';
+import SEO from '../components/seo';
 import './styles/login.css';
 
 const ForgotPassword = () => {
@@ -39,6 +40,10 @@ const ForgotPassword = () => {
 
     return (
         <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[60px] z-[1]">
+            <SEO
+                title="Reset Password | Global Sports Trade"
+                description="Recover your Global Sports Trade account password securely."
+            />
             <form
                 ref={formRef}
                 onSubmit={handleSubmit(doReset)}

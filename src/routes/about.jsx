@@ -19,6 +19,7 @@ import {
     AlertCircle
 } from 'lucide-react';
 import './styles/about.css';
+import SEO from '../components/seo';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -143,8 +144,27 @@ const ADVANTAGES = [
 ];
 
 const About = () => {
+    const aboutSchema = {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Global Sports Trade",
+        "url": "https://globalsportstrade.vercel.app/about",
+        "description": "Learn about Global Sports Trade's AI-driven predictive modeling, neural algorithms, 94%+ safety threshold, and responsible gaming mission.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Global Sports Trade",
+            "url": "https://globalsportstrade.vercel.app"
+        }
+    };
+
     return (
         <div className="w-full min-h-full overflow-y-auto bg-light-bg dark:bg-dark-bg text-light-primary dark:text-dark-primary transition-colors duration-300">
+            <SEO
+                title="About Us | AI Prediction Engine & Methodology | Global Sports Trade"
+                description="Discover how Global Sports Trade utilizes neural networks, multi-variable tactical data, and a 94%+ conviction threshold for high-accuracy match forecasting."
+                keywords="about global sports trade, sports AI engine, machine learning football, mathematical sports predictions, responsible staking"
+                jsonLd={aboutSchema}
+            />
             {/* ── HERO SECTION ────────────────────────────────────────────── */}
             <section className="relative pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
                 {/* Background decorative ambient glow */}

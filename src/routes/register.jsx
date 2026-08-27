@@ -8,6 +8,7 @@ import { showToast } from '../slices/toastsReducer';
 import LoadingButton from '../components/loadingButton';
 import PasswordEye from '../components/passwordEye';
 import Tick from '../components/tick';
+import SEO from '../components/seo';
 import './styles/login.css';
 
 const Register = () => {
@@ -45,6 +46,10 @@ const Register = () => {
 
     return (
         <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[60px] z-[1]">
+            <SEO
+                title="Create an Account | Global Sports Trade"
+                description="Join Global Sports Trade to unlock AI sports predictions, track high-conviction match analytics, and elevate your forecasting performance."
+            />
             <form
                 ref={formRef}
                 onSubmit={handleSubmit(doRegister)}

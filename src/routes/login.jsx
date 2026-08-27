@@ -10,6 +10,7 @@ import { showToast } from '../slices/toastsReducer';
 import PasswordEye from '../components/passwordEye';
 import LoadingButton from '../components/loadingButton';
 import Tick from '../components/tick';
+import SEO from '../components/seo';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -46,6 +47,10 @@ const Login = () => {
 
     return (
         <div className="register-container04 fixed inset-0 flex items-center justify-center overflow-scroll pt-[60px] z-[1]">
+            <SEO
+                title="Sign In | Global Sports Trade"
+                description="Sign in to your Global Sports Trade account to access unlocked predictions, AI match breakdowns, and your analytics dashboard."
+            />
             <form
                 ref={formRef}
                 onSubmit={handleSubmit(doLogin)}

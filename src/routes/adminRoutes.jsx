@@ -11,6 +11,7 @@ import Coupons from './admin/coupons'
 import EditCoupon from './admin/editCoupon'
 import ManualPayment from '../components/manualPayment'
 import MainCart from '../components/mainCart'
+import SEO from '../components/seo'
 
 const AdminRoutes = () => {
 
@@ -27,6 +28,10 @@ const AdminRoutes = () => {
 
     return (
         <>
+            <SEO
+                title="Admin Management Portal | Global Sports Trade"
+                noindex={true}
+            />
             <Routes>
                 <Route path='/' element={<Home />}>
                     <Route index element={<Navigate to="/admin" />} />

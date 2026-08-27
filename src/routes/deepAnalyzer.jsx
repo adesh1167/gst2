@@ -13,6 +13,7 @@ import AnalyzerComing from "./deepAnalyzer/coming";
 import "./styles/deepAnalyzer.css";
 import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
 import ManualSubscription from "./deepAnalyzer/manualSubscription";
+import SEO from "../components/seo";
 
 export default function DeepAnalyzer() {
 
@@ -45,10 +46,24 @@ export default function DeepAnalyzer() {
         }
     }, [isAuthenticated, userQueried])
 
-// console.log("User: ", userQueried)
+    const analyzerSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "GST Deep Analyzer",
+        "url": "https://globalsportstrade.vercel.app/deep-analyzer",
+        "applicationCategory": "SportsApplication",
+        "description": "Tactical AI match prediction engine offering deep statistical breakdowns, momentum curves, and high-precision soccer forecasts.",
+        "operatingSystem": "All"
+    };
 
     return (
         <div className="min-h-full bg-gradient-to-b from-black via-gray-900 to-[#07070a] text-gray-100 font-sans overflow-hidden margin orbitron-regular">
+            <SEO
+                title="Deep Analyzer | AI Tactical Insights & Match Predictions | Global Sports Trade"
+                description="Explore deep tactical fixture breakdowns, predictive neural momentum analytics, xG metrics, and comprehensive sports forecasting powered by AI."
+                keywords="deep analyzer, AI match prediction, football tactical insights, soccer neural forecasting, match statistics AI"
+                jsonLd={analyzerSchema}
+            />
             <div className="max-w-7xl mx-auto p-4 sm:p-6 h-full">
                 <AnimatePresence mode="sync">
                     <Routes>
