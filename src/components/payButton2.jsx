@@ -73,7 +73,7 @@ const FlutterwaveButton = ({
                     customizations: {
                         title: "GST",
                         description: description,
-                        logo: "https://globalsportstrade.vercel.app/logo.png",
+                        logo: "https://globalsportstrade.com/logo.png",
                     },
                 };
 

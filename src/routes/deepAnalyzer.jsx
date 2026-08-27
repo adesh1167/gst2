@@ -50,7 +50,7 @@ export default function DeepAnalyzer() {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "GST Deep Analyzer",
-        "url": "https://globalsportstrade.vercel.app/deep-analyzer",
+        "url": "https://globalsportstrade.com/deep-analyzer",
         "applicationCategory": "SportsApplication",
         "description": "Tactical AI match prediction engine offering deep statistical breakdowns, momentum curves, and high-precision soccer forecasts.",
         "operatingSystem": "All"

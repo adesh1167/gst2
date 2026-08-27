@@ -57,7 +57,7 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                                 customizations: {
                                     title: 'GST',
                                     description: 'Pay For Matches',
-                                    logo: 'https://globalsportstrade.vercel.app/assets/logo.png',
+                                    logo: 'https://globalsportstrade.com/assets/logo.png',
                                 },
                             };
                             setConfig(conf);
