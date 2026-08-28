@@ -35,7 +35,7 @@ const MyMatchItem = ({ item }) => {
     return (
         <div className="group flex items-start justify-between px-4 py-2 
                         border-b border-gray-100 dark:border-white/5 last:border-0
-                        transition-colors duration-200 text-sm">
+                        transition-colors duration-300 text-sm">
 
             {/* Teams + league info */}
             <div className="flex flex-col w-full gap-1">
@@ -76,7 +76,7 @@ const MyMatchItem = ({ item }) => {
                                         rounded-xl min-w-[76px] 
                                         shadow-sm dark:shadow-none 
                                         leading-[13px]
-                                        transition-colors duration-200">
+                                        transition-colors duration-300">
                             <span className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wider font-bold mb-0.5">
                                 Selection
                             </span>

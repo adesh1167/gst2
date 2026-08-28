@@ -103,7 +103,7 @@ const Header = () => {
                 <AnimatePresence>
                     {!menuExpanded && isAdminShown && (
                         <motion.span
-                            className="text-xs font-extrabold text-orange-500 dark:text-orange-400 tracking-widest uppercase px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20"
+                            className="text-xs font-extrabold text-orange-500 dark:text-orange-400 tracking-widest uppercase py-0.5 rounded-full"
                             initial={{ opacity: 0, width: 0, marginLeft: "-0.5rem" }}
                             animate={{ opacity: 1, width: 'auto', marginLeft: "0" }}
                             exit={{ opacity: 0, width: 0, marginLeft: "-0.5rem" }}

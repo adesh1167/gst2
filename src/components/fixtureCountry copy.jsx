@@ -22,7 +22,7 @@ const FixtureCountry = ({ country }) => (
                              text-gray-500 dark:text-white/60 whitespace-nowrap">
                 {country.name}
             </span>
-            <div className="flex-1 h-px bg-gradient-to-r from-gray-500/20 to-transparent" />
+            <div className="flex-1 h-px bg-gradient-to-r from-gray-200 dark:from-white/10 to-transparent" />
         </div>
 
         {Object.values(country.leagues).map(league => (
@@ -97,7 +97,7 @@ function Fixture({ fixture }) {
                 transition-colors duration-300
                 ${inCart
                     /* in-cart: green glow ring */
-                    ? 'shadow-[0_0_0_1px_rgba(34,197,94,0.55),0_6px_24px_rgba(34,197,94,0.12)]'
+                    ? 'shadow-[0_0_0_2px_rgba(34,197,94,0.55),0_6px_24px_rgba(34,197,94,0.12)]'
                     /* default light: elevated shadow + faint border */
                     : 'shadow-[0_2px_12px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.06)] border border-gray-200/80'
                     + ' dark:border dark:border-white/[0.10]'
@@ -111,7 +111,7 @@ function Fixture({ fixture }) {
             <div className={`
                 absolute inset-0 transition-all duration-300
                 ${inCart
-                    ? 'bg-gradient-to-br from-green-500/10 via-green-300/5 to-emerald-500/10'
+                    ? 'bg-gradient-to-br from-green-950 via-green-900/50 to-emerald-950 dark:from-green-950/60 dark:via-green-800/60 dark:to-emerald-950/70'
                     : 'bg-white dark:bg-[#13131f]'
                 }
             `} />
@@ -128,7 +128,7 @@ function Fixture({ fixture }) {
                             border-b border-black/[0.06] dark:border-white/[0.07]">
 
                 {/* Left: date + game-type badge + admin ID */}
-                <div className={`flex items-center gap-2 min-w-0 ${inCart ? 'text-green-600' : 'text-gray-500 dark:text-white/85'}`}>
+                <div className={`flex items-center gap-2 min-w-0 ${inCart ? 'text-green-100' : 'text-gray-500 dark:text-white/85'}`}>
                     <Calendar size={14}/>
                     <span className={`text-[11px] font-medium truncate`}>
                         {getFixtureDate(fixture.match_data.fixture.date, country)}
@@ -136,7 +136,7 @@ function Fixture({ fixture }) {
 
                     <span className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-semibold
                         ${inCart
-                            ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
+                            ? 'bg-green-500/20 text-green-100'
                             : 'bg-gray-400/15 text-gray-500 dark:text-white/80'
                         }`}>
                         {fixture.game_type}
@@ -153,7 +153,7 @@ function Fixture({ fixture }) {
                 <div className={`
                     shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold
                     ${inCart
-                        ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
+                        ? 'bg-green-500/40 dark:bg-green-500/15 text-green-100 border border-green-400 dark:border-green-500/25'
                         : 'bg-orange-500 text-white shadow-sm shadow-orange-900/25'
                     }
                 `}>
@@ -181,7 +181,7 @@ function Fixture({ fixture }) {
                     <div className={`
                         w-14 h-14 rounded-2xl flex items-center justify-center
                         ${inCart
-                            ? 'bg-green-500/5'
+                            ? 'bg-green-500/15'
                             : 'bg-gray-500/5 dark:bg-white/[0.07]'
                         }
                     `}>
@@ -190,7 +190,7 @@ function Fixture({ fixture }) {
                     </div>
                     <span className={`
                         text-xs font-bold text-center leading-snug w-full line-clamp-2
-                        ${inCart ? 'text-green-600/90 dark:text-green-400' : 'text-gray-800 dark:text-white/90'}
+                        ${inCart ? 'text-white/90 dark:text-green-200' : 'text-gray-800 dark:text-white/90'}
                     `}>
                         {teams.home.name}
                     </span>
@@ -202,7 +202,7 @@ function Fixture({ fixture }) {
                         w-11 h-11 rounded-full flex items-center justify-center
                         border-2 text-[11px] font-black tracking-tight
                         ${inCart
-                            ? 'border-green-500/5 text-green-500/70 bg-green-500/10'
+                            ? 'border-green-100/60 text-green-100 bg-green-500/10'
                             : 'border-gray-400/20 text-gray-400 dark:text-white/40 bg-gray-500/5'
                         }
                     `}>
@@ -221,7 +221,7 @@ function Fixture({ fixture }) {
                     <div className={`
                         w-14 h-14 rounded-2xl flex items-center justify-center
                         ${inCart
-                            ? 'bg-green-500/5'
+                            ? 'bg-green-500/15'
                             : 'bg-gray-500/5 dark:bg-white/[0.07]'
                         }
                     `}>
@@ -230,7 +230,7 @@ function Fixture({ fixture }) {
                     </div>
                     <span className={`
                         text-xs font-bold text-center leading-snug w-full line-clamp-2
-                        ${inCart ? 'text-green-600/90 dark:text-green-400' : 'text-gray-800 dark:text-white/90'}
+                        ${inCart ? 'text-white/90 dark:text-green-200' : 'text-gray-800 dark:text-white/90'}
                     `}>
                         {teams.away.name}
                     </span>
@@ -260,8 +260,8 @@ function Fixture({ fixture }) {
                             </svg>
                         </div>
                         <div className="flex flex-col leading-tight">
-                            <span className="text-xs font-bold text-green-500">Added to cart</span>
-                            <span className="text-[10px] text-green-500/80">Tap to remove</span>
+                            <span className="text-xs font-bold text-green-400">Added to cart</span>
+                            <span className="text-[10px] text-green-200 dark:tex-green-500/60">Tap to remove</span>
                         </div>
                     </div>
                 ) : (
@@ -277,12 +277,12 @@ function Fixture({ fixture }) {
                         <div className={`
                             flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold
                             ${inCart
-                                ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
+                                ? 'bg-green-500/40 dark:bg-green-500/15 text-green-200 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
                                 : 'bg-white dark:bg-white/[0.08] text-gray-600 dark:text-white/55'
                                   + ' border border-gray-200 dark:border-white/[0.12]'
                             }
                         `}>
-                            <span className="text-[9px] font-semibold opacity-85 uppercase tracking-wide">
+                            <span className="text-[9px] font-semibold opacity-55 uppercase tracking-wide">
                                 odds
                             </span>
                             <span className="font-extrabold">{formatNumber(fixture.odds)}</span>

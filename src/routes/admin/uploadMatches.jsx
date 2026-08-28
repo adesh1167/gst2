@@ -578,7 +578,7 @@ const UploadMatchesItem = ({ prevData, item, addMatchToList, selectedMatches }) 
 
   return (
     <div
-      className={`rounded-2xl border transition-all duration-200 overflow-hidden ${isAdded
+      className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isAdded
         ? 'border-emerald-500/60 dark:border-emerald-500/50 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-md shadow-emerald-950/10'
         : 'border-black/10 dark:border-white/10 bg-white dark:bg-[#121320] hover:border-black/20 dark:hover:border-white/20'
         }`}

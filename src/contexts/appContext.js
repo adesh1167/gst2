@@ -71,10 +71,13 @@ const AppContext = ({ children }) => {
 
     useEffect(() => {
         const root = document.documentElement;
+        const head = document.head;
         if (darkMode) {
             root.classList.add('dark');
+            head.querySelector("meta[name=theme-color]").setAttribute("content", "#0d0d14")
         } else {
             root.classList.remove('dark');
+            head.querySelector("meta[name=theme-color]").setAttribute("content", "#ffffff")
         }
         try {
             localStorage.setItem('darkMode', JSON.stringify(darkMode));

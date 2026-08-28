@@ -45,12 +45,12 @@ const Home = () => {
                 keywords="AI sports predictions, football predictions, match analysis, soccer tips AI, sports betting analytics, mathematical odds prediction"
                 jsonLd={homeSchema}
             />
-            <div className="w-full h-full min-h-[100%] overflow-y-scroll bg-gray-50 dark:bg-[#080810]">
+            <div className="w-full h-full min-h-[100%] overflow-y-scroll bg-gray-50 dark:bg-[#080810] transition-colors duration-300">
 
                 {/* ══════════════════════════════════════════════
                     HERO
                 ══════════════════════════════════════════════ */}
-                <section className="relative w-full overflow-hidden bg-[#ffffee] dark:bg-[#080810]"
+                <section className="relative w-full overflow-hidden"
                     style={{ minHeight: 340 }}>
 
                     {/* Ambient glow blobs */}
@@ -89,7 +89,7 @@ const Home = () => {
                             {/* Pill badge */}
                             <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold
                                              tracking-widest uppercase text-orange-600 dark:text-orange-400 bg-white/80 dark:bg-orange-500/10
-                                             border border-orange-500/25 rounded-full px-3 py-1 mb-5">
+                                             border border-orange-500/25 rounded-full px-3 py-1 mb-5 transition-colors duration-300">
                                 <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
                                 AI-Powered Predictions
                             </span>
@@ -114,7 +114,7 @@ const Home = () => {
                                     to="/about"
                                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
                                                bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm
-                                               transition-all duration-200 shadow-lg shadow-orange-900/40
+                                               transition-all duration-300 shadow-lg shadow-orange-900/40
                                                hover:shadow-orange-500/40 hover:-translate-y-0.5"
                                 >
                                     How It Works
@@ -128,7 +128,7 @@ const Home = () => {
                                                 bg-[#0d0d14]/90 dark:bg-[#0d0d14] hover:bg-white/12 text-white font-semibold text-sm
                                                border border-purple-900 hover:border-purple-500/50
                                                shadow-lg shadow-black/40
-                                               transition-all duration-200 hover:-translate-y-0.5"
+                                               transition-all duration-300 hover:-translate-y-0.5"
                                 >
                                     <span className="rainbow-text-active font-bold">Deep Analyzer</span>
                                 </Link>
@@ -150,7 +150,7 @@ const Home = () => {
                         ].map(s => (
                             <div key={s.label}
                                 className="flex items-center gap-2 bg-white/60 dark:bg-orange-500/10 border border-orange-400 dark:border-white/10
-                                            rounded-xl px-4 py-2 backdrop-blur-sm">
+                                            rounded-xl px-4 py-2 backdrop-blur-sm transition-colors duration-300">
                                 <span className="text-orange-600 dark:text-orange-400 font-black text-sm">{s.value}</span>
                                 <span className="text-orange-600 dark:text-orange-400 text-xs">{s.label}</span>
                             </div>
@@ -158,8 +158,10 @@ const Home = () => {
                     </motion.div>
 
                     {/* Bottom fade into content */}
-                    <div className="absolute bottom-0 left-0 right-0 h-8
-                                    bg-gradient-to-b from-transparent to-gray-50 dark:to-[#080810]" />
+                    <div className="opacity-1 dark:opacity-0 absolute bottom-0 left-0 right-0 h-8
+                                    bg-gradient-to-b from-transparent to-gray-50 transition-opacity delay-[0.15s] dark:delay-0 duration-[0.3s]" />
+                    <div className="opacity-0 dark:opacity-100 absolute bottom-0 left-0 right-0 h-8
+                                    bg-gradient-to-b from-transparent to-[#080810] transition-opacity delay-[0.1s] dark:delay[0s] duration-[0.2s]" />
                 </section>
 
                 {/* ══════════════════════════════════════════════
@@ -190,7 +192,7 @@ const Home = () => {
                                    bg-orange-500 hover:bg-orange-400
                                    text-white font-bold rounded-2xl
                                    shadow-[0_0px_18px_rgba(234,88,12,0.55)]
-                                   hover:-translate-y-1 transition-all duration-200"
+                                   hover:-translate-y-1 transition-all duration-300"
                     >
                         {/* Coupon badge */}
                         <AnimatePresence>

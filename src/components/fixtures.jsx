@@ -54,7 +54,7 @@ const Fixtures = () => {
     const countryList = Object.values(fixtures);
 
     return (
-        <div className="w-full bg-gray-50 dark:bg-[#080810]">
+        <div className="w-full">
 
             {/* ── Deep Analyzer promo banner ──── */}
             <div className="px-4 pt-6">
