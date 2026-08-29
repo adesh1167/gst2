@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'react-router';
+import { useLocation, useSearchParams } from 'react-router';
 import { useApp } from '../contexts/appContext';
 import MenuContent from './menuContent';
 
@@ -24,6 +24,10 @@ const panel = {
 const MobileMenu = () => {
     const { menuExpanded, closeMenu, menuSkip } = useApp();
     const { pathname } = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const modal = searchParams.get("modal")
+    const sub = searchParams.get("sub")
+
 
     // Close on route change (unless skip flag is set)
     useEffect(() => {
@@ -33,7 +37,7 @@ const MobileMenu = () => {
             return;
         }
         closeMenu();
-    }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [pathname, modal, sub]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         /* lg: hide entirely — desktop has its own sidebar */

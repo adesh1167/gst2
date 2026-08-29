@@ -16,6 +16,8 @@ import PayForMatchesWrapper from '../components/payForMatchesWrapper';
 import { AnimatePresence } from 'framer-motion';
 import '../routes/styles/home.css';
 
+import { useModal } from '../hooks/useModal';
+
 const Cart = ({ aside = false }) => {
     const cartObj = useSelector(state => state.cart);
     const { factor, country, continent } = useSelector(state => state.data);
@@ -27,6 +29,7 @@ const Cart = ({ aside = false }) => {
     const [couponLoading, setCouponLoading] = useState(false);
     const [emptyCartFlag, setEmptyCartFlag] = useState(false);
     const isAfrica = continent === "AF";
+    const { closeModal, openModal } = useModal();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,7 +69,7 @@ const Cart = ({ aside = false }) => {
                 {/* Close strip */}
                 {aside || (
                     <button
-                        onClick={() => navigate(-1)}
+                        onClick={closeModal}
                         className="top-0 left-0 w-full shrink-0 h-[70px] flex items-center justify-center gap-3
                                dark:text-white/90 text-black font-bold text-base cursor-pointer z-10"
                     >
@@ -235,12 +238,13 @@ const Cart = ({ aside = false }) => {
                             )}
 
                             {/* Change country */}
-                            <Link
-                                to="/change-country"
-                                className="px-5 py-3 text-sm text-orange-400 hover:text-orange-300 font-bold transition-colors"
+                            <button
+                                type="button"
+                                onClick={() => openModal('change-country')}
+                                className="px-5 py-3 text-sm text-left text-orange-400 hover:text-orange-300 font-bold transition-colors"
                             >
                                 Change {isAfrica ? "Country" : "Currency"}
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>

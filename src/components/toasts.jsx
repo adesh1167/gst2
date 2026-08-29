@@ -53,7 +53,7 @@ const Toasts = () => {
     );
 };
 
-const ToastItem = ({ toast }) => {
+const ToastItem = React.memo(({ toast }) => {
     const dispatch = useDispatch();
     const timerRef = useRef(null);
 
@@ -105,6 +105,6 @@ const ToastItem = ({ toast }) => {
             </button>
         </motion.div>
     );
-};
+});
 
 export default Toasts;

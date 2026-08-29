@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import LoadingButton from './loadingButton';
 import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import formatNumber from '../functions/formatNumber';
 import axios from 'axios';
 import { showToast } from '../slices/toastsReducer';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useIsAdmin } from '../hooks/useIsAdmin';
 
 const FlutterwaveButton = ({
     initiateLink,
@@ -26,10 +28,11 @@ const FlutterwaveButton = ({
 }) => {
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
-    const { isAdmin, dashboard, user } = useSelector((state) => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin";
+    const user = useSelector((state) => state.user.user);
+    const isAdminShown = useIsAdmin();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     function initiatePayment() {
         setLoading(true);
@@ -46,9 +49,14 @@ const FlutterwaveButton = ({
                 }));
 
                 if (manual && !isAdminShown) {
-                    navigate(manual, {
+                    const searchParams = new URLSearchParams(location.search);
+                    searchParams.set('sub', 'manual-payment');
+                    const manualData = typeof manual === 'object' ? manual : {};
+                    navigate({ search: `?${searchParams.toString()}` }, {
                         state: {
-                            amount: data.data.data.price,
+                            amount: data.data?.data?.price,
+                            type: manualData.type || 'matches',
+                            duration: manualData.duration,
                         }
                     });
                     setLoading(false);

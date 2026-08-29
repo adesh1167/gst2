@@ -262,7 +262,7 @@ export default function AnalyzerHome() {
                                 />
                             </div>
                             <div className="block text-center font-bold opacity-50 mt-5 md:mt-10 cursor-pointer">
-                                <Link to={"/change-country"} className=''>CHANGE {isAfrica ? "COUNTRY" : "CURRENCY"}</Link>
+                                <Link to={"?modal=change-country"} className=''>CHANGE {isAfrica ? "COUNTRY" : "CURRENCY"}</Link>
                             </div>
                         </motion.section>
                     }

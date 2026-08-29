@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { baseApiUrl } from '../data/url';
 import { useDispatch } from 'react-redux';
 import { setCountry, setCurrency, setFactor } from '../slices/dataReducer';
-import { useNavigate } from 'react-router';
 import LoadingButton from '../components/loadingButton';
 import { showToast } from '../slices/toastsReducer';
 import ModalWrapper from '../components/modalWrapper';
 import { Coins, Check } from 'lucide-react';
+import { useModal } from '../hooks/useModal';
 
 const CURRENCIES = [
     { code: 'EUR', name: 'Euro', symbol: '€' },
@@ -19,7 +19,7 @@ const SelectCurrency = ({ exitable = true }) => {
     const [localCurrency, setLocalCurrency] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
+    const { closeModal } = useModal();
     const dispatch = useDispatch();
 
     function handleSubmit(e) {
@@ -46,7 +46,7 @@ const SelectCurrency = ({ exitable = true }) => {
                     type: 'success',
                     duration: 3000
                 }));
-                navigate(-1);
+                closeModal();
                 dispatch(setCurrency(res.data.currency));
                 dispatch(setCountry(res.data.currency));
                 dispatch(setFactor(res.data.factor));
@@ -72,7 +72,7 @@ const SelectCurrency = ({ exitable = true }) => {
     return (
         <ModalWrapper
             exitable={exitable}
-            onClose={() => navigate(-1)}
+            onClose={closeModal}
             title="Select Your Currency"
             subtitle="Choose currency for billing & checkout"
             icon={Coins}
@@ -110,7 +110,8 @@ const SelectCurrency = ({ exitable = true }) => {
                                     isSelected
                                         ? 'border-orange-500 bg-orange-500 text-white'
                                         : 'border-gray-300 dark:border-gray-600'
-                                }`}>
+                                }`}
+                                >
                                     {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                                 </div>
                             </button>

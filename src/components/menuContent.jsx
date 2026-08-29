@@ -15,6 +15,7 @@ import { showToast } from '../slices/toastsReducer';
 import { AiSvg, BallSvg, CartSvg } from './svgs';
 import { Globe, Ticket, Upload } from 'lucide-react';
 import { useApp } from '../contexts/appContext';
+import { useIsAdmin } from '../hooks/useIsAdmin';
 
 /* ── Shared row styles ─────────────────────────────────────────────────── */
 const ROW_BASE =
@@ -39,25 +40,32 @@ const ICON_BASE = 'w-6 h-6 shrink-0 fill-current';
 const NEW_CLS = 'new';
 
 const NavRow = ({ to, end, close, newBadge, children }) => {
-    console.log("Here")
+    const location = useLocation();
+    const isQueryLink = typeof to === 'string' && to.startsWith('?');
+    const searchParams = new URLSearchParams(location.search);
+    const hasActiveModal = Boolean(searchParams.get('modal'));
 
     return (
         <NavLink
             to={to}
             end={end}
             onClick={close}
-            className={({ isActive }) =>
-                `block pl-2 pr-0 py-1 mb-2`
-            }
+            className="block pl-2 pr-0 py-1 mb-2"
         >
-            {({ isActive }) => (
-                <span className={`${isActive ? ROW_ACTIVE : ROW_INACTIVE} ${ROW_BASE} ${newBadge ? NEW_CLS : ''}`}>
-                    {children}
-                </span>
-            )}
+            {({ isActive }) => {
+                const active = isQueryLink
+                    ? location.search.includes(to.slice(1))
+                    : (hasActiveModal ? false : isActive);
+
+                return (
+                    <span className={`${active ? ROW_ACTIVE : ROW_INACTIVE} ${ROW_BASE} ${newBadge ? NEW_CLS : ''}`}>
+                        {children}
+                    </span>
+                );
+            }}
         </NavLink>
-    )
-}
+    );
+};
 
 const MenuContent = ({ onClose }) => {
     const [logoutLoading, setLogoutLoading] = useState(false);
@@ -66,12 +74,13 @@ const MenuContent = ({ onClose }) => {
     const { user, isAuthenticated, isAdmin, dashboard } = useSelector(s => s.user);
     const { newPaths, continent } = useSelector(s => s.data);
     const dispatch = useDispatch();
-    const { pathname } = useLocation();
+    const location = useLocation();
+    const { pathname } = location;
 
     const { darkMode, toggleDarkMode } = useApp();
 
-    const isAdminShown = useMemo(() => isAdmin && dashboard === 'admin', [isAdmin, dashboard]);
-    const isAfrica = continent === "AF" ? true : false;
+    const isAdminShown = useIsAdmin();
+    const isAfrica = continent === "AF";
 
     const close = () => onClose?.();
 
@@ -196,16 +205,21 @@ const MenuContent = ({ onClose }) => {
                     onClick={close}
                     className="block pl-2 pr-0 py-0.5"
                 >
-                    {({ isActive }) => (
-                        <span className={`${ROW_BASE} ${isActive ? ROW_ACTIVE : ROW_INACTIVE} ${hasNew.deepAnalyzer ? NEW_CLS : ''}`}>
-                            {/* AI circuit icon */}
-                            <AiSvg className={`${ICON_BASE} text-purple-900`} />
-                            {/* Rainbow gradient text — active state inverts the gradient for legibility */}
-                            <span className={isActive ? 'rainbow-text-active' : 'rainbow-text'}>
-                                Deep Analyzer
+                    {({ isActive }) => {
+                        const searchParams = new URLSearchParams(location.search);
+                        const hasActiveModal = Boolean(searchParams.get('modal'));
+                        const active = hasActiveModal ? false : isActive;
+                        return (
+                            <span className={`${ROW_BASE} ${active ? ROW_ACTIVE : ROW_INACTIVE} ${hasNew.deepAnalyzer ? NEW_CLS : ''}`}>
+                                {/* AI circuit icon */}
+                                <AiSvg className={`${ICON_BASE} text-purple-900`} />
+                                {/* Rainbow gradient text — active state inverts the gradient for legibility */}
+                                <span className={active ? 'rainbow-text-active' : 'rainbow-text'}>
+                                    Deep Analyzer
+                                </span>
                             </span>
-                        </span>
-                    )}
+                        );
+                    }}
                 </NavLink>
 
                 {/* My Matches */}
@@ -215,13 +229,13 @@ const MenuContent = ({ onClose }) => {
                 </NavRow>
 
                 {/* Cart */}
-                <NavRow to="/cart" close={close} newBadge={hasNew.cart}>
+                <NavRow to="?modal=cart" close={close} newBadge={hasNew.cart}>
                     <CartSvg className={ICON_BASE} />
                     Cart
                 </NavRow>
 
                 {/* Country */}
-                <NavRow to="/change-country" close={close} newBadge={hasNew.country}>
+                <NavRow to="?modal=change-country" close={close} newBadge={hasNew.country}>
                     <Globe className={ICON_BASE} style={{ fill: "transparent" }} />
                     Change {isAfrica ? "Country" : "Currency"}
                 </NavRow>

@@ -145,7 +145,7 @@ const Coupons = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search coupon codes or descriptions..."
-              className="w-full pl-10 pr-10 py-2.5 rounded-xl text-sm font-medium
+              className="w-full pl-10 pr-10 py-1.5 rounded-xl text-base font-medium
                          bg-black/[0.03] dark:bg-white/[0.05]
                          border border-black/10 dark:border-white/10
                          text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500

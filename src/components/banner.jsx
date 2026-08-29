@@ -1,47 +1,38 @@
-import { motion } from "framer-motion";
+import React, { memo } from "react";
 import { Link } from "react-router";
-import { Sparkles, ArrowRight, Zap } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 import { AiSvg } from "./svgs";
 
-export default function Banner() {
+const Banner = memo(() => {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20, transition: {delay: 1}}}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        <div
             className="group relative overflow-hidden rounded-2xl
                        bg-gradient-to-br from-[#0d0815] via-[#110a20] to-[#0a0612]
                        border border-purple-500/25
                        shadow-xl shadow-purple-900/20
                        hover:shadow-2xl hover:shadow-purple-800/30
                        hover:border-purple-500/40
-                       [transition-property:color,background-color,border-color,box-shadow] duration-500"
+                       transition-all duration-500"
         >
-            {/* ── Ambient glow blobs ── */}
+            {/* ── Ambient glow blobs (Pure CSS) ── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                <div
                     className="absolute -top-12 -right-12 w-56 h-56 rounded-full
-                               bg-purple-600/25 blur-[80px]"
+                               bg-purple-600/25 blur-[80px] banner-pulse-slow"
                 />
-                <motion.div
-                    animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                <div
                     className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full
-                               bg-red-600/20 blur-[60px]"
+                               bg-red-600/20 blur-[60px] banner-pulse-med"
                 />
-                <motion.div
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                <div
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                               w-32 h-32 rounded-full bg-blue-600/15 blur-[60px]"
+                               w-32 h-32 rounded-full bg-blue-600/15 blur-[60px] banner-pulse-subtle"
                 />
             </div>
 
             {/* ── Subtle grid overlay ── */}
             <div
-                className="absolute inset-0 opacity-[0.04]"
+                className="absolute inset-0 opacity-[0.04] pointer-events-none"
                 style={{
                     backgroundImage:
                         "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
@@ -51,53 +42,38 @@ export default function Banner() {
 
             <div className="relative z-10 flex items-center gap-4 sm:gap-5 p-5 sm:p-6">
 
-                {/* ── Animated concentric rings ── */}
+                {/* ── Concentric rings (Pure CSS transforms) ── */}
                 <div className="relative w-16 h-16 sm:w-[72px] sm:h-[72px] shrink-0 flex items-center justify-center">
-                    {/* Outer ring — slow clockwise pulse + spin */}
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0 rounded-full"
-                    >
+                    {/* Outer ring — slow clockwise spin */}
+                    <div className="absolute inset-0 rounded-full banner-spin-slow pointer-events-none">
                         <div className="w-full h-full rounded-full border-2 border-dashed border-purple-500/30
                                         group-hover:border-purple-400/50 transition-colors duration-500" />
-                    </motion.div>
+                    </div>
 
-                    {/* Middle ring — counter-clockwise, pulsing scale */}
-                    <motion.div
-                        animate={{ rotate: -360, scale: [1, 1.05, 1] }}
-                        transition={{
-                            rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-                            scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                        }}
+                    {/* Middle ring — counter-clockwise spin */}
+                    <div
                         className="absolute inset-2 rounded-full border border-red-500/35
-                                   group-hover:border-red-400/55 transition-colors duration-500"
+                                   group-hover:border-red-400/55 transition-colors duration-500
+                                   banner-spin-reverse pointer-events-none"
                     />
 
                     {/* Inner ring — fast clockwise with glow */}
-                    <motion.div
-                        animate={{ rotate: 360, scale: [1, 0.95, 1] }}
-                        transition={{
-                            rotate: { duration: 5, repeat: Infinity, ease: "linear" },
-                            scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                        }}
+                    <div
                         className="absolute inset-[14px] rounded-full border border-blue-400/30
                                    shadow-[0_0_12px_rgba(96,165,250,0.15)]
-                                   group-hover:border-blue-400/50 transition-colors duration-500"
+                                   group-hover:border-blue-400/50 transition-colors duration-500
+                                   banner-spin-fast pointer-events-none"
                     />
 
-                    {/* Center icon */}
-                    <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    {/* Center icon with subtle scale bounce */}
+                    <div
                         className="relative z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-xl
                                    bg-gradient-to-br from-purple-600/60 to-red-500/60
                                    flex items-center justify-center
-                                   shadow-lg shadow-purple-700/40"
+                                   shadow-lg shadow-purple-700/40 banner-icon-bounce"
                     >
-                        <AiSvg className={"w-5 h-5 md:w-6 md:h-6 text-white fill-white"} />
-                        {/* <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" /> */}
-                    </motion.div>
+                        <AiSvg className="w-5 h-5 md:w-6 md:h-6 text-white fill-white" />
+                    </div>
                 </div>
 
                 {/* ── Copy ── */}
@@ -139,14 +115,63 @@ export default function Banner() {
             </div>
 
             {/* ── Bottom shimmer line ── */}
-            <div className="absolute bottom-0 left-0 right-0 h-px">
-                <motion.div
-                    animate={{ x: ["-100%", "200%"] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                    className="h-full w-1/3
-                               bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
-                />
+            <div className="absolute bottom-0 left-0 right-0 h-px overflow-hidden">
+                <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent banner-shimmer" />
             </div>
-        </motion.div>
+
+            {/* ── Scoped CSS Keyframes for zero JS thread overhead ── */}
+            <style>{`
+                .banner-spin-slow {
+                    animation: bannerSpinCW 12s linear infinite;
+                    will-change: transform;
+                }
+                .banner-spin-reverse {
+                    animation: bannerSpinCCW 8s linear infinite;
+                    will-change: transform;
+                }
+                .banner-spin-fast {
+                    animation: bannerSpinCW 5s linear infinite;
+                    will-change: transform;
+                }
+                .banner-pulse-slow {
+                    animation: bannerPulse 4s ease-in-out infinite;
+                }
+                .banner-pulse-med {
+                    animation: bannerPulse 5s ease-in-out infinite 1s;
+                }
+                .banner-pulse-subtle {
+                    animation: bannerPulse 6s ease-in-out infinite 2s;
+                }
+                .banner-icon-bounce {
+                    animation: bannerIconScale 2.5s ease-in-out infinite;
+                }
+                .banner-shimmer {
+                    animation: bannerShimmerSlide 4s ease-in-out infinite;
+                }
+
+                @keyframes bannerSpinCW {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                @keyframes bannerSpinCCW {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(-360deg); }
+                }
+                @keyframes bannerPulse {
+                    0%, 100% { transform: scale(1); opacity: 0.2; }
+                    50% { transform: scale(1.2); opacity: 0.35; }
+                }
+                @keyframes bannerIconScale {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.08); }
+                }
+                @keyframes bannerShimmerSlide {
+                    0% { transform: translateX(-100%); }
+                    60%, 100% { transform: translateX(350%); }
+                }
+            `}</style>
+        </div>
     );
-}
+});
+
+export default Banner;

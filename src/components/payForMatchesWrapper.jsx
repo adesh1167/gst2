@@ -9,15 +9,16 @@ import { unavailablePayments } from '../data/unavaiablePayments';
 import FlutterwaveButton from './payButton2';
 import { useLocation, useNavigate } from 'react-router';
 
+import { useIsAdmin } from '../hooks/useIsAdmin';
+
 const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {}, className }) => {
 
     const [manualLink, setManualLink] = useState(null);
 
     const netTotal = useSelector(selectNetTotal);
-    const { isAdmin, dashboard } = useSelector((state) => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
+    const isAdminShown = useIsAdmin();
     const { country, factor } = useSelector((state) => state.data);
-    const cart = useSelector((state) => state.cart);
+    const cartItems = useSelector((state) => state.cart.items);
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
     const {pathname} = useLocation();
@@ -26,18 +27,18 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
 
     useEffect(() => {
         if (country && unavailablePayments.includes(country)) {
-            setManualLink("/cart/manual-payment");
+            setManualLink({ type: 'matches' });
+        } else {
+            setManualLink(null);
         }
     }, [country])
 
-    // console.log("Is Payment Open: ", isPaymentOpen, navCounter);
-
     const initiatePayload = useMemo(() => {
         return {
-            items: cart?.items?.map(item => item.id),
+            items: cartItems?.map(item => item.id),
             coupon: coupon?.coupon
         }
-    }, [cart, coupon])
+    }, [cartItems, coupon?.coupon])
 
     const finalCallBack = useCallback((res) => {
         // console.log("Res outside: ", res);
@@ -54,7 +55,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
                     duration: 4000
                 }))
             }, 1000);
-            if (emptyCartFlag) emptyCart();
+            if (emptyCartFlag && emptyCart) emptyCart();
             setTimeout(() => navigate("/my-matches"), 3000);
         } else if (res.data.status === "update") {
 
@@ -67,7 +68,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
                 duration: 3000
             }))
         }
-    }, [])
+    }, [dispatch, emptyCartFlag, emptyCart, navigate])
 
     const errorCallBack = useCallback((res) => {
         // console.log(res)

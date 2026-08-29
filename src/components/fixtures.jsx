@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { memo, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FixtureCountry from './fixtureCountry';
 import axios from 'axios';
@@ -8,11 +8,12 @@ import Loading from './loading';
 import { Link, useNavigationType } from 'react-router';
 import Banners from './banners';
 import { motion } from 'framer-motion';
+import { useIsAdmin } from '../hooks/useIsAdmin';
+import CheckoutButton from './checkoutButton';
 
 const Fixtures = () => {
     const { fixtures, fixturesLoaded } = useSelector(state => state.fixtures);
-    const { isAdmin, dashboard } = useSelector(state => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin";
+    const isAdminShown = useIsAdmin();
     const [error, setError] = useState(null);
     const navType = useNavigationType();
     const [firstLoad, setFirstLoad] = useState(false);
@@ -51,7 +52,10 @@ const Fixtures = () => {
             .flatMap(l => Object.values(l.fixtures)).length
         , [fixtures]);
 
-    const countryList = Object.values(fixtures);
+    // ✅ Memoized: avoids a new array allocation on every render
+    const countryList = useMemo(() => Object.values(fixtures), [fixtures]);
+
+    console.log("Home Rendered")
 
     return (
         <div className="w-full">
@@ -82,7 +86,7 @@ const Fixtures = () => {
             )}
 
             {/* ── Main content ───────────────── */}
-            <div className="w-full pb-4">
+            <div className="w-full pb-4 relative">
                 {error ? (
                     <EmptyState
                         icon="😞"
@@ -98,10 +102,10 @@ const Fixtures = () => {
                         >
                             {countryList.map((country, i) => (
                                 <React.Fragment key={country.name}>
-                                    <FixtureCountry country={country} />
+                                    <FixtureCountry key={country.name} country={country} />
                                     {/* Mid-list promo card after first country */}
                                     {i === 0 && countryList.length > 1 && (
-                                        <MidBanner />
+                                        <MidBanner key={"mid-banner"} />
                                     )}
                                 </React.Fragment>
                             ))}
@@ -121,6 +125,9 @@ const Fixtures = () => {
                         </p>
                     </div>
                 )}
+
+                <CheckoutButton />
+
             </div>
 
             {/* ── Footer ─────────────────────── */}
@@ -150,7 +157,10 @@ function EmptyState({ icon, title, body }) {
 }
 
 /* ── Mid-list "how it works" card ── */
-function MidBanner() {
+const MidBanner = memo(() => {
+
+    console.log("Mid Banner Rendered");
+
     return (
         <div className="text-center mx-4 my-6 rounded-2xl overflow-hidden
                         bg-gradient-to-br from-gray-900 to-gray-800
@@ -186,6 +196,6 @@ function MidBanner() {
             </div>
         </div>
     );
-}
+})
 
 export default Fixtures;

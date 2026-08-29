@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { countries } from '../data/countries';
@@ -8,18 +8,34 @@ import formatNumber from '../functions/formatNumber';
 import { showToast } from '../slices/toastsReducer';
 import ModalWrapper from './modalWrapper';
 import { AlertTriangle, Building2, Ticket, Mail, Copy, Check } from 'lucide-react';
+import { useModal } from '../hooks/useModal';
 
-const ManualPayment = ({ type = "matches", duration, amount }) => {
+const ManualPayment = ({ type: propType = "matches", duration: propDuration, amount: propAmount }) => {
+    const location = useLocation();
+    const stateData = location.state || {};
+
+    const effectiveType = stateData.type || propType || "matches";
+    const effectiveDuration = stateData.duration || propDuration;
+
     const cartObj = useSelector(state => state.cart);
     const cart = cartObj.items;
     const { factor, country } = useSelector(state => state.data);
     const netTotal = useSelector(selectNetTotal) * factor;
 
-    const total = type === "matches" ? formatNumber(netTotal) : formatNumber(amount);
-    const { id } = useParams();
-    const navigate = useNavigate();
+    const effectiveAmount = stateData.amount ?? propAmount ?? netTotal;
+    const total = effectiveType === "matches" ? formatNumber(netTotal) : formatNumber(effectiveAmount);
+
+    const { sub, closeSubModal, closeModal } = useModal();
     const dispatch = useDispatch();
     const [copiedKey, setCopiedKey] = useState(null);
+
+    const handleClose = () => {
+        if (sub) {
+            closeSubModal();
+        } else {
+            closeModal();
+        }
+    };
 
     if (!country) return null;
 
@@ -27,7 +43,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
     if (!countryDetails) return null;
 
     if (!unavailablePayments.includes(country)) {
-        navigate("/cart");
+        handleClose();
         return null;
     }
 
@@ -41,7 +57,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
     return (
         <ModalWrapper
             exitable={true}
-            onClose={() => navigate(-1)}
+            onClose={handleClose}
             title={`Payment for ${countryDetails.name}`}
             subtitle="Pay Manually"
             icon={AlertTriangle}
@@ -52,7 +68,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
             footer={
                 <button
                     type="button"
-                    onClick={() => navigate(-1)}
+                    onClick={handleClose}
                     className="py-2.5 px-6 rounded-xl font-bold text-xs sm:text-sm text-white
                                bg-gradient-to-r from-orange-600 to-orange-500
                                hover:from-orange-500 hover:to-orange-400
@@ -69,7 +85,6 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
 
                 <div className="flex items-center justify-between p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
                     <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {/* {type === "matches" ? "Matches Selected:" : `Subscription (${duration || id}):`} */}
                         Amount:
                     </span>
                     <span className="sans font-extrabold text-base text-orange-600 dark:text-orange-400">
@@ -77,7 +92,7 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                     </span>
                 </div>
 
-                {type === "matches" && cart?.length > 0 && (
+                {effectiveType === "matches" && cart?.length > 0 && (
                     <div className="space-y-1.5 p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-xs">
                         <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Fixtures ({cart.length}):</span>
                         <ul className="list-disc pl-4 space-y-1 text-gray-600 dark:text-gray-400">
@@ -88,9 +103,9 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                     </div>
                 )}
 
-                {type === "subscription" && (
+                {effectiveType === "subscription" && (
                     <div className="space-y-1.5 p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-xs">
-                        <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Plan: <span className='uppercase'>{duration}</span></span>
+                        <span className="font-semibold text-gray-800 dark:text-gray-200">Selected Plan: <span className='uppercase'>{effectiveDuration}</span></span>
                     </div>
                 )}
 
@@ -178,12 +193,11 @@ const ManualPayment = ({ type = "matches", duration, amount }) => {
                         contact.globalsportstrade@gmail.com
                     </a>
                     <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                        {type === "matches" ?
+                        {effectiveType === "matches" ?
                             "The match selections will be shown on your dashboard within 15 minutes."
                             :
                             "Your subscription will be activated within 15 minutes."
                         }
-
                     </p>
                 </div>
             </div>

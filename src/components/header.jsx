@@ -13,12 +13,13 @@ import { useApp } from '../contexts/appContext';
 import { Moon, Sun } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const Header = () => {
-    const { isAdmin, dashboard } = useSelector(s => s.user);
-    const { newPaths } = useSelector(s => s.data);
-    const { menuExpanded, setMenuExpanded, darkMode, toggleDarkMode } = useApp();
+import { useIsAdmin } from '../hooks/useIsAdmin';
 
-    const isAdminShown = isAdmin && dashboard === 'admin';
+const Header = () => {
+    const isAdmin = useSelector(s => s.user.isAdmin);
+    const isAdminShown = useIsAdmin();
+    const hasNewPaths = useSelector(s => (s.data.newPaths?.length || 0) > 0);
+    const { menuExpanded, setMenuExpanded, darkMode, toggleDarkMode } = useApp();
 
     // Track whether the panel has fully closed so we can show ADMIN label
     const [panelClosed, setPanelClosed] = useState(true);
@@ -40,7 +41,7 @@ const Header = () => {
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 h-[60px] lg:h-[80px] z-[20]
+            className="fixed top-0 left-0 right-0 h-[60px] lg:h-[80px] z-[51]
                        flex items-center justify-between px-3.5 lg:px-4
                        bg-white/95 dark:bg-[#0a0a0f]/95
                        backdrop-blur-md
@@ -123,7 +124,7 @@ const Header = () => {
                     aria-label="Open navigation"
                 >
                     {/* Green dot for new paths */}
-                    {newPaths.length > 0 && panelClosed && (
+                    {hasNewPaths && panelClosed && (
                         <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
                     )}
                     <span className="navicon text-gray-800 dark:text-white" />

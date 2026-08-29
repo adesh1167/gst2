@@ -3,14 +3,16 @@ User-agent: *
 Allow: /
 Allow: /about
 Allow: /deep-analyzer
+Allow: /my-matches
 Allow: /login
 Allow: /register
 
 # Disallow private and administrative paths
 Disallow: /admin/
 Disallow: /admin/*
-Disallow: /cart/manual-payment
 Disallow: /reset-password/
+Disallow: /reset-password/*
+Disallow: /persisted
 
 # Host and Sitemap
 Host: https://gsportstrade.com

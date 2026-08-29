@@ -213,7 +213,7 @@ const EditCoupon = ({ edit = true }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {/* Coupon Code */}
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0 md:mb-1.5 flex items-center gap-1.5">
               <Ticket className="w-3.5 h-3.5 text-orange-500" />
               <span>Coupon Code *</span>
             </label>
@@ -222,7 +222,7 @@ const EditCoupon = ({ edit = true }) => {
               placeholder="e.g. GST2026"
               value={formData.coupon}
               onChange={(e) => setValue('coupon', e.target.value.toUpperCase())}
-              className="w-full px-3.5 py-2.5 rounded-xl text-sm font-mono font-bold uppercase
+              className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base font-bold uppercase
                          bg-black/[0.03] dark:bg-white/[0.05]
                          border border-black/10 dark:border-white/10
                          text-gray-900 dark:text-white placeholder-gray-400
@@ -233,7 +233,7 @@ const EditCoupon = ({ edit = true }) => {
 
           {/* Discount Rate */}
           <div>
-            <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center justify-between mb-0 md:mb-1.5">
               <label className="text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
                 <Percent className="w-3.5 h-3.5 text-orange-500" />
                 <span>Discount (0.01 - 1.0) *</span>
@@ -252,7 +252,7 @@ const EditCoupon = ({ edit = true }) => {
               placeholder="e.g. 0.20 for 20%"
               value={formData.discount}
               onChange={(e) => setValue('discount', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl text-sm font-mono font-semibold
+              className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base font-mono uppercase
                          bg-black/[0.03] dark:bg-white/[0.05]
                          border border-black/10 dark:border-white/10
                          text-gray-900 dark:text-white placeholder-gray-400
@@ -266,7 +266,7 @@ const EditCoupon = ({ edit = true }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {/* Min Matches */}
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0 md:mb-1.5 flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-orange-500" />
               <span>Min. Matches</span>
             </label>
@@ -276,7 +276,7 @@ const EditCoupon = ({ edit = true }) => {
               placeholder="0 for no minimum"
               value={formData.minimum}
               onChange={(e) => setValue('minimum', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl text-sm font-mono font-semibold
+              className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base font-mono uppercase
                          bg-black/[0.03] dark:bg-white/[0.05]
                          border border-black/10 dark:border-white/10
                          text-gray-900 dark:text-white placeholder-gray-400
@@ -287,7 +287,7 @@ const EditCoupon = ({ edit = true }) => {
 
           {/* Expiration DateTime */}
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0 md:mb-1.5 flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-orange-500" />
               <span>Expiration Date & Time</span>
             </label>
@@ -295,7 +295,7 @@ const EditCoupon = ({ edit = true }) => {
               type="datetime-local"
               value={formData.expiration}
               onChange={(e) => setValue('expiration', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold
+              className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base uppercase
                          bg-black/[0.03] dark:bg-white/[0.05]
                          border border-black/10 dark:border-white/10
                          text-gray-900 dark:text-white placeholder-gray-400
@@ -307,7 +307,7 @@ const EditCoupon = ({ edit = true }) => {
 
         {/* Customer Description / Success Message */}
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0 md:mb-1.5 flex items-center gap-1.5">
             <MessageSquare className="w-3.5 h-3.5 text-orange-500" />
             <span>Success Message (Shown to User)</span>
           </label>
@@ -316,18 +316,18 @@ const EditCoupon = ({ edit = true }) => {
             placeholder="e.g. 20% discount applied to your order!"
             value={formData.description}
             onChange={(e) => setValue('description', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl text-sm font-medium
-                       bg-black/[0.03] dark:bg-white/[0.05]
-                       border border-black/10 dark:border-white/10
-                       text-gray-900 dark:text-white placeholder-gray-400
-                       focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500
-                       transition-all"
+            className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base uppercase
+                         bg-black/[0.03] dark:bg-white/[0.05]
+                         border border-black/10 dark:border-white/10
+                         text-gray-900 dark:text-white placeholder-gray-400
+                         focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500
+                         transition-all"
           />
         </div>
 
         {/* Min Matches Warning Message */}
         <div>
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0 md:mb-1.5 flex items-center gap-1.5">
             <AlertCircle className="w-3.5 h-3.5 text-orange-500" />
             <span>Min. Matches Error Message</span>
           </label>
@@ -336,12 +336,12 @@ const EditCoupon = ({ edit = true }) => {
             placeholder="e.g. This coupon only applies on 3 or more matches"
             value={formData.minMessage}
             onChange={(e) => setValue('minMessage', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl text-sm font-medium
-                       bg-black/[0.03] dark:bg-white/[0.05]
-                       border border-black/10 dark:border-white/10
-                       text-gray-900 dark:text-white placeholder-gray-400
-                       focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500
-                       transition-all"
+            className="w-[125%] md:w-full origin-bottom-left scale-[0.8] md:scale-[1] px-3.5 py-2.5 rounded-xl text-base uppercase
+                         bg-black/[0.03] dark:bg-white/[0.05]
+                         border border-black/10 dark:border-white/10
+                         text-gray-900 dark:text-white placeholder-gray-400
+                         focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500
+                         transition-all"
           />
         </div>
 

@@ -10,6 +10,8 @@ import FlutterwaveButton from './payButton2';
 import { useLocation, useNavigate } from 'react-router';
 import { useApp } from '../contexts/appContext';
 
+import { useIsAdmin } from '../hooks/useIsAdmin';
+
 const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showPrice = true, background = "", color = "", className, style = {} }) => {
 
 
@@ -18,8 +20,7 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
     const [manualLink, setManualLink] = useState(null);
 
     const netTotal = useSelector(selectNetTotal);
-    const { isAdmin, dashboard } = useSelector((state) => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin" ? true : false;
+    const isAdminShown = useIsAdmin();
     const { country, factor } = useSelector((state) => state.data);
     const navigate = useNavigate();
     const {pathname} = useLocation();
@@ -28,7 +29,9 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
 
     useEffect(() => {
         if (country && unavailablePayments.includes(country)) {
-            setManualLink(`/deep-analyzer/manual-subscription/${type}`);
+            setManualLink({ type: 'subscription', duration: type });
+        } else {
+            setManualLink(null);
         }
     }, [country, type])
 
@@ -60,7 +63,7 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
                 duration: 3000
             }))
         }
-    }, [])
+    }, [dispatch, fetchDeepAnalyzerSubscription])
 
     const errorCallBack = useCallback((res) => {
         if (res.data.status === "update") {
@@ -91,7 +94,7 @@ const PayForSubscriptionWrapper = ({ title = "SUBSCRIBE", type = "weekly", showP
                 duration: 3000
             }))
         }
-    }, [])
+    }, [dispatch, navigate, pathname])
 
     return (
 

@@ -9,18 +9,26 @@
 }
 
 /* ── Base resets ────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   -webkit-text-size-adjust: 100%;
-     -moz-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 /* Hide browser scrollbar globally */
-*::-webkit-scrollbar { display: none; }
+*::-webkit-scrollbar {
+  display: none;
+}
 
-a { text-decoration: none; }
+a {
+  text-decoration: none;
+}
 
 body {
   margin: 0;
@@ -35,15 +43,38 @@ body {
   @apply bg-dark-bg text-dark-primary;
 }
 
-/* ── Scroll lock ────────────────────────────────────────────────────────── */
-.scroll-lock { overflow: hidden; }
+input[type="datetime-local"], input[type="date"] {
+  /* 1. Force the element to behave like a standard block or standard flexbox */
+  display: block;
 
-.sans{
+  /* 2. Strip WebKit's default layout styling and min-widths */
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* 3. Ensure native text padding doesn't push the internal elements out */
+  box-sizing: border-box;
+}
+
+/* 4. Fix alignment bugs inside the native WebKit date wrapper */
+input[type="datetime-local"]::-webkit-date-and-time-value, input[type="date"]::-webkit-date-and-time-value{
+  text-align: left;
+  min-height: 1.5em;
+  /* Prevents text from clipping or jumping to the top */
+}
+
+
+/* ── Scroll lock ────────────────────────────────────────────────────────── */
+.scroll-lock {
+  overflow: hidden;
+}
+
+.sans {
   font-family: sans-serif;
 }
 
 /* ── Rainbow gradient (Deep Analyzer nav item) ──────────────────────────── */
-.rainbow-text, .ai .rainbow-text-active {
+.rainbow-text,
+.ai .rainbow-text-active {
   background: linear-gradient(to right, red, orange, blue, purple, green, black, red);
   -webkit-background-clip: text;
   background-clip: text;
@@ -52,8 +83,10 @@ body {
 
 /* When the Deep Analyzer row is active the pill bg is dark/white,
    so swap to a light gradient so text stays legible */
-.rainbow-text-active, .ai .rainbow-text, .dark .rainbow-text {
-  background: linear-gradient(to right, red, orange, rgb(100,100,255), rgb(255,100,255), rgb(100,255,100), white, red);
+.rainbow-text-active,
+.ai .rainbow-text,
+.dark .rainbow-text {
+  background: linear-gradient(to right, red, orange, rgb(100, 100, 255), rgb(255, 100, 255), rgb(100, 255, 100), white, red);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
@@ -61,7 +94,7 @@ body {
 
 /* Deep Analyzer route root class (unchanged) */
 .ai .rainbow-text {
-  background: linear-gradient(to right, red, orange, rgb(100,100,255), rgb(255,100,255), rgb(100,255,100), white, red);
+  background: linear-gradient(to right, red, orange, rgb(100, 100, 255), rgb(255, 100, 255), rgb(100, 255, 100), white, red);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
@@ -108,6 +141,13 @@ body {
 }
 
 @media (min-width: 660px) {
-  .dag-country { padding-left: 40px !important; padding-right: 40px !important; }
-  .my-matches-container04 { padding-left: 20px !important; padding-right: 20px !important; }
+  .dag-country {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .my-matches-container04 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }

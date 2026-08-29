@@ -16,7 +16,6 @@ import Login from './routes/login';
 import Register from './routes/register';
 import About from './routes/about';
 import { setMatchesLoaded, setMyMatches } from './slices/myMatchesReducer';
-import Welcome from './components/welcome';
 import Header from './components/header';
 import ForgotPassword from './routes/forgotPassword';
 import ResetPassword from './routes/resetPassword';
@@ -27,26 +26,25 @@ import DeepAnalyzer from './routes/deepAnalyzer';
 import useWindowSize from './functions/useWindowSize';
 import AsideCart from './components/asideCart';
 import { AnimatePresence } from 'framer-motion';
+import { useIsAdmin } from './hooks/useIsAdmin';
+import { useModal } from './hooks/useModal';
+import GlobalModals from './components/globalModals';
 
 axios.defaults.withCredentials = true;
 
 function App() {
     const dispatch = useDispatch();
-    const cart = useSelector(s => s.cart);
-    const { user, isAdmin, dashboard } = useSelector(s => s.user);
+    const { user, dashboard } = useSelector(s => s.user);
+    const isAdminShown = useIsAdmin();
     const { firstLoad, country, currency, continent, tAndCAccepted } = useSelector(s => s.data);
+    const { modal, openModal, closeModal } = useModal();
     const { pathname } = useLocation();
     const { width } = useWindowSize();
     const { menuExpanded } = useApp();
     const navigate = useNavigate();
 
     const isAfrica = continent === 'AF';
-    const isCountrySelected = (isAfrica && country) || (!isAfrica && currency);
-
-    // Persist cart to localStorage
-    useEffect(() => {
-        if (cart) localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
+    const isCountrySelected = Boolean((isAfrica && country) || (!isAfrica && currency));
 
     // Reset fixtures on dashboard switch
     useEffect(() => {
@@ -99,34 +97,32 @@ function App() {
     // Scroll lock
     useEffect(() => {
         const lock =
-            pathname === '/cart' ||
-            pathname === '/country' ||
-            pathname === '/change-country' ||
+            Boolean(modal) ||
             pathname === '/deep-analyzer/search' ||
             (menuExpanded && width < 1024) ||   // lg breakpoint = 1024px
             (!tAndCAccepted && pathname !== '/about');
 
         document.body.classList.toggle('scroll-lock', lock);
-    }, [pathname, tAndCAccepted, menuExpanded, width]);
+    }, [pathname, tAndCAccepted, menuExpanded, width, modal]);
 
     // Deep Analyzer ai class
     useEffect(() => {
         if (pathname.includes('/deep-analyzer')) {
             document.getElementById('root').classList.add('ai');
-        } else{
+        } else {
             document.getElementById('root').classList.remove('ai');
         }
     }, [pathname]);
 
-    // Country redirect
+    // Country selection check on first load
     useEffect(() => {
-        if (firstLoad && !isCountrySelected && pathname !== '/country' && pathname !== '/about') {
-            navigate('/country', { state: { redirect: pathname } });
+        if (firstLoad && !isCountrySelected && pathname !== '/about' && !modal) {
+            openModal('country');
         }
-        if (firstLoad && isCountrySelected && pathname === '/country') {
-            navigate('/');
+        if (firstLoad && isCountrySelected && modal === 'country') {
+            closeModal();
         }
-    }, [isCountrySelected, firstLoad, pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [isCountrySelected, firstLoad, pathname, modal, openModal, closeModal]);
 
     return (
         <>
@@ -153,14 +149,14 @@ function App() {
                         <Route
                             path="*"
                             element={
-                                isAdmin && dashboard === 'admin'
+                                isAdminShown
                                     ? <AdminRoutes />
                                     : <UserRoutes />
                             }
                         />
                         <Route element={
                             <div className='h-full overflow-y-scroll'>
-                                <Outlet/>
+                                <Outlet />
                             </div>
                         }>
                             <Route path="/deep-analyzer/*" element={<DeepAnalyzer />} />
@@ -172,20 +168,21 @@ function App() {
                             <Route path="/about"            element={<About />} />
                         </Route>
                     </Routes>
-
-                    <AnimatePresence mode="sync">
-                        {(!tAndCAccepted && pathname !== '/about') && <Welcome key="welcome-modal" />}
-                    </AnimatePresence>
                 </main>
 
+                {/* Desktop Aside Cart */}
                 <AnimatePresence mode='sync'>
-                    {pathname !== "/cart" && !pathname.includes('/deep-analyzer') && (
+                    {!pathname.includes('/deep-analyzer') && (
                         <AsideCart key="aside-cart" />
                     )}
                 </AnimatePresence>
             </div>
 
-            <Toasts/>
+            {/* Centralized Global Modals (Query Parameter driven) */}
+            <GlobalModals />
+
+            {/* Toast Notifications */}
+            <Toasts />
         </>
     );
 }

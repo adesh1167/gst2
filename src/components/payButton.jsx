@@ -12,19 +12,22 @@ import { removeItems } from '../slices/cartReducer';
 import LoadingButton from './loadingButton';
 import { unavailablePayments } from '../data/unavaiablePayments';
 
+import { useIsAdmin } from '../hooks/useIsAdmin';
+
 const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, background = "", color = "", style = {}, className = "" }) => {
     const [loading, setLoading] = useState(false);
     const [config, setConfig] = useState(null);
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
     const netTotal = useSelector(selectNetTotal);
-    const { user, isAuthenticated, isAdmin, dashboard } = useSelector((state) => state.user);
-    const isAdminShown = isAdmin && dashboard === "admin";
+    const { user, isAuthenticated } = useSelector((state) => state.user);
+    const isAdminShown = useIsAdmin();
     const { country, factor } = useSelector((state) => state.data);
     const cart = useSelector((state) => state.cart);
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
-    const { pathname } = useLocation();
+    const location = useLocation();
+    const { pathname } = location;
     const handlePayment = useFlutterwave(config);
     const dispatch = useDispatch();
 
@@ -114,7 +117,13 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                 setLoading(false);
                 closePaymentModal();
                 setIsPaymentOpen(false);
-                navigate("/cart/manual-payment");
+                const searchParams = new URLSearchParams(location.search);
+                searchParams.set('sub', 'manual-payment');
+                navigate({ search: `?${searchParams.toString()}` }, {
+                    state: {
+                        amount: netTotal,
+                    }
+                });
             }, 100);
             return;
         }

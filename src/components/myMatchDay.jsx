@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import formatNumber from '../functions/formatNumber';
 import { getMyMatchTime } from '../functions/formatDate';
 import { useSelector } from 'react-redux';
 
-const MyMatchDay = ({ day }) => {
-    const { country } = useSelector(state => state.data);
+const MyMatchDay = memo(({ day }) => {
+    const country = useSelector(state => state.data.country);
 
     return (
         <div className="w-full rounded-2xl overflow-hidden
@@ -24,14 +24,14 @@ const MyMatchDay = ({ day }) => {
             {/* Matches */}
             <div className="flex flex-col">
                 {day.matches.map((item, i) => (
-                    <MyMatchItem key={i} item={item} />
+                    <MyMatchItem key={item.id || i} item={item} />
                 ))}
             </div>
         </div>
     );
-};
+});
 
-const MyMatchItem = ({ item }) => {
+const MyMatchItem = memo(({ item }) => {
     return (
         <div className="group flex items-start justify-between px-4 py-2 
                         border-b border-gray-100 dark:border-white/5 last:border-0
@@ -51,8 +51,6 @@ const MyMatchItem = ({ item }) => {
 
                 <div className="flex w-full">
                     <div className="flex-1 flex flex-col justify-between pr-4 overflow-hidden">
-                        {/* Teams */}
-
                         {/* League */}
                         <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-white/50 overflow-hidden font-medium">
                             <span className="league-name truncate">{item.league}</span>
@@ -88,10 +86,8 @@ const MyMatchItem = ({ item }) => {
                 </div>
 
             </div>
-
-            {/* Selection + odds */}
         </div>
     );
-};
+});
 
 export default MyMatchDay;

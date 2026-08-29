@@ -2,6 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
+const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: {
+        opacity: 0,
+        transition: { duration: 0.3, ease: 'easeIn' }
+    }
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, scale: 0.85, y: 30 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: {
+        opacity: 0,
+        scale: 0.85,
+        y: 30,
+        transition: { duration: 0.3, ease: 'easeIn' }
+    }
+};
+
 const ModalWrapper = ({
     children,
     onClose,
@@ -32,18 +60,15 @@ const ModalWrapper = ({
 
     return (
         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={handleBackdropClick}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-[calc(1rem+60px)] lg:pt-[calc(1rem+80px)] bg-black/75 backdrop-blur-md overflow-y-auto"
         >
             <motion.div
-                initial={{ opacity: 0, scale: 0.94, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.94, y: 15 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+                variants={cardVariants}
                 className={`flex flex-col max-h-full relative w-full ${maxWidth} my-auto rounded-2xl
                            bg-white dark:bg-[#121320]
                            border border-black/10 dark:border-white/10

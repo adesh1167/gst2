@@ -1,11 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux'
-import React from 'react'
-import { removeItem } from '../slices/cartReducer'
-import formatNumber from '../functions/formatNumber'
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, memo } from 'react';
+import { removeItem } from '../slices/cartReducer';
+import formatNumber from '../functions/formatNumber';
 
-const CartItem = ({ item }) => {
+const CartItem = memo(({ item }) => {
     const { factor, country } = useSelector(state => state.data);
     const dispatch = useDispatch();
+
+    const handleRemove = useCallback(() => {
+        dispatch(removeItem(item.id));
+    }, [dispatch, item.id]);
 
     return (
         <div className="flex items-center gap-3 text-gray-600 dark:text-gray-300 w-full mb-2">
@@ -18,7 +22,6 @@ const CartItem = ({ item }) => {
                         <span className="font-semibold text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                             {item.home}
                         </span>
-                        {/* <span className="text-black/60 dark:text-white/60 text-[10px] text-center leading-none">v</span> */}
                         <div className="h-[1.5px] my-2 w-full bg-gradient-to-r from-transparent via-gray-500/20 to-transparent" />
                         <span className="font-semibold text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                             {item.away}
@@ -27,16 +30,15 @@ const CartItem = ({ item }) => {
                 </div>
                 <div className="flex flex-col justify-between items-end self-stretch">
                     <span className="text-sm font-semibold shrink-0 sans">
-                        {country} {formatNumber(item.price * factor, 0, 0)}
+                        {country} {formatNumber(item.price * (factor || 1), 0, 0)}
                     </span>
                     <span className="text-black/60 dark:text-white/60 text-xs pb-1.5">{item.game_type}</span>
-
                 </div>
             </div>
 
             {/* Remove button */}
             <button
-                onClick={() => dispatch(removeItem(item.id))}
+                onClick={handleRemove}
                 className="shrink-0 text-red-400 hover:text-red-300 transition-colors p-1"
                 aria-label="Remove item"
             >
@@ -47,6 +49,6 @@ const CartItem = ({ item }) => {
             </button>
         </div>
     );
-};
+});
 
 export default CartItem;

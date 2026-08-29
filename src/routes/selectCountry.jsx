@@ -1,21 +1,22 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { baseApiUrl } from '../data/url';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCountry, setFactor } from '../slices/dataReducer';
-import { useNavigate } from 'react-router';
 import LoadingButton from '../components/loadingButton';
 import { showToast } from '../slices/toastsReducer';
 import ModalWrapper from '../components/modalWrapper';
 import { Globe, Check } from 'lucide-react';
 import { countries } from '../data/countries';
+import { useModal } from '../hooks/useModal';
 
 const SelectCountry = ({ exitable = true }) => {
-    const {country} = useSelector(state => state.data);
+    const country = useSelector(state => state.data.country);
     const [localCountry, setLocalCountry] = useState(country);
     const [loading, setLoading] = useState(false);
+    const countriesList = useMemo(() => Object.values(countries), []);
 
-    const navigate = useNavigate();
+    const { closeModal } = useModal();
     const dispatch = useDispatch();
 
     function handleSubmit(e) {
@@ -42,7 +43,7 @@ const SelectCountry = ({ exitable = true }) => {
                     type: 'success',
                     duration: 3000
                 }));
-                navigate(-1);
+                closeModal();
                 dispatch(setCountry(res.data.country));
                 dispatch(setFactor(res.data.factor));
             }
@@ -61,14 +62,14 @@ const SelectCountry = ({ exitable = true }) => {
     return (
         <ModalWrapper
             exitable={exitable}
-            onClose={() => navigate(-1)}
+            onClose={closeModal}
             title="Select Your Country"
             subtitle="Choose your region for local currency & odds"
             icon={Globe}
         >
             <form onSubmit={loading ? e => e.preventDefault() : handleSubmit} className="flex flex-col flex-1 overflow-hidden p-6 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[50vh] overflow-y-auto pr-1">
-                    {Object.values(countries).map(country => {
+                    {countriesList.map(country => {
                         const isSelected = localCountry === country.code;
                         return (
                             <button
