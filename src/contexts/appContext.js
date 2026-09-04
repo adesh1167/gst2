@@ -8,7 +8,7 @@ import { setDeepAnalyzerSubscription } from "../slices/subscriptionsReducer";
 import { useLocation } from "react-router";
 import { setNewPaths } from "../slices/dataReducer";
 
-const VERSION = "3.0.0";
+const VERSION = "3.1.0";
 
 const AuthContext = createContext();
 
