@@ -18,7 +18,8 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
     const netTotal = useSelector(selectNetTotal);
     const isAdminShown = useIsAdmin();
     const { country, factor } = useSelector((state) => state.data);
-    const cartItems = useSelector((state) => state.cart.items);
+    const { items: cartItems, emptyCartFlag: reduxEmptyCartFlag } = useSelector((state) => state.cart);
+    const isCartEmptyingActive = emptyCartFlag !== undefined ? emptyCartFlag : reduxEmptyCartFlag;
     const coupon = useSelector((state) => state.data.coupon);
     const navigate = useNavigate();
     const {pathname} = useLocation();
@@ -55,7 +56,7 @@ const PayForMatchesWrapper = ({ emptyCart, emptyCartFlag, title = "PAY", showPri
                     duration: 4000
                 }))
             }, 1000);
-            if (emptyCartFlag && emptyCart) emptyCart();
+            if (isCartEmptyingActive && emptyCart) emptyCart();
             setTimeout(() => navigate("/my-matches"), 3000);
         } else if (res.data.status === "update") {
 

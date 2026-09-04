@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./styles/myMatches.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { baseApiUrl } from "../data/url";
 import Loading from "../components/loading";
 import { setMatchesLoaded, setMyMatches } from "../slices/myMatchesReducer";
 import MyMatchDay from "../components/myMatchDay";
-import { Link, useLocation, useNavigationType } from "react-router";
+import { Link, useLocation } from "react-router";
 import { showToast } from "../slices/toastsReducer";
 import SEO from "../components/seo";
 
@@ -34,15 +34,13 @@ const MyMatches = () => {
 
 const MyMatchesContent = () => {
     const [loading, setLoading] = useState(true);
-    const [firstLoad, setFirstLoad] = useState(false);
     const [error, setError] = useState(null);
     const { matches, matchesLoaded } = useSelector(state => state.myMatches);
     const { isAuthenticated } = useSelector(state => state.user);
     const dispatch = useDispatch();
-    const navType = useNavigationType();
     const { pathname } = useLocation();
 
-    function fetchMyMatches() {
+    const fetchMyMatches = useCallback(() => {
         setLoading(true);
         axios({ url: `${baseApiUrl}/get-my-matches.php`, method: "POST" })
             .then(res => {
@@ -66,29 +64,18 @@ const MyMatchesContent = () => {
             })
             .catch(() => dispatch(showToast({ message: "An error occurred, check your network and reload", type: "error", duration: 3000 })))
             .finally(() => {
-                if (!matchesLoaded) dispatch(setMatchesLoaded(true));
+                dispatch(setMatchesLoaded(true));
                 setLoading(false);
             });
-    }
+    }, [dispatch, pathname]);
 
     useEffect(() => {
-        if (firstLoad) {
-            if (matchesLoaded) {
-                if (navType !== "PUSH") setLoading(false);
-                else fetchMyMatches();  // intentionally kept same as original
-            } else {
-                fetchMyMatches();
-            }
+        if (!matchesLoaded) {
+            fetchMyMatches();
         } else {
-            if (matchesLoaded) {
-                if (navType !== "PUSH") setLoading(false);
-                else fetchMyMatches();
-            } else {
-                fetchMyMatches();
-            }
+            setLoading(false);
         }
-        if (!firstLoad) setFirstLoad(true);
-    }, [matchesLoaded]);
+    }, [matchesLoaded, fetchMyMatches]);
 
     return (
         <div className="w-full min-h-full bg-white dark:bg-dark-bg">

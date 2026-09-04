@@ -1,10 +1,12 @@
 import { useSearchParams, useNavigate } from 'react-router';
 import { useCallback } from 'react';
+import { getDepth } from '../services/navigationDepth';
 
 /**
  * Universal hook for managing modal overlays via URL query parameters (?modal=...&sub=...).
  * Keeps underlying page routes, scroll positions, and state intact.
- * Uses history-aware navigate(-1) on close with fallback when history is nonexistent.
+ * Uses session navigation depth tracking to safely navigate(-1) within the app
+ * and fallback to navigate('/', { replace: true }) if no in-app history exists.
  */
 export function useModal() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,37 +41,24 @@ export function useModal() {
     }, [setSearchParams]);
 
     const canGoBack = useCallback(() => {
-        return window.history.state && typeof window.history.state.idx === 'number' && window.history.state.idx > 0;
+        return getDepth() > 0;
     }, []);
 
     const closeSubModal = useCallback(() => {
         if (canGoBack()) {
             navigate(-1);
         } else {
-            setSearchParams(prev => {
-                const next = new URLSearchParams(prev);
-                next.delete('sub');
-                return next;
-            }, { replace: true });
+            navigate('/', { replace: true });
         }
-    }, [canGoBack, navigate, setSearchParams]);
+    }, [canGoBack, navigate]);
 
     const closeModal = useCallback(() => {
         if (canGoBack()) {
             navigate(-1);
         } else {
-            setSearchParams(prev => {
-                const next = new URLSearchParams(prev);
-                next.delete('modal');
-                next.delete('sub');
-                next.delete('type');
-                next.delete('amount');
-                next.delete('duration');
-                next.delete('tier');
-                return next;
-            }, { replace: true });
+            navigate('/', { replace: true });
         }
-    }, [canGoBack, navigate, setSearchParams]);
+    }, [canGoBack, navigate]);
 
     return {
         modal,

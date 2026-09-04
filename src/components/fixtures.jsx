@@ -55,7 +55,7 @@ const Fixtures = () => {
     // ✅ Memoized: avoids a new array allocation on every render
     const countryList = useMemo(() => Object.values(fixtures), [fixtures]);
 
-    console.log("Home Rendered")
+    // console.log("Home Rendered")
 
     return (
         <div className="w-full">

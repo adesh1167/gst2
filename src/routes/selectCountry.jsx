@@ -43,7 +43,9 @@ const SelectCountry = ({ exitable = true }) => {
                     type: 'success',
                     duration: 3000
                 }));
-                closeModal();
+                if(exitable){
+                    closeModal();
+                }
                 dispatch(setCountry(res.data.country));
                 dispatch(setFactor(res.data.factor));
             }

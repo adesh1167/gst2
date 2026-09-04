@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, useLocation, Navigate, Outlet } from 'react-router';
+import { Routes, Route, useNavigate, useLocation, Navigate, Outlet, useNavigationType } from 'react-router';
 import './App.css';
 import UserRoutes from './routes/userRoutes';
 import { useEffect, useLayoutEffect } from 'react';
@@ -29,6 +29,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useIsAdmin } from './hooks/useIsAdmin';
 import { useModal } from './hooks/useModal';
 import GlobalModals from './components/globalModals';
+import { incrementDepth, decrementDepth } from './services/navigationDepth';
 
 axios.defaults.withCredentials = true;
 
@@ -37,11 +38,22 @@ function App() {
     const { user, dashboard } = useSelector(s => s.user);
     const isAdminShown = useIsAdmin();
     const { firstLoad, country, currency, continent, tAndCAccepted } = useSelector(s => s.data);
-    const { modal, openModal, closeModal } = useModal();
+    const { modal, sub, openModal, closeModal } = useModal();
     const { pathname } = useLocation();
     const { width } = useWindowSize();
-    const { menuExpanded } = useApp();
+    const { menuExpanded, windowSize } = useApp();
+    const location = useLocation();
     const navigate = useNavigate();
+    const navType = useNavigationType();
+
+    // Track internal SPA navigation depth for history-aware back navigation
+    useEffect(() => {
+        if (navType === 'PUSH') {
+            incrementDepth();
+        } else if (navType === 'POP') {
+            decrementDepth();
+        }
+    }, [location.key, navType]);
 
     const isAfrica = continent === 'AF';
     const isCountrySelected = Boolean((isAfrica && country) || (!isAfrica && currency));
@@ -77,16 +89,16 @@ function App() {
             axios({ method: 'POST', url: `${baseApiUrl}/profile.php` })
                 .then(res => {
                     dispatch(setFirstLoad(true));
-                    if (res.data.continent)  dispatch(setContinent(res.data.continent));
-                    if (res.data.factor)     dispatch(setFactor(res.data.factor));
-                    if (res.data.country)    dispatch(setCountry(res.data.country));
+                    if (res.data.continent) dispatch(setContinent(res.data.continent));
+                    if (res.data.factor) dispatch(setFactor(res.data.factor));
+                    if (res.data.country) dispatch(setCountry(res.data.country));
                     if (res.data.currency) {
                         dispatch(setCurrency(res.data.currency));
                         dispatch(setCountry(res.data.currency));
                     }
                     if (res.data.status === 'loggedin') dispatch(login(res.data.data));
-                    if (res.data.version)    dispatch(setVersion(res.data.version));
-                    if (res.data.new_paths)  dispatch(setNewPaths(res.data.new_paths));
+                    if (res.data.version) dispatch(setVersion(res.data.version));
+                    if (res.data.new_paths) dispatch(setNewPaths(res.data.new_paths));
                     dispatch(setUserQueried(true));
                 })
                 .catch(() => dispatch(showToast({ message: 'An error occurred, reload page', type: 'error', duration: 3000 })));
@@ -98,12 +110,14 @@ function App() {
     useEffect(() => {
         const lock =
             Boolean(modal) ||
+            Boolean(sub) ||
+            (firstLoad && !isCountrySelected && pathname !== '/about') ||
             pathname === '/deep-analyzer/search' ||
-            (menuExpanded && width < 1024) ||   // lg breakpoint = 1024px
+            (menuExpanded && !windowSize.isMd) || // lg breakpoint = 1024px
             (!tAndCAccepted && pathname !== '/about');
 
         document.body.classList.toggle('scroll-lock', lock);
-    }, [pathname, tAndCAccepted, menuExpanded, width, modal]);
+    }, [pathname, tAndCAccepted, menuExpanded, width, modal, sub, firstLoad, isCountrySelected]);
 
     // Deep Analyzer ai class
     useEffect(() => {
@@ -114,15 +128,6 @@ function App() {
         }
     }, [pathname]);
 
-    // Country selection check on first load
-    useEffect(() => {
-        if (firstLoad && !isCountrySelected && pathname !== '/about' && !modal) {
-            openModal('country');
-        }
-        if (firstLoad && isCountrySelected && modal === 'country') {
-            closeModal();
-        }
-    }, [isCountrySelected, firstLoad, pathname, modal, openModal, closeModal]);
 
     return (
         <>
@@ -160,12 +165,12 @@ function App() {
                             </div>
                         }>
                             <Route path="/deep-analyzer/*" element={<DeepAnalyzer />} />
-                            <Route path="/my-matches"       element={<MyMatches />} />
-                            <Route path="/login"            element={<Login />} />
-                            <Route path="/register"         element={<Register />} />
-                            <Route path="/forgot-password"  element={<ForgotPassword />} />
+                            <Route path="/my-matches" element={<MyMatches />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
                             <Route path="/reset-password/:id" element={<ResetPassword />} />
-                            <Route path="/about"            element={<About />} />
+                            <Route path="/about" element={<About />} />
                         </Route>
                     </Routes>
                 </main>

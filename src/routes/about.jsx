@@ -52,7 +52,7 @@ const WORKFLOW = [
     {
         step: '01',
         title: 'Multi-Dimensional Data Ingestion',
-        desc: 'Our data engines ingest thousands of variables per fixture — team momentum, injury reports, xG trends, tactical matchups, and market dynamics.',
+        desc: 'Our data engines ingest thousands of variables per fixture such as team momentum, injury reports, xG trends, tactical matchups, and market dynamics.',
         icon: Cpu,
         color: 'text-blue-500 dark:text-blue-400',
         bg: 'bg-blue-500/10',
@@ -274,10 +274,10 @@ const About = () => {
                                     </p>
                                 </div>
 
-                                <div className="mt-6 pt-3 border-t border-black/5 dark:border-white/5 flex items-center text-xs font-semibold text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {/* <div className="mt-6 pt-3 border-t border-black/5 dark:border-white/5 flex items-center text-xs font-semibold text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <span>Learn more</span>
                                     <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                                </div>
+                                </div> */}
                             </motion.div>
                         );
                     })}

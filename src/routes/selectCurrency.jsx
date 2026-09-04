@@ -46,7 +46,9 @@ const SelectCurrency = ({ exitable = true }) => {
                     type: 'success',
                     duration: 3000
                 }));
-                closeModal();
+                if (exitable) {
+                    closeModal();
+                }
                 dispatch(setCurrency(res.data.currency));
                 dispatch(setCountry(res.data.currency));
                 dispatch(setFactor(res.data.factor));
@@ -86,11 +88,10 @@ const SelectCurrency = ({ exitable = true }) => {
                                 key={currency.code}
                                 type="button"
                                 onClick={() => setLocalCurrency(currency.code)}
-                                className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all ${
-                                    isSelected
+                                className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all ${isSelected
                                         ? 'border-orange-500 bg-orange-500/10 dark:bg-orange-500/15 shadow-sm shadow-orange-500/20'
                                         : 'border-black/10 dark:border-white/10 hover:border-orange-500/40 bg-black/[0.02] dark:bg-white/[0.02]'
-                                }`}
+                                    }`}
                             >
                                 <div className="flex items-center gap-3.5">
                                     <div className="w-10 h-10 rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400 font-bold text-lg flex items-center justify-center font-mono">
@@ -106,11 +107,10 @@ const SelectCurrency = ({ exitable = true }) => {
                                     </div>
                                 </div>
 
-                                <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
-                                    isSelected
+                                <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${isSelected
                                         ? 'border-orange-500 bg-orange-500 text-white'
                                         : 'border-gray-300 dark:border-gray-600'
-                                }`}
+                                    }`}
                                 >
                                     {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                                 </div>

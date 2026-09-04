@@ -176,7 +176,8 @@ const PayButton = ({ emptyCart, emptyCartFlag, title = "PAY", showPrice = true, 
                         duration: 4000
                     }));
                 }, 1000);
-                if (emptyCartFlag) emptyCart();
+                const shouldEmpty = emptyCartFlag !== undefined ? emptyCartFlag : cart.emptyCartFlag;
+                if (shouldEmpty && emptyCart) emptyCart();
                 setTimeout(() => navigate("/my-matches"), 3000);
             } else {
                 dispatch(showToast({

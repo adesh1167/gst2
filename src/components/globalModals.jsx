@@ -10,26 +10,30 @@ import ManualPayment from './manualPayment';
 import Welcome from './welcome';
 
 /**
- * GlobalModals renders all overlay modals centrally based on query parameters (?modal=...&sub=...).
- * This separates modals completely from regular direct route paths and allows stacked submodals.
+ * GlobalModals renders all overlay modals centrally.
+ * Handles both state-driven mandatory boot modals (Welcome, First-load Country)
+ * and query-parameter-driven voluntary overlays (?modal=...&sub=...).
  */
 const GlobalModals = () => {
     const { modal, sub, searchParams } = useModal();
-    const { country, currency, continent, tAndCAccepted } = useSelector((state) => state.data);
+    const { firstLoad, country, currency, continent, tAndCAccepted } = useSelector((state) => state.data);
     const { pathname, state: locationState } = useLocation();
 
     const isAfrica = continent === 'AF';
     const isCountrySelected = Boolean((isAfrica && country) || (!isAfrica && currency));
 
-    const showCountryModal = modal === 'country' || modal === 'change-country';
+    // Mandatory boot modals
+    const showWelcome = (!tAndCAccepted && pathname !== '/about') || modal === 'welcome';
+    const isFirstLoadCountryNeeded = firstLoad && !isCountrySelected && pathname !== '/about';
+
+    // Query param / voluntary modals
+    const showCountryModal = isFirstLoadCountryNeeded || modal === 'country' || sub === 'country' || modal === 'change-country';
     const showCartModal = modal === 'cart';
     const showManualPayment = sub === 'manual-payment' || modal === 'manual-payment';
-    const showWelcome = (!tAndCAccepted && pathname !== '/about') || modal === 'welcome';
 
     return (
         <AnimatePresence mode="sync">
             {/* 1. Terms & Conditions / Welcome Modal */}
-            {showWelcome && <Welcome key="welcome-modal" />}
 
             {/* 2. Country / Currency Selector Modal */}
             {showCountryModal && (
@@ -56,6 +60,8 @@ const GlobalModals = () => {
                     duration={locationState?.duration || searchParams.get('duration') || undefined}
                 />
             )}
+
+            {showWelcome && <Welcome key="welcome-modal" />}    
         </AnimatePresence>
     );
 };

@@ -60,14 +60,22 @@ const CheckoutButton = memo(() => {
                             {/* Cart icon + count bubble */}
                             <div className="relative">
                                 <CartSvg size={26} />
-                                <span className="sans font-extrabold absolute -top-1.5 -right-2 w-4 h-4 bg-white text-orange-500
-                                                text-[10px] font-black rounded-full flex items-center justify-center">
-                                    {cartQuantity}
-                                </span>
+                                <AnimatePresence mode='wait'>
+                                    <motion.span
+                                        key={cartQuantity}
+                                        initial={{ rotateX: -90, }}
+                                        animate={{ rotateX: 0, }}
+                                        exit={{ rotateX: 90, }}
+                                        transition={{ duration: 0.15 }}
+                                        className="sans font-extrabold absolute -top-1.5 -right-2 w-4 h-4 bg-white text-orange-500
+                                                    text-[10px] font-black rounded-full flex items-center justify-center">
+                                        {cartQuantity}
+                                    </motion.span>
+                                </AnimatePresence>
                             </div>
 
                             {/* Price */}
-                            <div className="flex flex-col leading-tight">
+                            <div className="flex flex-col leading-tight text-left">
                                 <span className="text-orange-100 text-[10px] font-bold">Pay</span>
                                 <span className="text-white text-sm font-extrabold tracking-tight">
                                     {country} <span className="sans">{formatNumber(netTotal * factor)}</span>

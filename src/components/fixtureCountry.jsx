@@ -152,10 +152,10 @@ function Fixture({ fixture }) {
                         {getFixtureDate(fixture.match_data.fixture.date, country)}
                     </span>
 
-                    <span className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-semibold
+                    <span className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-semibold border transition-colors duration-300
                         ${inCart
-                            ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
-                            : 'bg-gray-400/15 text-gray-500 dark:text-white/80'
+                            ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border-green-400 dark:border-green-500/25'
+                            : 'bg-gray-400/15 text-gray-500 dark:text-white/80 border-transparent'
                         }`}>
                         {fixture.game_type}
                     </span>
@@ -169,10 +169,10 @@ function Fixture({ fixture }) {
 
                 {/* Right: price tag */}
                 <div className={`
-                    shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold
+                    shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-colors duration-300
                     ${inCart
-                        ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
-                        : 'bg-orange-500 text-white shadow-sm shadow-orange-900/25'
+                        ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border-green-400 dark:border-green-500/25'
+                        : 'bg-orange-500 text-white shadow-sm shadow-orange-900/25 border-transparent'
                     }
                 `}>
                     {inCart && (
@@ -256,8 +256,8 @@ function Fixture({ fixture }) {
 
             {/* ── ACTION STRIP ─────────────────────────────── */}
             <div className={`
-                relative z-10 flex items-center justify-between gap-3
-                px-4 py-3
+                relative z-10 flex items-center justify-between gap-3 min-h-[52px]
+                px-4 py-2.5
                 border-t border-black/[0.05] dark:border-white/[0.06]
                 transition-colors duration-300
                 ${inCart
@@ -292,11 +292,10 @@ function Fixture({ fixture }) {
                     {/* Odds — admin only */}
                     {isAdminShown && (
                         <div className={`
-                            flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold
+                            flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-colors duration-300
                             ${inCart
-                                ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border border-green-400 dark:border-green-500/25 transition-colors duration-300'
-                                : 'bg-white dark:bg-white/[0.08] text-gray-600 dark:text-white/55'
-                                + ' border border-gray-200 dark:border-white/[0.12]'
+                                ? 'bg-green-500 dark:bg-green-500/15 text-white dark:text-green-500 border-green-400 dark:border-green-500/25'
+                                : 'bg-white dark:bg-white/[0.08] text-gray-600 dark:text-white/55 border-gray-200 dark:border-white/[0.12]'
                             }
                         `}>
                             <span className="text-[9px] font-semibold opacity-85 uppercase tracking-wide">
@@ -311,11 +310,11 @@ function Fixture({ fixture }) {
                         type="button"
                         aria-label={inCart ? 'Remove from cart' : 'Add to cart'}
                         className={`
-                            flex items-center gap-2 px-4 py-2 rounded-xl
-                            text-xs font-bold transition-colors duration-300
+                            flex items-center justify-center gap-1.5 px-4 h-9 rounded-xl
+                            text-xs font-bold border transition-colors duration-300 shrink-0
                             ${inCart
-                                ? 'bg-red-500/20 text-red-500/90 border border-red-500/45 hover:bg-red-500/25'
-                                : 'bg-orange-500 hover:bg-orange-400 text-white shadow-sm shadow-orange-900/20'
+                                ? 'bg-red-500/20 text-red-500/90 border-red-500/45 hover:bg-red-500/25'
+                                : 'bg-orange-500 hover:bg-orange-400 text-white shadow-sm shadow-orange-900/20 border-transparent'
                             }
                         `}
                     >
@@ -330,7 +329,7 @@ function Fixture({ fixture }) {
                         ) : (
                             <>
                                 {/* Cart + icon */}
-                                <CartSvg size={18} />
+                                <CartSvg size={15} />
                                 Add
                             </>
                         )}

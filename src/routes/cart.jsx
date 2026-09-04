@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useOutlet, useNavigate } from 'react-router';
 import CartItem from '../components/cartItem';
-import { clearCart } from '../slices/cartReducer';
+import { clearCart, setEmptyCartFlag } from '../slices/cartReducer';
 import { selectNetTotal } from '../slices/netTotal';
 import formatNumber from '../functions/formatNumber';
 import axios from 'axios';
@@ -21,13 +21,11 @@ import { useModal } from '../hooks/useModal';
 const Cart = ({ aside = false }) => {
     const cartObj = useSelector(state => state.cart);
     const { factor, country, continent } = useSelector(state => state.data);
-    const cart = cartObj.items;
+    const { items: cart, total, emptyCartFlag } = cartObj;
     const netTotal = useSelector(selectNetTotal) * factor;
-    const { total } = cartObj;
     const coupon = useSelector(state => state.data.coupon);
     const [couponText, setCouponText] = useState("");
     const [couponLoading, setCouponLoading] = useState(false);
-    const [emptyCartFlag, setEmptyCartFlag] = useState(false);
     const isAfrica = continent === "AF";
     const { closeModal, openModal } = useModal();
     const dispatch = useDispatch();
@@ -110,7 +108,8 @@ const Cart = ({ aside = false }) => {
                                 ) : (
                                     <div className="flex flex-col flex-1 items-center justify-center py-4 gap-3 text-black/60 dark:text-white/60">
                                         <img src="/assets/empty-cart.png" alt="empty" className="w-12 opacity-30 dark:invert" />
-                                        <span className="text-lg">Cart is empty</span>
+                                        <p className="text-lg">Cart is empty</p>
+                                        <p className="text-lg">Add at least one match to checkout</p>
                                     </div>
                                 )}
                             </div>
@@ -134,17 +133,16 @@ const Cart = ({ aside = false }) => {
 
                             {/* Empty cart after payment */}
                             <div className="flex items-center self-start gap-2 px-5 pt-2 pb-6 text-black/60 dark:text-white/60 text-sm">
-                                <label htmlFor="emptyCartFlagInput" className="flex items-center gap-2 cursor-pointer select-none">
+                                <label className="flex items-center gap-2 cursor-pointer select-none">
+                                    <input
+                                        type="checkbox"
+                                        checked={emptyCartFlag}
+                                        onChange={e => dispatch(setEmptyCartFlag(e.target.checked))}
+                                        className="sr-only"
+                                    />
                                     Empty cart after payment
-                                    <Tick checked={emptyCartFlag} color="#fff" />
+                                    <Tick checked={emptyCartFlag} />
                                 </label>
-                                <input
-                                    id="emptyCartFlagInput"
-                                    type="checkbox"
-                                    value={emptyCartFlag}
-                                    onChange={e => setEmptyCartFlag(e.target.checked)}
-                                    className="absolute opacity-0 -z-10"
-                                />
                             </div>
 
                             {/* Summary + coupon */}
@@ -188,9 +186,13 @@ const Cart = ({ aside = false }) => {
                                 {/* Coupon details */}
                                 {coupon && cartObj.quantity > 0 && (
                                     coupon?.min_matches && coupon.min_matches > cartObj.quantity ? (
-                                        <p className="text-sm text-white/60">
-                                            Coupon <strong className="text-white">{coupon.coupon}</strong> only applies on {coupon.min_matches}+ matches
+                                        <p className="text-sm text-red-600 dark:text-red-500">
+                                            Add <strong className="sans">{coupon.min_matches - cart.length}</strong> more match{coupon.min_matches - cart.length > 1 ? 'es' : ''} to activate coupon <strong className="">{coupon.coupon}</strong> <br/>
+                                            (<strong className="">{coupon.coupon}</strong> requires minimum of <strong className="sans">{coupon.min_matches}</strong> matches)
                                         </p>
+                                        // <p className="text-sm text-red-600 dark:text-red-500">
+                                        //     Coupon <strong className="text-red-700/70 dark:text-red-500">{coupon.coupon}</strong> only applies on <strong className="sans text-red-700/70 dark:text-red-500">{coupon.min_matches}</strong> or more matches
+                                        // </p>
                                     ) : (
                                         <div className="rounded-xl bg-green-300/10 border border-green-500/50 px-4 py-3 flex flex-col gap-2">
                                             <div className="flex items-center justify-between text-green-600 dark:text-green-300 text-sm font-semibold">
